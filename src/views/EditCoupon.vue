@@ -14,7 +14,7 @@
         </div>
         <b-row>
           <b-col xl="4" lg="4" md="4" sm="12">
-            <FormAddImage />
+            <EditImageCoupon />
           </b-col>
           <b-col xl="8" lg="8" md="8" sm="12">
             <FormAddCoupon />
@@ -30,14 +30,14 @@
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import FormAddCoupon from '../components/_base/addcoupon/FormAddCoupon'
-import FormAddImage from '../components/_base/addcoupon/FormAddImage'
+import EditImageCoupon from '../components/_base/editcoupon/EditImageCoupon'
 
 export default {
   components: {
     Navbar,
     Footer,
     FormAddCoupon,
-    FormAddImage
+    EditImageCoupon
   }
 }
 </script>

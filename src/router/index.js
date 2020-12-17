@@ -5,6 +5,7 @@ import Product from '../views/Product.vue'
 import DetailProduct from '../views/DetailProduct.vue'
 import AddProduct from '../views/AddProduct.vue'
 import AddCoupon from '../views/AddCoupon.vue'
+import EditCoupon from '../views/EditCoupon.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/addcoupon',
     name: 'AddCoupon',
     component: AddCoupon
+  },
+  {
+    path: '/editcoupon',
+    name: 'EditCoupon',
+    component: EditCoupon
   }
 ]
 
