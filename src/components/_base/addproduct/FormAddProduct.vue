@@ -44,7 +44,7 @@
                 placeholder="select end hour"
               ></b-form-input>
             </div>
-            <div style="margin-top:75px">
+            <div style="margin-top:100px">
               <h6>Input stok</h6>
               <b-form-input
                 id="input"
@@ -86,7 +86,7 @@
               type="text"
               placeholder="select end hour"
             ></b-form-input>
-            <div>
+            <div style="margin-bottom:25px">
               <h6>Product Name</h6>
               <p>* Click size you want to use for this product</p>
               <b-button class="style-size">R</b-button>
@@ -109,9 +109,17 @@
               <b-button class="style-size2">Dine in</b-button>
               <b-button class="style-size2">Take Away</b-button>
             </div>
-            <div>
-              <b-button class="btn-style2">Save</b-button>
-              <b-button class="btn-style2">Cancle</b-button>
+            <div style="margin-top:60px;margin-bottom:60px">
+              <b-button
+                class="btn-style2"
+                style="background-color:#6A4029;width:250px;margin-right:100px"
+                >Save</b-button
+              >
+              <b-button
+                class="btn-style2"
+                style="background-color:#E7EAED;color:#7B7B7B;width:250px"
+                >Cancle</b-button
+              >
             </div>
           </div>
         </b-col>
