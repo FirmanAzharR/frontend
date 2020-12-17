@@ -1,50 +1,38 @@
 <template>
-  <div class="home">
-    <b-container class="centered">
-      <img alt="Vue logo" src="../assets/logo.png" />
+  <div class="product">
+    <div>
       <Navbar />
-      <b-card>
-        <h5>Interpolation</h5>
-        <p>My name is {{ name }}</p>
-      </b-card>
-      <b-card>
-        <h5>Computed</h5>
-        <p>Original Message : {{ message }}</p>
-        <p>Reverse message : {{ reverseMessage }}</p>
-      </b-card>
-    </b-container>
+      <b-container fluid class="bv-example-row">
+        <b-row style="border-top: 1px solid #d2d2d2;">
+          <b-col
+            xl="4"
+            lg="4"
+            md="12"
+            sm="12"
+            style="border-right: 1px solid #d2d2d2"
+            ><HomePromo
+          /></b-col>
+          <b-col xl="8" md="12" sm="12"><HomeProduct /></b-col>
+        </b-row>
+      </b-container>
+      <Footer />
+    </div>
   </div>
 </template>
 
 <script>
-// [1] step pertama import komponen
 import Navbar from '../components/_base/Navbar'
-
+import Footer from '../components/_base/Footer'
+import HomePromo from '../components/_base/HomePromo'
+import HomeProduct from '../components/_base/HomeProduct'
+//import axios from 'axios'
 export default {
-  name: 'Home',
-  // [2] step 2 mendaftarkan komponen yang sudah kita import
+  name: 'Product',
   components: {
-    Navbar
-  },
-  data() {
-    return {
-      name: 'Bagus Tri Harjanto',
-      message: 'Hello World'
-    }
-  },
-  computed: {
-    reverseMessage: function() {
-      return this.message
-        .split(' ')
-        .reverse()
-        .join(' ')
-    }
+    Navbar,
+    HomePromo,
+    HomeProduct,
+    Footer
   }
 }
 </script>
-
-<style scoped>
-.centered {
-  text-align: center;
-}
-</style>
