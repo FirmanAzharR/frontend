@@ -5,8 +5,10 @@
         class="promo-title"
         style="text-align:center; max-width: 17rem;margin-bottom:40px"
       >
-        <h4 class="font2">Promo Today</h4>
-        <p class="font1">Cupon will be updated every weeks. Check them out!</p>
+        <h4 class="font2 color">Promo Today</h4>
+        <p class="font1 color">
+          Cupon will be updated every weeks. Check them out!
+        </p>
       </div>
       <b-card id="card-style">
         <div class="d-flex align-items-center">
@@ -57,5 +59,8 @@
   margin-bottom: 20px;
   background-color: #88b787;
   border: none;
+}
+.color {
+  color: #6a4029;
 }
 </style>

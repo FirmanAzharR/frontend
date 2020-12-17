@@ -2,7 +2,7 @@
   <div>
     <b-container class="p-0">
       <b-navbar toggleable="lg" style="margin-top:20px;margin-bottom:20px;">
-        <b-navbar-brand href="#" class="brand">
+        <b-navbar-brand href="#" class="brand" style="font-size:23px">
           <img
             src="../../assets/img/coffee-logo.png"
             width="30"
@@ -17,10 +17,10 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-nav class="ml-auto">
             <b-nav-item href="#"
-              ><router-link to="#" class="link">Home</router-link></b-nav-item
+              ><router-link to="/" class="link">Home</router-link></b-nav-item
             >
             <b-nav-item href="#"
-              ><router-link to="#" class="link"
+              ><router-link to="/product" class="link"
                 >Product</router-link
               ></b-nav-item
             >

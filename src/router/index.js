@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Product from '../views/Product.vue'
-import Lifecycle from '../views/Lifecycle.vue'
+import DetailProduct from '../views/DetailProduct.vue'
+import AddProduct from '../views/AddProduct.vue'
 
 Vue.use(VueRouter)
 
@@ -18,9 +19,14 @@ const routes = [
     component: Product
   },
   {
-    path: '/lifecycle',
-    name: 'Lifecycle',
-    component: Lifecycle
+    path: '/detailproduct',
+    name: 'DetailProduct',
+    component: DetailProduct
+  },
+  {
+    path: '/addproduct',
+    name: 'AddProduct',
+    component: AddProduct
   }
 ]
 

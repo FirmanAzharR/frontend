@@ -6,10 +6,10 @@
           <div style="padding-left:40px">
             <h4>
               <img src="../../assets/img/coffee-logo.png" alt="coffee-logo" />
-              Coffe Shop
+              Coffeeland
             </h4>
             <p style="margin-top:20px; line-height: 30px">
-              Coffee Shop is a store that sells some good <br />
+              Coffeeland is a store that sells some good <br />
               meals, and especially coffee. We provide <br />high quality beans
             </p>
             <img src="../../assets/img/instagram.png" alt="twitter" />
@@ -36,7 +36,7 @@
         <b-col xl="3" lg="3" md="3" sm="4" cols="12">
           <ul>
             <li style="font-weight:bold">Engage</li>
-            <li>Coffee Shop ?</li>
+            <li>Coffeeland ?</li>
             <li>FAQ</li>
             <li>About Us</li>
             <li>Privacy Policy</li>
