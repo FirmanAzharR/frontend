@@ -24,7 +24,7 @@
           </div>
         </b-col>
         <b-col xl="3" lg="3" md="3" sm="4" cols="12">
-          <ul>
+          <ul class="display-min">
             <li style="font-weight:bold">Product</li>
             <li>Download</li>
             <li>Pricing</li>
@@ -34,7 +34,7 @@
           </ul>
         </b-col>
         <b-col xl="3" lg="3" md="3" sm="4" cols="12">
-          <ul>
+          <ul class="display-min">
             <li style="font-weight:bold">Engage</li>
             <li>Coffeeland ?</li>
             <li>FAQ</li>
@@ -56,5 +56,10 @@
 ul {
   list-style-type: none;
   line-height: 40px;
+}
+@media only screen and (max-width: 600px) {
+  .display-min {
+    padding-left: 40px;
+  }
 }
 </style>

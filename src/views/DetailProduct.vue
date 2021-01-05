@@ -8,9 +8,9 @@
         style="border-top: 1px solid #d2d2d2;"
       >
         <b-container>
-          <div style="margin-top:25px">
+          <!-- <div style="margin-top:25px">
             <ProductInformation />
-          </div>
+          </div> -->
           <div style="margin-top:50px"></div>
           <FormCheckout />
         </b-container>
@@ -23,16 +23,17 @@
 <script>
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
-import ProductInformation from '../components/_base/detailproduct/ProductInformation'
+//import ProductInformation from '../components/_base/detailproduct/ProductInformation'
 import FormCheckout from '../components/_base/detailproduct/FormCheckout'
-
 //import axios from 'axios'
+
 export default {
-  name: 'Product',
+  name: 'DetailProduct',
+  props: ['detailProduct'],
   components: {
     Navbar,
     Footer,
-    ProductInformation,
+    //ProductInformation,
     FormCheckout
   }
 }

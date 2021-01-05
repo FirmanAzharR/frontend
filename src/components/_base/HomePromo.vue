@@ -10,41 +10,45 @@
           Cupon will be updated every weeks. Check them out!
         </p>
       </div>
-      <b-card id="card-style">
+      <b-card id="card-style" v-for="(item, index) in coupon" :key="index">
         <div class="d-flex align-items-center">
-          <img src="../../assets/img/aside-icon.png" alt="" />
+          <img src="../../assets/img/aside-icon2.png" alt="" />
           <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p>
-        </div>
-      </b-card>
-      <b-card id="card-style" style="background-color:#F5C361">
-        <div class="d-flex align-items-center">
-          <img src="../../assets/img/aside-icon.png" alt="" />
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p>
-        </div>
-      </b-card>
-      <b-card id="card-style">
-        <div class="d-flex align-items-center">
-          <img src="../../assets/img/aside-icon.png" alt="" />
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p>
-        </div>
-      </b-card>
-      <b-card id="card-style" style="background-color:#F5C361">
-        <div class="d-flex align-items-center">
-          <img src="../../assets/img/aside-icon.png" alt="" />
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            {{ item.coupon_information }}
           </p>
         </div>
       </b-card>
     </div>
   </div>
 </template>
+
+<script>
+import axios from 'axios'
+export default {
+  data() {
+    return {
+      coupon: []
+    }
+  },
+  created() {
+    this.getPromo()
+  },
+  methods: {
+    getPromo() {
+      axios
+        .get(`http://localhost:5000/coupon`)
+        .then(response => {
+          this.coupon = response.data.data
+          // //console.log(response.data.pagination.totalData)
+          // this.totalRows = response.data.pagination.totalData
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }
+}
+</script>
 
 <style>
 .font1 {
@@ -56,8 +60,9 @@
 #card-style {
   border-radius: 15px;
   max-width: 22rem;
+  width: 22rem;
   margin-bottom: 20px;
-  background-color: #88b787;
+  background-color: #ffb836;
   border: none;
 }
 .color {

@@ -35,30 +35,16 @@
               ></b-nav-item
             >
           </b-nav>
-          <b-nav>
-            <b-form-input
-              id="search"
-              style=""
-              placeholder="Search Product"
-              type="text"
-              :value="dataProductName"
-              @keyup.enter="sendData"
-            >
-            </b-form-input>
-          </b-nav>
           <b-navbar-nav class="ml-5">
             <b-navbar-nav right>
               <b-nav-item
                 ><router-link to="#" class="link"
-                  ><img src="../../assets/img/chat.png" alt=""/></router-link
-              ></b-nav-item>
+                  >Login</router-link
+                ></b-nav-item
+              >
               <b-nav-item
-                ><router-link to="#" class="link"
-                  ><img
-                    style="border-radius:50px"
-                    src="../../assets/img/user.png"
-                    alt=""/></router-link
-              ></b-nav-item>
+                ><router-link to="#" id="btn">Sign Up</router-link></b-nav-item
+              >
             </b-navbar-nav>
           </b-navbar-nav>
         </b-collapse>
@@ -79,7 +65,7 @@ export default {
 }
 </script>
 
-<style>
+<style scope>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Rubik:wght@300;400;500;600&display=swap');
 .navbar {
   font-family: 'Rubik', sans-serif;
@@ -88,13 +74,12 @@ export default {
   font-weight: bold;
   font-size: 20px;
 }
-#search {
+
+#btn {
+  padding: 10px;
   border-radius: 15px;
-  width: 150px;
-  height: 35px;
-  border: 2px solid #6a4029;
-}
-#search:focus {
-  box-shadow: 0 0 0 0.2rem rgba(163, 100, 65, 0.25);
+  background-color: #ffba33;
+  color: #6a4029;
+  text-decoration: none;
 }
 </style>

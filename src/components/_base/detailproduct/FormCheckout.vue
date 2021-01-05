@@ -2,6 +2,34 @@
   <div>
     <b-row>
       <b-col xl="5" lg="5" md="12" sm="12">
+        <div>
+          <ul>
+            <li>
+              <a href="#">Favorite & Promo ></a>{{ products[0].product_name }}
+            </li>
+          </ul>
+        </div>
+        <div class="centered" style="margin-top:25px">
+          <img
+            src="../../../assets/img/coldbrew.png"
+            style="border-radius:50%; width:200px"
+          />
+        </div>
+      </b-col>
+      <b-col xl="7" lg="7" md="12" sm="12">
+        <h3 style="margin-top:60px">{{ products[0].product_name }}</h3>
+        <p>
+          {{ products[0].product_information }}
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione nam
+          id deserunt voluptatibus laudantium voluptatem vitae enim. Aspernatur
+          exercitationem eius fuga hic labore placeat sapiente quis
+          reprehenderit laboriosam eaque? Laboriosam.
+        </p>
+      </b-col>
+    </b-row>
+
+    <b-row style="margin-top:50px">
+      <b-col xl="5" lg="5" md="12" sm="12">
         <div class=" d-flex justify-content-center align-items-center">
           <b-card class="shadow-card card-style">
             <div style="margin-bottom:20px">Delivery and Time</div>
@@ -74,13 +102,12 @@
             <div style="text-align:center;margin-bottom:10px">
               Choose a size
             </div>
-            <b-button class="style-size">R</b-button>
             <b-button
               class="style-size"
-              style="margin-right:20px;margin-left:20px"
-              >L</b-button
+              v-for="(item, index) in products"
+              :key="index"
+              >{{ item.size_name }}</b-button
             >
-            <b-button class="style-size">XL</b-button>
           </b-card>
         </div>
       </b-col>
@@ -120,6 +147,35 @@
   </div>
 </template>
 
+<script>
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      products: [],
+      productId: (this.id = this.$route.params.id)
+    }
+  },
+  created() {
+    this.getProductDetail(this.productId)
+  },
+  methods: {
+    getProductDetail(id) {
+      axios
+        .get(`http://localhost:5000/product/${id}`)
+        .then(response => {
+          this.products = response.data.data
+          console.log(this.products)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }
+}
+</script>
+
 <style scoped>
 .card-style {
   border: none;
@@ -135,6 +191,8 @@
   font-weight: bold;
   color: #6a4029;
   font-size: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .button-style {
   border-radius: 15px;
