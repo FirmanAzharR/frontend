@@ -5,7 +5,7 @@
         <div>
           <ul>
             <li>
-              <a href="#">Favorite & Promo ></a>{{ products[0].product_name }}
+              <a href="#">Favorite & Promo>Product_name</a>
             </li>
           </ul>
         </div>
@@ -14,16 +14,24 @@
             src="../../../assets/img/coldbrew.png"
             style="border-radius:50%; width:200px"
           />
+          <br />
+          <div>
+            <b-button
+              pill
+              style="background-color:#6A4029;color:white;"
+              @click.prevent="onDelete"
+              >Delete This Product<b-icon-trash></b-icon-trash
+            ></b-button>
+          </div>
         </div>
       </b-col>
       <b-col xl="7" lg="7" md="12" sm="12">
-        <h3 style="margin-top:60px">{{ products[0].product_name }}</h3>
+        <h3 style="margin-top:60px">product name</h3>
         <p>
-          {{ products[0].product_information }}
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione nam
-          id deserunt voluptatibus laudantium voluptatem vitae enim. Aspernatur
-          exercitationem eius fuga hic labore placeat sapiente quis
-          reprehenderit laboriosam eaque? Laboriosam.
+          Product Information Lorem ipsum dolor sit amet, consectetur
+          adipisicing elit. Ratione nam id deserunt voluptatibus laudantium
+          voluptatem vitae enim. Aspernatur exercitationem eius fuga hic labore
+          placeat sapiente quis reprehenderit laboriosam eaque? Laboriosam.
         </p>
       </b-col>
     </b-row>
@@ -148,9 +156,10 @@
 </template>
 
 <script>
-import axios from 'axios'
-
+//import axios from 'axios'
+import { mapActions } from 'vuex'
 export default {
+  name: 'FormDetailProduct',
   data() {
     return {
       products: [],
@@ -158,20 +167,42 @@ export default {
     }
   },
   created() {
-    this.getProductDetail(this.productId)
+    // this.getProductDetail(this.productId)
   },
   methods: {
-    getProductDetail(id) {
-      axios
-        .get(`http://localhost:5000/product/${id}`)
-        .then(response => {
-          this.products = response.data.data
-          console.log(this.products)
+    ...mapActions(['deleteProducts']),
+    makeToast(bodyMsg, msg, variant) {
+      this.$bvToast.toast(bodyMsg, {
+        title: msg,
+        variant: variant,
+        solid: true
+      })
+    },
+    onDelete() {
+      this.deleteProducts(this.productId)
+        .then(result => {
+          this.makeToast(
+            'Product Delete',
+            `Your Product ${result.data.data.product_name} Deleted successfully`,
+            'success'
+          )
         })
         .catch(error => {
-          console.log(error)
+          console.log(error.msg)
+          this.makeToast('Delete Product Failed', 'Failed', 'danger')
         })
     }
+    // getProductDetail(id) {
+    //   axios
+    //     .get(`http://localhost:5000/product/${id}`)
+    //     .then(response => {
+    //       this.products = response.data.data
+    //       console.log(this.products)
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // }
   }
 }
 </script>

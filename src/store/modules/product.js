@@ -1,27 +1,85 @@
 import axios from 'axios'
-//import router from '../../router'
+
 export default {
-  modules: {},
   state: {
-    products: {}
+    products: [],
+    productSearch: '',
+    sort: 'category_id ASC',
+    category: '',
+    totalRows: null,
+    limit: 12,
+    page: 1
   },
   mutations: {
-    setUser(state, dataProducts) {
-      state.products = dataProducts
+    // tambahkan
+    setProduct(state, payload) {
+      // payload = response.data
+      state.products = payload.data
+      state.totalRows = payload.pagination.totalData
+    },
+    handleChangePage(state, payload) {
+      state.page = payload
     }
   },
   actions: {
-    getProduct(context, data) {
+    getProducts(context) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:5000/user/register', data)
-          .then(result => {
-            resolve(result)
+          .get(
+            `http://localhost:5000/product?page=${context.state.page}&limit=${context.state.limit}&category=${context.state.category}&search=&sort=${context.state.sort}`
+          )
+          .then(response => {
+            console.log(response)
+            resolve(response)
+            context.state.products = response.data.data
+            context.state.totalRows = response.data.pagination.totalData
           })
           .catch(error => {
-            reject(error.response)
+            console.log(error)
+            reject(error)
           })
       })
+    },
+    postProducts(context, data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post('http://localhost:5000/product', data)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error)
+          })
+      })
+    },
+    deleteProducts(context, data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete(`http://localhost:5000/product/${data}`)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            //console.log(error)
+            //console.log(reject)
+            reject(error)
+          })
+      })
+    }
+  },
+  getters: {
+    getPageProduct(state) {
+      return state.page
+    },
+    getLimitProduct(state) {
+      return state.limit
+    },
+    getDataProduct(state) {
+      return state.products
+    },
+    getTotalRowsProduct(state) {
+      return state.totalRows
     }
   }
 }

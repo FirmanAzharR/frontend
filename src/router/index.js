@@ -8,6 +8,7 @@ import AddProduct from '../views/AddProduct.vue'
 import EditProduct from '../views/EditProduct.vue'
 import AddCoupon from '../views/AddCoupon.vue'
 import EditCoupon from '../views/EditCoupon.vue'
+import YourCart from '../views/YourCart.vue'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -55,6 +56,11 @@ const routes = [
     path: '/editcoupon',
     name: 'EditCoupon',
     component: EditCoupon
+  },
+  {
+    path: '/yourcart',
+    name: 'YourCart',
+    component: YourCart
   }
 ]
 

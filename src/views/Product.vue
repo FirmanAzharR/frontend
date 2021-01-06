@@ -1,7 +1,8 @@
 <template>
   <div class="product">
     <div>
-      <Navbar :dataProductName="productSearch" @sendData="search" />
+      <!-- <Navbar :dataProductName="productSearch" @sendData="search" /> -->
+      <Navbar />
       <b-container fluid class="bv-example-row">
         <b-row style="border-top: 1px solid #d2d2d2;">
           <b-col
@@ -44,7 +45,12 @@
                     >Foods</router-link
                   ></b-nav-item
                 >
-                <b-nav-item @click="resetProduct"
+                <!-- <b-nav-item @click="resetProduct"
+                  ><router-link to="#" class="link"
+                    >All Product</router-link
+                  ></b-nav-item
+                > -->
+                <b-nav-item
                   ><router-link to="#" class="link"
                     >All Product</router-link
                   ></b-nav-item
@@ -95,6 +101,14 @@
                               alt=""
                               class="item-img"
                             />
+
+                            <!-- <img
+                            v-if="item.product_img === ''"
+                              v-else
+                              :src="'http://localhost:5000/' + item.product_img"
+                              alt=""
+                              class="item-img"
+                            /> -->
                             <div
                               class="badge-pos"
                               v-if="item.product_discon !== 0"
@@ -143,13 +157,14 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import HomePromo from '../components/_base/HomePromo'
-import axios from 'axios'
+//import axios from 'axios'
 export default {
   name: 'Product',
-  props: ['searchProduct'],
+  //props: ['searchProduct'],
   components: {
     Navbar,
     HomePromo,
@@ -158,58 +173,71 @@ export default {
   data() {
     return {
       user: 1,
-      products: [],
-      productSearch: '',
-      sort: 'category_id ASC',
-      category: '',
-      currentPage: 1,
-      totalRows: null,
-      limit: 12,
-      page: 1
+      // products: [],
+      // productSearch: '',
+      // sort: 'category_id ASC',
+      // category: '',
+      currentPage: 1
+      // totalRows: null,
+      // limit: 12,
+      // page: 1
     }
   },
   computed: {
-    rows() {
-      return this.totalRows
-    }
+    ...mapGetters({
+      products: 'getDataProduct',
+      page: 'getPageProduct',
+      limit: 'getLimitProduct',
+      rows: 'getTotalRowsProduct'
+    })
+    // rows() {
+    //   return this.totalRows
+    // }
   },
   created() {
-    this.getProduct(this.category, this.productSearch, this.sort)
+    this.getProducts()
+    //this.getProduct(this.category, this.productSearch, this.sort)
+    //this.getProducts
   },
   methods: {
-    resetProduct() {
-      this.sort = 'category_id ASC'
-      this.category = ''
-      this.productSearch = ''
-      this.page = 1
-      this.getProduct(this.category, this.productSearch, this.sort)
-    },
-    search(event) {
-      this.productSearch = event
-      this.category = ''
-      this.getProduct(this.category, this.productSearch, this.sort)
-    },
-    getProductByCategory(idCategory) {
-      this.page = 1
-      this.productSearch = ''
-      this.getProduct(idCategory, this.productSearch, this.sort)
-    },
-    getProduct(category, searchData, sort) {
-      axios
-        .get(
-          `http://localhost:5000/product?page=${this.page}&limit=${this.limit}&category=${category}&search=${searchData}&sort=${sort}`
-        )
-        .then(response => {
-          this.products = response.data.data
-          this.totalRows = response.data.pagination.totalData
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
+    ...mapActions(['getProducts']),
+    ...mapMutations(['handleChangePage']),
+    // resetProduct() {
+    // this.sort = 'category_id ASC'
+    // this.category = ''
+    // this.productSearch = ''
+    // this.page = 1
+    // this.getProduct(this.category, this.productSearch, this.sort)
+    //},
+    //search(event) {
+    // this.productSearch = event
+    // this.category = ''
+    // this.getProduct(this.category, this.productSearch, this.sort)
+    //},
+    //getProductByCategory(idCategory) {
+    // this.page = 1
+    // this.productSearch = ''
+    // this.getProduct(idCategory, this.productSearch, this.sort)
+
+    //},
+    // getProduct(category, searchData, sort) {
+    // axios
+    //   .get(
+    //     `http://localhost:5000/product?page=${this.page}&limit=${this.limit}&category=${category}&search=${searchData}&sort=${sort}`
+    //   )
+    //   .then(response => {
+    //     this.products = response.data.data
+    //     this.totalRows = response.data.pagination.totalData
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    // },
     changePage(numberPage) {
-      this.page = numberPage
-      this.getProduct('', '', this.sort)
+      this.handleChangePage(numberPage)
+      this.getProducts()
+      // this.page = numberPage
+      // this.getProduct('', '', this.sort)
     }
   }
 }
