@@ -22,6 +22,12 @@ export default {
     },
     handleChangeCategory(state, payload) {
       state.category = payload
+    },
+    handleSort(state, payload) {
+      state.sort = payload
+    },
+    productSearchs(state, payload) {
+      state.productSearch = payload
     }
   },
   actions: {
@@ -29,16 +35,14 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://localhost:5000/product?page=${context.state.page}&limit=${context.state.limit}&category=${context.state.category}&search=&sort=${context.state.sort}`
+            `http://localhost:5000/product?page=${context.state.page}&limit=${context.state.limit}&category=${context.state.category}&search=${context.state.productSearch}&sort=${context.state.sort}`
           )
           .then(response => {
-            console.log(response)
             resolve(response)
             context.state.products = response.data.data
             context.state.totalRows = response.data.pagination.totalData
           })
           .catch(error => {
-            console.log(error)
             reject(error)
           })
       })

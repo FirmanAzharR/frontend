@@ -55,17 +55,17 @@
                 <b-nav-item-dropdown text="Sort by" right>
                   <b-dropdown-item
                     href="#"
-                    @click="getProduct('', '', 'product_discon DESC')"
+                    @click="getProductSort('product_discon DESC')"
                     >Biggest promo</b-dropdown-item
                   >
                   <b-dropdown-item
                     href="#"
-                    @click="getProduct('', '', 'product_price ASC')"
+                    @click="getProductSort('product_price ASC')"
                     >Cheapest price</b-dropdown-item
                   >
                   <b-dropdown-item
                     href="#"
-                    @click="getProduct('', '', 'product_price DESC')"
+                    @click="getProductSort('product_price DESC')"
                     >most expensive price</b-dropdown-item
                   >
                 </b-nav-item-dropdown>
@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import HomePromo from '../components/_base/HomePromo'
@@ -192,48 +192,36 @@ export default {
     // }
   },
   created() {
+    this.productSearchs('')
+    this.handleChangePage(1)
+    this.handleChangeCategory('')
     this.getProducts()
     //this.getProduct(this.category, this.productSearch, this.sort)
     //this.getProducts
   },
   methods: {
-    ...mapState(['productSearch']),
     ...mapActions(['getProducts']),
-    ...mapMutations(['handleChangePage', 'handleChangeCategory']),
-    // resetProduct() {
-    // this.sort = 'category_id ASC'
-    // this.category = ''
-    // this.productSearch = ''
-    // this.page = 1
-    // this.getProduct(this.category, this.productSearch, this.sort)
-    //},
-    //search(event) {
-    // this.productSearch = event
-    // this.category = ''
-    // this.getProduct(this.category, this.productSearch, this.sort)
-    //},
+    ...mapMutations([
+      'handleChangePage',
+      'handleChangeCategory',
+      'handleSort',
+      'productSearchs'
+    ]),
+
     getProductByCategory(idCategory) {
       this.handleChangePage(1)
-      this.productSearch = ''
+      this.productSearchs('')
       this.handleChangeCategory(idCategory)
       this.getProducts()
       //this.page = 1
       //this.productSearch = ''
       //this.getProducts()
     },
-    // getProduct(category, searchData, sort) {
-    // axios
-    //   .get(
-    //     `http://localhost:5000/product?page=${this.page}&limit=${this.limit}&category=${category}&search=${searchData}&sort=${sort}`
-    //   )
-    //   .then(response => {
-    //     this.products = response.data.data
-    //     this.totalRows = response.data.pagination.totalData
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
-    // },
+    getProductSort(dataSort) {
+      this.handleChangePage(1)
+      this.handleSort(dataSort)
+      this.getProducts()
+    },
     changePage(numberPage) {
       this.handleChangePage(numberPage)
       this.getProducts()

@@ -41,8 +41,8 @@
               style=""
               placeholder="Search Product"
               type="text"
-              :value="dataProductName"
-              @keyup.enter="sendData"
+              v-model="cari"
+              @keyup.enter="search"
             >
             </b-form-input>
           </b-nav>
@@ -68,12 +68,26 @@
 </template>
 
 <script>
+import { mapActions, mapMutations } from 'vuex'
 export default {
-  props: ['dataProductName'],
+  name: 'Navbar',
+  data() {
+    return {
+      cari: ''
+    }
+  },
   methods: {
-    sendData(event) {
-      const sendData = event.target.value
-      this.$emit('sendData', sendData)
+    ...mapActions(['getProducts']),
+    ...mapMutations([
+      'handleChangePage',
+      'handleChangeCategory',
+      'handleSort',
+      'productSearchs'
+    ]),
+    search() {
+      this.handleChangeCategory('')
+      this.productSearchs(this.cari)
+      this.getProducts()
     }
   }
 }

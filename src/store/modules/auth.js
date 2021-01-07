@@ -63,9 +63,9 @@ export default {
           // Any status codes that falls outside the range of 2xx cause this function to trigger
           // Do something with response error
           if (
-            error.response.data.status === 403 &&
-            error.response.data.msg === 'invalid token' &&
-            error.response.data.msg === 'invalid signature' &&
+            error.response.data.status === 403 ||
+            error.response.data.msg === 'invalid token' ||
+            error.response.data.msg === 'invalid signature' ||
             error.response.data.msg === 'jwt expired'
           ) {
             context.dispatch('logout')
