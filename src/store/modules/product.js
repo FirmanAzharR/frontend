@@ -19,6 +19,9 @@ export default {
     },
     handleChangePage(state, payload) {
       state.page = payload
+    },
+    handleChangeCategory(state, payload) {
+      state.category = payload
     }
   },
   actions: {

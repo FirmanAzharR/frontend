@@ -27,20 +27,17 @@
                     >Favorite & Promo</router-link
                   ></b-nav-item
                 >
-                <b-nav-item
-                  @click=";(category = 1), getProductByCategory(category)"
+                <b-nav-item @click="getProductByCategory(1)"
                   ><router-link to="#" class="link"
                     >Coffee</router-link
                   ></b-nav-item
                 >
-                <b-nav-item
-                  @click=";(category = 2), getProductByCategory(category)"
+                <b-nav-item @click="getProductByCategory(2)"
                   ><router-link to="#" class="link"
                     >Non Coffee</router-link
                   ></b-nav-item
                 >
-                <b-nav-item
-                  @click=";(category = 3), getProductByCategory(category)"
+                <b-nav-item @click="getProductByCategory(3)"
                   ><router-link to="#" class="link"
                     >Foods</router-link
                   ></b-nav-item
@@ -50,7 +47,7 @@
                     >All Product</router-link
                   ></b-nav-item
                 > -->
-                <b-nav-item
+                <b-nav-item @click="getProductByCategory('')"
                   ><router-link to="#" class="link"
                     >All Product</router-link
                   ></b-nav-item
@@ -157,7 +154,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import HomePromo from '../components/_base/HomePromo'
@@ -200,8 +197,9 @@ export default {
     //this.getProducts
   },
   methods: {
+    ...mapState(['productSearch']),
     ...mapActions(['getProducts']),
-    ...mapMutations(['handleChangePage']),
+    ...mapMutations(['handleChangePage', 'handleChangeCategory']),
     // resetProduct() {
     // this.sort = 'category_id ASC'
     // this.category = ''
@@ -214,12 +212,15 @@ export default {
     // this.category = ''
     // this.getProduct(this.category, this.productSearch, this.sort)
     //},
-    //getProductByCategory(idCategory) {
-    // this.page = 1
-    // this.productSearch = ''
-    // this.getProduct(idCategory, this.productSearch, this.sort)
-
-    //},
+    getProductByCategory(idCategory) {
+      this.handleChangePage(1)
+      this.productSearch = ''
+      this.handleChangeCategory(idCategory)
+      this.getProducts()
+      //this.page = 1
+      //this.productSearch = ''
+      //this.getProducts()
+    },
     // getProduct(category, searchData, sort) {
     // axios
     //   .get(
