@@ -3,6 +3,8 @@ import axios from 'axios'
 export default {
   state: {
     products: [],
+    productById: '',
+    productDetails: [],
     productSearch: '',
     sort: 'category_id ASC',
     category: '',
@@ -41,6 +43,34 @@ export default {
             resolve(response)
             context.state.products = response.data.data
             context.state.totalRows = response.data.pagination.totalData
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getProductById(context, id) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`http://localhost:5000/product/${id}`)
+          .then(response => {
+            context.state.productById = response.data.data[0]
+            console.log(context.state.productById)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getProductDetail(context, id) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`http://localhost:5000/product/productDetail/${id}`)
+          .then(response => {
+            context.state.productDetails = response.data.data
+            console.log(context.state.productDetails)
+            resolve(response)
           })
           .catch(error => {
             reject(error)
@@ -87,6 +117,12 @@ export default {
     },
     getTotalRowsProduct(state) {
       return state.totalRows
+    },
+    getProductById(state) {
+      return state.productById
+    },
+    getProductDetail(state) {
+      return state.productDetails
     }
   }
 }

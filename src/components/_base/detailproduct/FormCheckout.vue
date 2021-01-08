@@ -5,7 +5,7 @@
         <div>
           <ul>
             <li>
-              <a href="#">Favorite & Promo>Product_name</a>
+              <a href="#">Favorite & Promo>{{ productById.product_name }}</a>
             </li>
           </ul>
         </div>
@@ -26,12 +26,9 @@
         </div>
       </b-col>
       <b-col xl="7" lg="7" md="12" sm="12">
-        <h3 style="margin-top:60px">product name</h3>
+        <h3 style="margin-top:60px">{{ productById.product_name }}</h3>
         <p>
-          Product Information Lorem ipsum dolor sit amet, consectetur
-          adipisicing elit. Ratione nam id deserunt voluptatibus laudantium
-          voluptatem vitae enim. Aspernatur exercitationem eius fuga hic labore
-          placeat sapiente quis reprehenderit laboriosam eaque? Laboriosam.
+          {{ productById.product_information }}
         </p>
       </b-col>
     </b-row>
@@ -91,11 +88,16 @@
             <b-button class="button-style" style="background-color:#6A4029"
               >Add to Cart</b-button
             ><br />
-            <b-button
+            <router-link
               class="button-style"
-              style="background-color:#FFBA33;color:#6A4029"
-              >Edit Product</b-button
+              style="background-color:#FFBA33;color:#6A4029;text-align:center"
+              :to="{
+                name: 'EditProduct',
+                params: { id: productId }
+              }"
             >
+              Edit Product
+            </router-link>
           </div>
         </div>
       </b-col>
@@ -112,7 +114,7 @@
             </div>
             <b-button
               class="style-size"
-              v-for="(item, index) in products"
+              v-for="(item, index) in detailProduct"
               :key="index"
               >{{ item.size_name }}</b-button
             >
@@ -157,7 +159,7 @@
 
 <script>
 //import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'FormDetailProduct',
   data() {
@@ -167,10 +169,17 @@ export default {
     }
   },
   created() {
-    // this.getProductDetail(this.productId)
+    this.getProductById(this.productId)
+    this.getProductDetail(this.productId)
+  },
+  computed: {
+    ...mapGetters({
+      productById: 'getProductById',
+      detailProduct: 'getProductDetail'
+    })
   },
   methods: {
-    ...mapActions(['deleteProducts']),
+    ...mapActions(['deleteProducts', 'getProductById', 'getProductDetail']),
     makeToast(bodyMsg, msg, variant) {
       this.$bvToast.toast(bodyMsg, {
         title: msg,
