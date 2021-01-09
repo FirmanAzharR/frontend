@@ -25,7 +25,7 @@
               ></b-nav-item
             >
             <b-nav-item href="#"
-              ><router-link to="#" class="link"
+              ><router-link to="/yourcart" class="link"
                 >Your Cart</router-link
               ></b-nav-item
             >

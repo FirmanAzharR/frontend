@@ -55,7 +55,6 @@ export default {
           .get(`http://localhost:5000/product/${id}`)
           .then(response => {
             context.state.productById = response.data.data[0]
-            console.log(context.state.productById)
             resolve(response)
           })
           .catch(error => {
@@ -69,7 +68,6 @@ export default {
           .get(`http://localhost:5000/product/productDetail/${id}`)
           .then(response => {
             context.state.productDetails = response.data.data
-            console.log(context.state.productDetails)
             resolve(response)
           })
           .catch(error => {
@@ -87,6 +85,23 @@ export default {
           .catch(error => {
             console.log(error)
             reject(error)
+          })
+      })
+    },
+    patchProducts(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(
+            `http://localhost:5000/product/${payload.id_product}`,
+            payload.data
+          )
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            console.log(error)
+            //reject(error)
+            console.log(reject)
           })
       })
     },
