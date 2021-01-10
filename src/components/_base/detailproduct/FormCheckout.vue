@@ -66,18 +66,26 @@
             <b-col xl="4" lg="4" md="12" sm="12">
               <b-input-group>
                 <b-input-group-prepend>
-                  <b-button style="background-color:#6A4029">-</b-button>
+                  <b-button style="background-color:#6A4029" @click="qtyMin()"
+                    >-</b-button
+                  >
                 </b-input-group-prepend>
 
-                <b-form-input type="number" min="0.00"></b-form-input>
+                <b-form-input
+                  type="number"
+                  min="0.00"
+                  v-model="qty"
+                ></b-form-input>
 
                 <b-input-group-append>
-                  <b-button style="background-color:#6A4029">+</b-button>
+                  <b-button style="background-color:#6A4029" @click="qtyPlus()"
+                    >+</b-button
+                  >
                 </b-input-group-append>
               </b-input-group>
             </b-col>
             <b-col xl="4" lg="4" md="12" sm="12"
-              ><h5 style="text-align:right">Price</h5></b-col
+              ><h5 style="text-align:right">{{ productPrice }}</h5></b-col
             >
             <b-col xl="2" lg="2" md="12" sm="12"></b-col>
           </b-row>
@@ -85,7 +93,10 @@
           <div
             class="d-flex flex-column justify-content-center align-items-center"
           >
-            <b-button class="button-style" style="background-color:#6A4029"
+            <b-button
+              class="button-style"
+              style="background-color:#6A4029"
+              @click="addToCart()"
               >Add to Cart</b-button
             ><br />
             <router-link
@@ -112,12 +123,17 @@
             <div style="text-align:center;margin-bottom:10px">
               Choose a size
             </div>
-            <b-button
-              class="style-size"
-              v-for="(item, index) in detailProduct"
-              :key="index"
-              >{{ item.size_name }}</b-button
-            >
+            <div class="d-flex justify-content-center">
+              <b-form-radio
+                v-model="size"
+                v-for="(item, index) in detailProduct"
+                :key="index"
+                name="some-radios"
+                :value="{ id_size: item.size_id, price: item.product_price }"
+                ><b-button class="style-size">{{ item.size_name }}</b-button
+                >{{ size }}</b-form-radio
+              >
+            </div>
           </b-card>
         </div>
       </b-col>
@@ -135,8 +151,9 @@
             </b-col>
             <b-col cols="5">
               <ul>
-                <li style="font-weight:bold">item1</li>
-                <li>item1</li>
+                {{
+                  getCarts
+                }}
               </ul>
             </b-col>
             <b-col
@@ -146,9 +163,11 @@
               <h6 style="margin-right:20px;font-size:20px;font-weight:bold">
                 Checkout
               </h6>
-              <b-button class="style-size"
-                ><b-icon icon="arrow-right"></b-icon
-              ></b-button>
+              <router-link to="/yourcart" class="link">
+                <b-button class="style-size"
+                  ><b-icon icon="arrow-right"></b-icon
+                ></b-button>
+              </router-link>
             </b-col>
           </b-row>
         </b-card>
@@ -159,13 +178,17 @@
 
 <script>
 //import axios from 'axios'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'FormDetailProduct',
   data() {
     return {
+      size: '',
       products: [],
-      productId: (this.id = this.$route.params.id)
+      productId: (this.id = this.$route.params.id),
+      //checkout: [],
+      qty: 0,
+      productPrice: 0
     }
   },
   created() {
@@ -175,11 +198,36 @@ export default {
   computed: {
     ...mapGetters({
       productById: 'getProductById',
-      detailProduct: 'getProductDetail'
+      detailProduct: 'getProductDetail',
+      getCarts: 'getCart'
     })
   },
   methods: {
     ...mapActions(['deleteProducts', 'getProductById', 'getProductDetail']),
+    ...mapMutations(['cart']),
+    qtyPlus() {
+      this.qty = this.qty + 1
+      this.productPrice = this.qty * this.size.price
+    },
+    qtyMin() {
+      this.qty = this.qty - 1
+      this.productPrice = this.qty * this.size.price
+      if (this.qty <= 0) {
+        this.qty = 0
+        this.productPrice = 0
+      }
+    },
+    addToCart() {
+      const setCart = {
+        product_id: this.productId,
+        product_name: this.productById.product_name,
+        id_size: this.size.id_size,
+        product_price: this.size.price,
+        product_qty: this.qty,
+        product_total: this.productPrice
+      }
+      this.cart(setCart)
+    },
     makeToast(bodyMsg, msg, variant) {
       this.$bvToast.toast(bodyMsg, {
         title: msg,
@@ -201,17 +249,6 @@ export default {
           this.makeToast('Delete Product Failed', 'Failed', 'danger')
         })
     }
-    // getProductDetail(id) {
-    //   axios
-    //     .get(`http://localhost:5000/product/${id}`)
-    //     .then(response => {
-    //       this.products = response.data.data
-    //       console.log(this.products)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
-    // }
   }
 }
 </script>

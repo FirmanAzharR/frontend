@@ -35,18 +35,6 @@
               ></b-nav-item
             >
           </b-nav>
-          <b-navbar-nav class="ml-5">
-            <b-navbar-nav right>
-              <b-nav-item
-                ><router-link to="#" class="link"
-                  >Login</router-link
-                ></b-nav-item
-              >
-              <b-nav-item
-                ><router-link to="#" id="btn">Sign Up</router-link></b-nav-item
-              >
-            </b-navbar-nav>
-          </b-navbar-nav>
         </b-collapse>
       </b-navbar>
     </b-container>

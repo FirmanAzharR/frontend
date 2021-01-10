@@ -9,6 +9,7 @@ import EditProduct from '../views/EditProduct.vue'
 import AddCoupon from '../views/AddCoupon.vue'
 import EditCoupon from '../views/EditCoupon.vue'
 import YourCart from '../views/YourCart.vue'
+import Dashboard from '../views/Dashboard.vue'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -23,8 +24,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
-    meta: { requiresAuth: true }
+    component: Home
   },
   {
     path: '/product',
@@ -61,6 +61,11 @@ const routes = [
     path: '/yourcart',
     name: 'YourCart',
     component: YourCart
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard
   }
 ]
 

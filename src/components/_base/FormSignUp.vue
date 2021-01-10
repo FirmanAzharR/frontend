@@ -10,7 +10,12 @@
           />Coffeeland
         </div>
         <div class="align-self-center">
-          <b-button class="btn-style">Login</b-button>
+          <b-button
+            class="btn-style"
+            :value="typeForm"
+            @click="changeForm('signin')"
+            >Login</b-button
+          >
         </div>
       </div>
       <div style="padding:80px;margin-top:20px">
@@ -72,6 +77,8 @@
           </h6>
           <br />
           <b-button
+            :value="typeForm"
+            @click="changeForm('signin')"
             block
             class="btn-style2 shadow"
             style="color:white;background-color:#6A4029"
@@ -85,7 +92,9 @@
 
 <script>
 import { mapActions } from 'vuex'
+
 export default {
+  props: ['typeForm'],
   name: 'SignUp',
   data() {
     return {
@@ -100,6 +109,10 @@ export default {
   methods: {
     // mapaction dan mapmutation
     ...mapActions(['signup']),
+    changeForm(data) {
+      const changeForm = data
+      this.$emit('changeForm', changeForm)
+    },
     makeToast(bodyMsg, msg, variant) {
       this.$bvToast.toast(bodyMsg, {
         title: msg,
@@ -130,3 +143,48 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Rubik:wght@300;400;500;600;700&display=swap');
+.rubik {
+  font-family: 'Rubik', sans-serif;
+}
+.responsive {
+  width: 100%;
+  height: auto;
+}
+.btn-style {
+  padding: 10px;
+  width: 120px;
+  background-color: #ffba33;
+  border-radius: 20px;
+  color: #7d4f2a;
+  font-weight: 600;
+  border: none;
+}
+.btn-style2 {
+  padding: 10px;
+  height: 55px;
+  border-radius: 20px;
+  font-weight: 600;
+  border: none;
+}
+.label-input {
+  color: #868b95;
+  font-weight: bold;
+}
+.input {
+  height: 55px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+.input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(163, 100, 65, 0.25);
+  border-color: #7d4f2a;
+}
+.shadow {
+  -webkit-box-shadow: 1px 2px 8px 0px #2e2d2d54;
+  -moz-box-shadow: 1px 2px 8px 0px #2e2d2d54;
+  box-shadow: 1px 2px 8px 0px #2e2d2d54;
+}
+</style>

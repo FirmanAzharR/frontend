@@ -3,14 +3,19 @@ import Vuex from 'vuex'
 import Auth from './modules/auth'
 import SignUp from './modules/signup'
 import Products from './modules/product'
+import Dashboard from './modules/dashboard'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 export default new Vuex.Store({
-  modules: { Auth, SignUp, Products },
-  state: {
-    name: 'firman azhar r'
-  },
+  modules: { Auth, SignUp, Products, Dashboard },
+  state: {},
   mutations: {},
   action: {},
-  getters: {}
+  getters: {},
+  plugins: [
+    createPersistedState({
+      path: ['Auth.user']
+    })
+  ]
 })

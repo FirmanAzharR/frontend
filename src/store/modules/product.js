@@ -10,7 +10,8 @@ export default {
     category: '',
     totalRows: null,
     limit: 12,
-    page: 1
+    page: 1,
+    cart: []
   },
   mutations: {
     // tambahkan
@@ -30,6 +31,10 @@ export default {
     },
     productSearchs(state, payload) {
       state.productSearch = payload
+    },
+    cart(state, payload) {
+      state.cart = [...state.cart, payload]
+      localStorage.setItem('cart', JSON.stringify(state.cart))
     }
   },
   actions: {
@@ -138,6 +143,15 @@ export default {
     },
     getProductDetail(state) {
       return state.productDetails
+    },
+    getCart(state) {
+      let getCart = localStorage.getItem('cart')
+      getCart = JSON.parse(getCart)
+      if (getCart) {
+        return (state.cart = getCart)
+      } else {
+        return (state.cart = [])
+      }
     }
   }
 }

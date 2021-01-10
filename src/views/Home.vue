@@ -1,10 +1,7 @@
 <template>
   <div class="rubik">
-    <div v-if="rule === 0">
-      <NavbarHome />
-    </div>
-    <div v-else>
-      <h1><Navbar /></h1>
+    <div>
+      <Navbar />
     </div>
     <div class="bg">
       <b-container>
@@ -234,19 +231,15 @@
 </template>
 
 <script>
-import NavbarHome from '../components/_base/NavbarHome'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 export default {
   components: {
-    NavbarHome,
     Navbar,
     Footer
   },
   data() {
-    return {
-      rule: 0
-    }
+    return {}
   }
 }
 </script>

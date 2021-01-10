@@ -8,10 +8,10 @@
         <b-col xs="12" sm="12" md="6" lg="6" style="padding:0px">
           <div class="bg">
             <div v-if="type === 'signin'">
-              <FormLogin />
+              <FormLogin :typeForm="type" @changeForm="formChange" />
             </div>
             <div v-else-if="type === 'signup'">
-              <FormSignUp />
+              <FormSignUp :typeForm="type" @changeForm="formChange" />
             </div>
             <div v-else-if="type === 'forgot'">
               <FormForgot />
@@ -45,62 +45,26 @@ export default {
     return {
       type: 'signin'
     }
+  },
+  create() {},
+  computed: {},
+  methods: {
+    formChange(type) {
+      this.type = type
+    }
   }
 }
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Rubik:wght@300;400;500;600;700&display=swap');
-.rubik {
-  font-family: 'Rubik', sans-serif;
-}
-.responsive {
-  width: 100%;
-  height: auto;
-}
-.btn-style {
-  padding: 10px;
-  width: 120px;
-  background-color: #ffba33;
-  border-radius: 20px;
-  color: #7d4f2a;
-  font-weight: 600;
-  border: none;
-}
-.btn-style2 {
-  padding: 10px;
-  height: 55px;
-  border-radius: 20px;
-  font-weight: 600;
-  border: none;
-}
-.label-input {
-  color: #868b95;
-  font-weight: bold;
-}
-.input {
-  height: 55px;
-  border-radius: 20px;
-  margin-bottom: 15px;
-}
-.input:focus {
-  box-shadow: 0 0 0 0.2rem rgba(163, 100, 65, 0.25);
-  border-color: #7d4f2a;
-}
-.shadow {
-  -webkit-box-shadow: 1px 2px 8px 0px #2e2d2d54;
-  -moz-box-shadow: 1px 2px 8px 0px #2e2d2d54;
-  box-shadow: 1px 2px 8px 0px #2e2d2d54;
-}
-
 .before-footer-login {
-  margin-top: 156px;
+  margin-top: 188px;
 }
 .before-footer-signup {
-  margin-top: 113px;
+  margin-top: 145px;
 }
 .before-footer-forgot {
-  margin-top: 258px;
+  margin-top: 289px;
 }
 
 @media only screen and (max-width: 600px) {

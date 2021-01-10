@@ -19,6 +19,11 @@
             <b-nav-item href="#"
               ><router-link to="/" class="link">Home</router-link></b-nav-item
             >
+            <b-nav-item href="#" v-if="role !== undefined"
+              ><router-link to="/dashboard" class="link"
+                >Dashboard</router-link
+              ></b-nav-item
+            >
             <b-nav-item href="#"
               ><router-link to="/product" class="link"
                 >Product</router-link
@@ -48,17 +53,32 @@
           </b-nav>
           <b-navbar-nav class="ml-5">
             <b-navbar-nav right>
-              <b-nav-item
+              <b-nav-item v-if="role !== undefined"
                 ><router-link to="#" class="link"
                   ><img src="../../assets/img/chat.png" alt=""/></router-link
               ></b-nav-item>
-              <b-nav-item
+              <b-nav-item v-if="role !== undefined"
                 ><router-link to="#" class="link"
                   ><img
                     style="border-radius:50px"
                     src="../../assets/img/user.png"
                     alt=""/></router-link
               ></b-nav-item>
+              <b-nav-item
+                ><router-link to="/login" class="link" v-if="role === undefined"
+                  >Login</router-link
+                ></b-nav-item
+              >
+              <b-nav-item v-if="role !== undefined" @click="handleLogout"
+                ><router-link to="#" class="link"
+                  >Logout</router-link
+                ></b-nav-item
+              >
+              <b-nav-item
+                ><router-link to="#" id="btn" v-if="role === undefined"
+                  >Sign Up</router-link
+                ></b-nav-item
+              >
             </b-navbar-nav>
           </b-navbar-nav>
         </b-collapse>
@@ -68,22 +88,33 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   name: 'Navbar',
   data() {
     return {
-      cari: ''
+      cari: '',
+      role: ''
     }
   },
+  created() {
+    this.role = this.setUser.user_role
+    console.log(this.role)
+  },
+  computed: {
+    ...mapGetters(['setUser'])
+  },
   methods: {
-    ...mapActions(['getProducts']),
+    ...mapActions(['getProducts', 'logout']),
     ...mapMutations([
       'handleChangePage',
       'handleChangeCategory',
       'handleSort',
       'productSearchs'
     ]),
+    handleLogout() {
+      this.logout()
+    },
     search() {
       this.handleChangeCategory('')
       this.productSearchs(this.cari)
@@ -110,5 +141,12 @@ export default {
 }
 #search:focus {
   box-shadow: 0 0 0 0.2rem rgba(163, 100, 65, 0.25);
+}
+#btn {
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #ffba33;
+  color: #6a4029;
+  text-decoration: none;
 }
 </style>
