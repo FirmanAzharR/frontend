@@ -27,6 +27,7 @@
         <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
           <label for="" class="label-input">Email Address :</label>
           <b-form-input
+            v-focus
             v-model="form.user_email"
             type="email"
             class="input"

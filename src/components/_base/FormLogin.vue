@@ -19,14 +19,13 @@
         </div>
       </div>
       <div style="padding:80px;margin-top:20px">
-        <h3
-          style="text-align:center;color:#7d4f2a;margin-bottom:50px;font-weight:bold"
-        >
+        <h3 v-title style="margin-bottom:50px;">
           Login
         </h3>
         <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
           <label for="" class="label-input">Email Address</label>
           <b-form-input
+            v-focus
             v-model="form.user_email"
             type="email"
             class="input"

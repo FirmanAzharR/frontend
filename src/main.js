@@ -14,8 +14,21 @@ Vue.use(AvatarPlugin)
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-
 Vue.config.productionTip = false
+
+Vue.directive('title', el => {
+  ;(el.style.fontFamily = 'Rubik, sans-serif'),
+    (el.style.fontSize = 26 + 'px'),
+    (el.style.fontWeight = 'bold'),
+    (el.style.color = '#7D4F2A'),
+    (el.style.textAlign = 'center')
+})
+
+Vue.directive('focus', {
+  inserted: function(el) {
+    el.focus()
+  }
+})
 
 new Vue({
   router,
