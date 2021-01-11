@@ -9,12 +9,17 @@
             >
               <div id="preview">
                 <img v-if="url" :src="url" class="round-img" />
-                <img
+                <div
                   v-else
-                  src="../../../assets/img/coldbrew.png"
-                  alt=""
-                  class="round-img"
-                />
+                  class="d-flex justify-content-center"
+                  style="background-color:#d2d2d2;border-radius:50%;width:170px;height:170px"
+                >
+                  <img
+                    class="align-self-center"
+                    src="../../../assets/img/camera.png"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>
                 <b-button

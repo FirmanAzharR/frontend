@@ -14,11 +14,16 @@
         <b-card
           id="card-style"
           class="font1"
-          v-for="(item, index) in coupon"
+          v-for="(item, index) in getCoupons"
           :key="index"
         >
           <div style="font-size: 2rem;position: absolute;right:10px;top:0px;">
-            <router-link to="/editcoupon" class="link">
+            <router-link
+              :to="{
+                name: 'EditCoupon',
+                params: { id: item.id_coupon }
+              }"
+            >
               <b-icon
                 icon="pencil-fill"
                 class="rounded-circle bg p-2"
@@ -38,18 +43,16 @@
               ></b-icon>
             </div>
           </div>
-          <div class="d-flex align-items-center">
-            <img src="../../assets/img/aside-icon2.png" alt="" />
-            <!-- <img
-              v-if="item.coupon_img === ''"
-              src="../../assets/img/aside-icon2.png"
-              alt=""
-            />
+          <div class="d-flex align-items-center promo-card">
             <img
-              v-else
-              :src="'http://localhost:5000/' + item.coupon_img"
-              alt=""
-            /> -->
+              :src="
+                item.coupon_img === ''
+                  ? require('../../assets/img/aside-icon2.png')
+                  : 'http://localhost:5000/coupon/' + item.coupon_img
+              "
+              alt="img"
+              class="img"
+            />
             <p>{{ item.coupon_information }} {{ index }}</p>
           </div>
         </b-card>
@@ -72,9 +75,9 @@
         footer-bg-variant="warning"
         footer-text-variant="dark"
       >
-        <h4>{{ couponName }}</h4>
+        <h4>{{ getCouponName }}</h4>
         <template #modal-footer="{ cancel }">
-          <b-button variant="danger" @click="deleteCoupon(couponId)">
+          <b-button variant="danger" @click="onDelete()">
             OK
           </b-button>
           <b-button @click="cancel()">
@@ -87,57 +90,45 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      coupon: [],
-      couponId: '',
-      couponName: ''
+      couponId: ''
     }
   },
   created() {
-    this.getPromo()
+    this.getCoupon()
+  },
+  computed: {
+    ...mapGetters(['getCoupons', 'getCouponName'])
   },
   methods: {
-    getPromo() {
-      axios
-        .get(`http://localhost:5000/coupon`)
-        .then(response => {
-          this.coupon = response.data.data
-          // //console.log(response.data.pagination.totalData)
-          // this.totalRows = response.data.pagination.totalData
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    deleteCoupon(id) {
-      axios
-        .delete(`http://localhost:5000/coupon/${id}`)
-        .then(response => {
-          alert(`delete success ${response}`)
-          this.getPromo()
-          //this.coupon = response.data.data
-          // //console.log(response.data.pagination.totalData)
-          // this.totalRows = response.data.pagination.totalData
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
+    ...mapActions(['getCoupon', 'deleteCoupon', 'getCouponsById']),
     getCouponById(id) {
-      axios
-        .get(`http://localhost:5000/coupon/${id}`)
-        .then(response => {
-          this.couponId = response.data.data[0].id_coupon
-          this.couponName = response.data.data[0].coupon_name
-          //this.coupon = response.data.data
-          // //console.log(response.data.pagination.totalData)
-          // this.totalRows = response.data.pagination.totalData
+      this.couponId = id
+      this.getCouponsById(id)
+    },
+    makeToast(bodyMsg, msg, variant) {
+      this.$bvToast.toast(bodyMsg, {
+        title: msg,
+        variant: variant,
+        solid: true
+      })
+    },
+    onDelete() {
+      this.deleteCoupon(this.couponId)
+        .then(result => {
+          this.makeToast(
+            'Coupon Deleted',
+            `Your Couppon ${result} Deleted successfully`,
+            'success'
+          )
+          this.getCoupon()
         })
         .catch(error => {
-          console.log(error)
+          console.log(error.msg)
+          this.makeToast('Delete Coupon Failed', 'Failed', 'danger')
         })
     }
   }
@@ -172,5 +163,16 @@ export default {
   border-radius: 15px;
   font-size: 15px;
   font-family: 'Poppins', sans-serif;
+}
+.promo-card {
+  padding: 10px !important;
+  height: 90px !important;
+  width: auto !important;
+}
+.img {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+  border-radius: 50%;
 }
 </style>

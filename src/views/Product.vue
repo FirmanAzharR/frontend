@@ -94,18 +94,15 @@
                         >
                           <div align="center">
                             <img
-                              src="../assets/img/food-1.png"
+                              :src="
+                                item.product_img === ''
+                                  ? require('../assets/img/food-1.png')
+                                  : 'http://localhost:5000/product/' +
+                                    item.product_img
+                              "
                               alt=""
                               class="item-img"
                             />
-
-                            <!-- <img
-                            v-if="item.product_img === ''"
-                              v-else
-                              :src="'http://localhost:5000/' + item.product_img"
-                              alt=""
-                              class="item-img"
-                            /> -->
                             <div
                               class="badge-pos"
                               v-if="item.product_discon !== 0"
@@ -252,6 +249,8 @@ export default {
 }
 .item-img {
   border-radius: 50%;
+  width: 130px;
+  height: 130px;
   position: relative;
   top: -40px;
   left: -5px;

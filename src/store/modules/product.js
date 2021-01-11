@@ -118,8 +118,6 @@ export default {
             resolve(response)
           })
           .catch(error => {
-            //console.log(error)
-            //console.log(reject)
             reject(error)
           })
       })

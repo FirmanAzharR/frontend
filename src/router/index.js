@@ -54,7 +54,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/editcoupon',
+    path: '/editcoupon/:id',
     name: 'EditCoupon',
     component: EditCoupon
   },
