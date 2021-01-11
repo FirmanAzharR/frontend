@@ -12,14 +12,7 @@
             <li><a href="#">Favorite & Promo ></a>Add new Promo</li>
           </ul>
         </div>
-        <b-row>
-          <b-col xl="4" lg="4" md="4" sm="12">
-            <FormAddImage />
-          </b-col>
-          <b-col xl="8" lg="8" md="8" sm="12">
-            <FormAddCoupon />
-          </b-col>
-        </b-row>
+        <FormAddCoupon />
       </b-container>
       <Footer />
     </div>
@@ -29,15 +22,13 @@
 <script>
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
-import FormAddCoupon from '../components/_base/addcoupon/FormAddCoupon'
-import FormAddImage from '../components/_base/addcoupon/FormAddImage'
+import FormAddCoupon from '../components/_base/coupon/FormAddCoupon'
 
 export default {
   components: {
     Navbar,
     Footer,
-    FormAddCoupon,
-    FormAddImage
+    FormAddCoupon
   }
 }
 </script>

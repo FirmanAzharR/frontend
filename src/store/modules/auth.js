@@ -38,7 +38,7 @@ export default {
       router.push('/login')
     },
     interceptorRequest(context) {
-      console.log('interceptor request works!')
+      //console.log('interceptor request works!')
       axios.interceptors.request.use(
         function(config) {
           config.headers.Authorization = `Bearer ${context.state.token}`
@@ -52,7 +52,7 @@ export default {
       )
     },
     interceptorResponse(context) {
-      console.log('interceptor response works!')
+      //console.log('interceptor response works!')
       axios.interceptors.response.use(
         function(response) {
           // Any status code that lie within the range of 2xx cause this function to trigger

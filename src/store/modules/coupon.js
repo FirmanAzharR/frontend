@@ -2,29 +2,20 @@ import axios from 'axios'
 //import router from '../../router'
 export default {
   modules: {},
-  state: {
-    dash: ''
-  },
+  state: {},
   mutations: {},
   actions: {
-    dashboard(context) {
+    addCoupon(context, data) {
       return new Promise((resolve, reject) => {
         axios
-          .get('http://localhost:5000/dashboard')
+          .post('http://localhost:5000/coupon', data)
           .then(result => {
             resolve(result)
-            //console.log(result)
-            context.state.dash = result.data.data
           })
           .catch(error => {
-            reject(error)
+            reject(error.response)
           })
       })
-    }
-  },
-  getters: {
-    getDashboard(state) {
-      return state.dash
     }
   }
 }

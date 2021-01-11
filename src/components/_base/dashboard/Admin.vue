@@ -8,7 +8,10 @@
         <b-col sm="12" md="12" lg="4" xl="4">
           <div class="shadow card-style">
             <b-card title="Today Income" class="card-style">
-              <h4>Rp. {{ getDashboard.today[0].subtotal_transaksi }}</h4>
+              <h4 v-if="getDashboard.today[0].subtotal_transaksi">
+                Rp. {{ getDashboard.today[0].subtotal_transaksi }}
+              </h4>
+              <h4 v-else>Rp. 0</h4>
               <b-card-text>
                 Total transaction :
                 {{ getDashboard.today[0].total_transaction }}
