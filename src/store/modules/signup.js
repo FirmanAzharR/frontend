@@ -8,7 +8,7 @@ export default {
     signup(context, data) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:5000/user/register', data)
+          .post(`${process.env.VUE_APP_PORT}/user/register`, data)
           .then(result => {
             resolve(result)
           })

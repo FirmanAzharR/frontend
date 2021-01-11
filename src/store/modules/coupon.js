@@ -12,7 +12,7 @@ export default {
     getCoupon(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:5000/coupon`)
+          .get(`${process.env.VUE_APP_PORT}/coupon`)
           .then(response => {
             resolve(response)
             context.state.coupon = response.data.data
@@ -25,7 +25,7 @@ export default {
     addCoupon(context, data) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:5000/coupon', data)
+          .post(`${process.env.VUE_APP_PORT}/coupon`, data)
           .then(result => {
             resolve(result)
           })
@@ -37,7 +37,7 @@ export default {
     updateCoupon(context, data) {
       return new Promise((resolve, reject) => {
         axios
-          .patch(`http://localhost:5000/coupon/${data.id}`, data.data)
+          .patch(`${process.env.VUE_APP_PORT}/coupon/${data.id}`, data.data)
           .then(result => {
             resolve(result)
           })
@@ -49,7 +49,7 @@ export default {
     getCouponsById(context, data) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:5000/coupon/${data}`)
+          .get(`${process.env.VUE_APP_PORT}/coupon/${data}`)
           .then(response => {
             context.state.couponName = response.data.data[0].coupon_name
             context.state.couponById = response.data.data[0]
@@ -63,7 +63,7 @@ export default {
     deleteCoupon(context, data) {
       return new Promise((resolve, reject) => {
         axios
-          .delete(`http://localhost:5000/coupon/${data}`)
+          .delete(`${process.env.VUE_APP_PORT}/coupon/${data}`)
           .then(response => {
             resolve(response)
           })

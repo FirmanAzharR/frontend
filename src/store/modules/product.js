@@ -42,7 +42,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://localhost:5000/product?page=${context.state.page}&limit=${context.state.limit}&category=${context.state.category}&search=${context.state.productSearch}&sort=${context.state.sort}`
+            `${process.env.VUE_APP_PORT}/product?page=${context.state.page}&limit=${context.state.limit}&category=${context.state.category}&search=${context.state.productSearch}&sort=${context.state.sort}`
           )
           .then(response => {
             resolve(response)
@@ -57,7 +57,7 @@ export default {
     getProductById(context, id) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:5000/product/${id}`)
+          .get(`${process.env.VUE_APP_PORT}/product/${id}`)
           .then(response => {
             context.state.productById = response.data.data[0]
             resolve(response)
@@ -70,7 +70,7 @@ export default {
     getProductDetail(context, id) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:5000/product/productDetail/${id}`)
+          .get(`${process.env.VUE_APP_PORT}/product/productDetail/${id}`)
           .then(response => {
             context.state.productDetails = response.data.data
             resolve(response)
@@ -83,7 +83,7 @@ export default {
     postProducts(context, data) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:5000/product', data)
+          .post(`${process.env.VUE_APP_PORT}/product`, data)
           .then(response => {
             resolve(response)
           })
@@ -97,7 +97,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://localhost:5000/product/${payload.id_product}`,
+            `${process.env.VUE_APP_PORT}/product/${payload.id_product}`,
             payload.data
           )
           .then(response => {
@@ -113,7 +113,7 @@ export default {
     deleteProducts(context, data) {
       return new Promise((resolve, reject) => {
         axios
-          .delete(`http://localhost:5000/product/${data}`)
+          .delete(`${process.env.VUE_APP_PORT}/product/${data}`)
           .then(response => {
             resolve(response)
           })

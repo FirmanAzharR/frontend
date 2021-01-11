@@ -10,7 +10,7 @@ export default {
     dashboard(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get('http://localhost:5000/dashboard')
+          .get(`${process.env.VUE_APP_PORT}/dashboard`)
           .then(result => {
             resolve(result)
             //console.log(result)

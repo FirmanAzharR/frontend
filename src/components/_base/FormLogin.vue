@@ -87,9 +87,11 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import alertkMixin from '../../store/mixins/alertMixin'
 export default {
   props: ['typeForm'],
   name: 'Login',
+  mixins: [alertkMixin],
   data() {
     return {
       form: {
@@ -111,14 +113,6 @@ export default {
     // mapaction dan mapmutation
     ...mapActions(['login']),
     ...mapMutations(['handleFormLogin']),
-    //toast notification
-    makeToast(bodyMsg, msg, variant) {
-      this.$bvToast.toast(bodyMsg, {
-        title: msg,
-        variant: variant,
-        solid: true
-      })
-    },
     onSubmit() {
       //console.log(this.form)
       this.login(this.form)
