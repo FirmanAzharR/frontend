@@ -40,6 +40,16 @@
           </div>
           <div class="d-flex align-items-center">
             <img src="../../assets/img/aside-icon2.png" alt="" />
+            <!-- <img
+              v-if="item.coupon_img === ''"
+              src="../../assets/img/aside-icon2.png"
+              alt=""
+            />
+            <img
+              v-else
+              :src="'http://localhost:5000/' + item.coupon_img"
+              alt=""
+            /> -->
             <p>{{ item.coupon_information }} {{ index }}</p>
           </div>
         </b-card>

@@ -1,6 +1,6 @@
-# backend-frontend
+# Coffeeland Vue
 
-Coffeeland Vue
+Coffeeland with vue js and express js
 
 ## Project setup
 
