@@ -30,7 +30,19 @@ export default {
             resolve(result)
           })
           .catch(error => {
-            reject(error.response)
+            reject(error)
+          })
+      })
+    },
+    updateCoupon(context, data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`http://localhost:5000/coupon/${data.id}`, data.data)
+          .then(result => {
+            resolve(result)
+          })
+          .catch(error => {
+            reject(error)
           })
       })
     },

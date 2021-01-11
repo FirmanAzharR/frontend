@@ -141,7 +141,6 @@
           </b-col>
         </b-row>
       </b-form>
-      {{ form.coupon_start }}
     </b-container>
   </div>
 </template>
@@ -176,7 +175,7 @@ export default {
     ...mapGetters(['getByIdCoupon'])
   },
   methods: {
-    ...mapActions(['getCouponsById']),
+    ...mapActions(['getCouponsById', 'updateCoupon']),
     chooseFiles: function() {
       document.getElementById('fileUpload').click()
     },
@@ -190,8 +189,11 @@ export default {
         (this.form.coupon_discon = this.getByIdCoupon.coupon_discon),
         (this.form.cupon_min = this.getByIdCoupon.cupon_min),
         (this.form.cupon_max = this.getByIdCoupon.cupon_max),
-        (this.form.coupon_start = this.getByIdCoupon.coupon_start),
-        (this.form.coupon_end = this.getByIdCoupon.coupon_end),
+        (this.form.coupon_start = this.getByIdCoupon.coupon_start.substr(
+          0,
+          10
+        )),
+        (this.form.coupon_end = this.getByIdCoupon.coupon_end.substr(0, 10)),
         (this.form.coupon_information = this.getByIdCoupon.coupon_information),
         (this.form.coupon_status = this.getByIdCoupon.coupon_status),
         (this.form.coupon_img = this.getByIdCoupon.coupon_img)
@@ -231,17 +233,17 @@ export default {
       // for (var pair of data.entries()) {
       //   console.log(pair[0] + ', ' + pair[1])
       // }
-      this.addCoupon(data)
+      this.updateCoupon({ data: data, id: this.couponId })
         .then(result => {
           this.makeToast(
-            `Coupon ${result.data.data.coupon_name} Inserted Successfully`,
+            `Coupon ${result.data.data.coupon_name} Updated Successfully`,
             'Congratulations',
             'success'
           )
           //this.onReset()
         })
         .catch(error => {
-          this.makeToast('Insert Coupon Failed', error, 'danger')
+          this.makeToast('Update Coupon Failed', error, 'danger')
         })
     }
   }

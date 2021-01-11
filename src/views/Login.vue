@@ -2,10 +2,12 @@
   <div>
     <div class="rubik">
       <b-row style="margin-right:0px;">
-        <b-col xs="12" sm="12" md="6" lg="6" style="padding:0px" class="img">
-          <img src="../assets/img/bg-login.png" alt="" class="responsive" />
-        </b-col>
         <b-col xs="12" sm="12" md="6" lg="6" style="padding:0px">
+          <div class="img">
+            <img src="../assets/img/bg-login.png" alt="" class="responsive" />
+          </div>
+        </b-col>
+        <b-col style="padding:0px">
           <div class="bg">
             <div v-if="type === 'signin'">
               <FormLogin :typeForm="type" @changeForm="formChange" />
@@ -20,9 +22,7 @@
           <div class="before-footer-login" v-if="type === 'signin'"></div>
           <div class="before-footer-signup" v-else-if="type === 'signup'"></div>
           <div class="before-footer-forgot" v-else-if="type === 'forgot'"></div>
-          <div>
-            <Footer />
-          </div>
+          <Footer />
         </b-col>
       </b-row>
     </div>
@@ -56,15 +56,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .before-footer-login {
-  margin-top: 188px;
+  margin-top: 158px;
 }
 .before-footer-signup {
-  margin-top: 145px;
+  margin-top: 115px;
 }
 .before-footer-forgot {
-  margin-top: 289px;
+  margin-top: 258px;
 }
 
 @media only screen and (max-width: 600px) {
