@@ -35,7 +35,7 @@
               ></b-nav-item
             >
             <b-nav-item href="#"
-              ><router-link to="#" class="link"
+              ><router-link to="/history" class="link"
                 >History</router-link
               ></b-nav-item
             >
@@ -58,7 +58,7 @@
                   ><img src="../../assets/img/chat.png" alt=""/></router-link
               ></b-nav-item>
               <b-nav-item v-if="role !== undefined"
-                ><router-link to="#" class="link"
+                ><router-link to="/profile" class="link"
                   ><img
                     style="border-radius:50px"
                     src="../../assets/img/user.png"

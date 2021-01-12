@@ -5,7 +5,19 @@ export default {
   state: {
     coupon: [],
     couponName: '',
-    couponById: ''
+    couponById: '',
+    form: {
+      coupon_name: '',
+      coupon_code: '',
+      coupon_discon: '',
+      cupon_min: '',
+      cupon_max: '',
+      coupon_start: '',
+      coupon_end: '',
+      coupon_information: '',
+      coupon_status: 1,
+      coupon_img: ''
+    }
   },
   mutations: {},
   actions: {
@@ -52,7 +64,7 @@ export default {
           .get(`${process.env.VUE_APP_PORT}/coupon/${data}`)
           .then(response => {
             context.state.couponName = response.data.data[0].coupon_name
-            context.state.couponById = response.data.data[0]
+            context.state.form = response.data.data[0]
             resolve(response)
           })
           .catch(error => {
@@ -82,6 +94,9 @@ export default {
     },
     getByIdCoupon(state) {
       return state.couponById
+    },
+    cobaset(state) {
+      return state.form
     }
   }
 }

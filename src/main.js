@@ -30,6 +30,10 @@ Vue.directive('focus', {
   }
 })
 
+Vue.directive('item-center', el => {
+  el.style.textAlign = 'center'
+})
+
 new Vue({
   router,
   store,

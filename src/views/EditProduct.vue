@@ -22,11 +22,24 @@
               >
                 <div id="preview">
                   <img v-if="url" :src="url" class="round-img" />
+                  <div
+                    v-else-if="productById.product_img === ''"
+                    class="d-flex justify-content-center"
+                    style="background-color:#d2d2d2;border-radius:50%;width:170px;height:170px"
+                  >
+                    <img
+                      class="align-self-center"
+                      src="../assets/img/camera.png"
+                      alt=""
+                    />
+                  </div>
                   <img
                     v-else
-                    src="../assets/img/coldbrew.png"
-                    alt=""
                     class="round-img"
+                    :src="
+                      'http://localhost:5000/product/' + productById.product_img
+                    "
+                    alt=""
                   />
                 </div>
                 <div>

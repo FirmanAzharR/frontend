@@ -20,12 +20,17 @@
               >
                 <div id="preview">
                   <img v-if="url" :src="url" class="round-img" />
-                  <img
+                  <div
                     v-else
-                    src="../assets/img/coldbrew.png"
-                    alt=""
-                    class="round-img"
-                  />
+                    class="d-flex justify-content-center"
+                    style="background-color:#d2d2d2;border-radius:50%;width:170px;height:170px"
+                  >
+                    <img
+                      class="align-self-center"
+                      src="../assets/img/camera.png"
+                      alt=""
+                    />
+                  </div>
                 </div>
                 <div>
                   <b-button
@@ -82,7 +87,6 @@
                   @change="changeCategory()"
                   required
                 ></b-form-select>
-                <h6></h6>
                 <h6>Product Name</h6>
                 <b-form-input
                   class="input2"
@@ -109,10 +113,10 @@
                   v-model="form.product_information"
                   required
                 ></b-form-textarea>
+                <br />
                 <div style="margin-bottom:25px">
-                  <h6>Product Name</h6>
+                  <h6>Product Size</h6>
                   <p>* Click size you want to use for this product</p>
-                  <b>(Checked: {{ size }})</b>
                   <div class="d-flex">
                     <b-form-checkbox
                       v-model="size"
@@ -139,16 +143,49 @@
                       <h6>Choose size to input Product Price</h6>
                     </div>
                     <div v-else-if="size.length === 1">
-                      <input type="text" />
+                      <b-form-input
+                        type="number"
+                        required
+                        placeholder="Input price"
+                        v-model="price1"
+                      ></b-form-input>
                     </div>
                     <div v-else-if="size.length === 2">
-                      <input type="text" />
-                      <input type="text" />
+                      <b-form-input
+                        type="number"
+                        required
+                        placeholder="Input price"
+                        v-model="price1"
+                      ></b-form-input
+                      ><br />
+                      <b-form-input
+                        type="number"
+                        required
+                        placeholder="Input price"
+                        v-model="price2"
+                      ></b-form-input>
                     </div>
                     <div v-else-if="size.length === 3">
-                      <input type="text" />
-                      <input type="text" />
-                      <input type="text" />
+                      <b-form-input
+                        type="number"
+                        required
+                        placeholder="Input price"
+                        v-model="price1"
+                      ></b-form-input
+                      ><br />
+                      <b-form-input
+                        type="number"
+                        required
+                        placeholder="Input price"
+                        v-model="price2"
+                      ></b-form-input
+                      ><br />
+                      <b-form-input
+                        type="number"
+                        required
+                        placeholder="Input price"
+                        v-model="price3"
+                      ></b-form-input>
                     </div>
                   </div>
                   <!-- <b-button class="style-size" style="font-size:12px"
@@ -204,6 +241,10 @@ export default {
   data() {
     return {
       size: [],
+      price1: '',
+      price2: '',
+      price3: '',
+      priceSize: [],
       selected: null,
       url: null,
       options: [
@@ -221,7 +262,7 @@ export default {
         product_status: 1,
         product_stock: '',
         id_size: this.size,
-        product_price: [20000, 30000],
+        product_price: '',
         p_detail_status: 1
       }
     }
@@ -245,7 +286,20 @@ export default {
     getSize() {
       this.form.id_size = this.size
     },
+    getPrice() {
+      if (this.price1) {
+        this.priceSize.push(this.price1)
+      }
+      if (this.price2) {
+        this.priceSize.push(this.price2)
+      }
+      if (this.price3) {
+        this.priceSize.push(this.price3)
+      }
+      this.form.product_price = this.priceSize
+    },
     onSubmit() {
+      this.getPrice()
       const {
         category_id,
         product_name,
@@ -269,9 +323,9 @@ export default {
       data.append('id_size', id_size)
       data.append('product_price', product_price)
       data.append('p_detail_status', p_detail_status)
-      // for (var pair of data.entries()) {
-      //   console.log(pair[0] + ', ' + pair[1])
-      // }
+      for (var pair of data.entries()) {
+        console.log(pair[0] + ', ' + pair[1])
+      }
       this.postProducts(data)
         .then(result => {
           //console.log(result)

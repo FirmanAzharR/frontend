@@ -10,7 +10,7 @@
               <div id="preview">
                 <img v-if="url" :src="url" class="round-img" />
                 <div
-                  v-else-if="form.coupon_img === ''"
+                  v-else-if="cobaset.coupon_img === ''"
                   class="d-flex justify-content-center"
                   style="background-color:#d2d2d2;border-radius:50%;width:170px;height:170px"
                 >
@@ -23,7 +23,7 @@
                 <img
                   v-else
                   class="round-img"
-                  :src="'http://localhost:5000/coupon/' + form.coupon_img"
+                  :src="'http://localhost:5000/coupon/' + cobaset.coupon_img"
                   alt=""
                 />
               </div>
@@ -57,7 +57,7 @@
               type="text"
               placeholder="Input Coupon Name"
               required=""
-              v-model="form.coupon_name"
+              v-model="cobaset.coupon_name"
             ></b-form-input>
             <h6>Coupon Information</h6>
             <b-form-input
@@ -65,7 +65,7 @@
               type="text"
               placeholder="Input Coupon Information"
               required
-              v-model="form.coupon_information"
+              v-model="cobaset.coupon_information"
             ></b-form-input>
             <b-row>
               <b-col xl="6" lg="6" md="6" sm="6">
@@ -75,7 +75,7 @@
                   type="text"
                   placeholder="Add coupon code"
                   required
-                  v-model="form.coupon_code"
+                  v-model="cobaset.coupon_code"
                 ></b-form-input>
                 <h6>Minimum purchase:</h6>
                 <b-form-input
@@ -83,7 +83,7 @@
                   type="number"
                   placeholder="Minimum purchase"
                   required
-                  v-model="form.cupon_min"
+                  v-model="cobaset.cupon_min"
                 ></b-form-input>
                 <h6>Expire date:(Start Date)</h6>
                 <b-form-input
@@ -91,7 +91,7 @@
                   type="date"
                   placeholder="select start date"
                   required
-                  v-model="form.coupon_start"
+                  v-model="coupon_start"
                 ></b-form-input>
               </b-col>
               <b-col xl="6" lg="6" md="6" sm="6">
@@ -101,7 +101,7 @@
                   type="text"
                   placeholder="Input coupon discount"
                   required
-                  v-model="form.coupon_discon"
+                  v-model="cobaset.coupon_discon"
                 ></b-form-input>
                 <h6>Maximal discount:</h6>
                 <b-form-input
@@ -109,7 +109,7 @@
                   type="number"
                   placeholder="Maximal discount"
                   required
-                  v-model="form.cupon_max"
+                  v-model="cobaset.cupon_max"
                 ></b-form-input>
                 <h6>End Date:</h6>
                 <b-form-input
@@ -117,7 +117,7 @@
                   type="date"
                   placeholder="select end date"
                   required
-                  v-model="form.coupon_end"
+                  v-model="coupon_end"
                 ></b-form-input>
               </b-col>
             </b-row>
@@ -153,51 +153,31 @@ export default {
     return {
       url: null,
       couponId: (this.id = this.$route.params.id),
-      form: {
-        coupon_name: '',
-        coupon_code: '',
-        coupon_discon: '',
-        cupon_min: '',
-        cupon_max: '',
-        coupon_start: '',
-        coupon_end: '',
-        coupon_information: '',
-        coupon_status: 1,
-        coupon_img: ''
-      }
+      coupon_start: '',
+      coupon_end: ''
     }
   },
   created() {
     this.getCouponsById(this.couponId)
-    this.setData()
+    this.subDate()
   },
   computed: {
-    ...mapGetters(['getByIdCoupon'])
+    ...mapGetters(['getByIdCoupon', 'cobaset'])
   },
   methods: {
     ...mapActions(['getCouponsById', 'updateCoupon']),
+    subDate() {
+      this.coupon_start = this.cobaset.coupon_start.substr(0, 10)
+      this.coupon_end = this.cobaset.coupon_end.substr(0, 10)
+    },
     chooseFiles: function() {
       document.getElementById('fileUpload').click()
     },
     handleFile(e) {
-      const file = (this.form.coupon_img = e.target.files[0])
+      const file = (this.cobaset.coupon_img = e.target.files[0])
       this.url = URL.createObjectURL(file)
     },
-    setData() {
-      ;(this.form.coupon_name = this.getByIdCoupon.coupon_name),
-        (this.form.coupon_code = this.getByIdCoupon.coupon_code),
-        (this.form.coupon_discon = this.getByIdCoupon.coupon_discon),
-        (this.form.cupon_min = this.getByIdCoupon.cupon_min),
-        (this.form.cupon_max = this.getByIdCoupon.cupon_max),
-        (this.form.coupon_start = this.getByIdCoupon.coupon_start.substr(
-          0,
-          10
-        )),
-        (this.form.coupon_end = this.getByIdCoupon.coupon_end.substr(0, 10)),
-        (this.form.coupon_information = this.getByIdCoupon.coupon_information),
-        (this.form.coupon_status = this.getByIdCoupon.coupon_status),
-        (this.form.coupon_img = this.getByIdCoupon.coupon_img)
-    },
+
     makeToast(bodyMsg, msg, variant) {
       this.$bvToast.toast(bodyMsg, {
         title: msg,
@@ -206,33 +186,20 @@ export default {
       })
     },
     onSubmit() {
-      const {
-        coupon_name,
-        coupon_code,
-        coupon_discon,
-        cupon_min,
-        cupon_max,
-        coupon_start,
-        coupon_end,
-        coupon_information,
-        coupon_status,
-        coupon_img
-      } = this.form
       const data = new FormData()
-      data.append('coupon_name', coupon_name)
-      data.append('coupon_code', coupon_code)
-      data.append('coupon_discon', coupon_discon)
-      data.append('cupon_min', cupon_min)
-      data.append('cupon_max', cupon_max)
-      data.append('coupon_start', coupon_start)
-      data.append('coupon_end', coupon_end)
-      data.append('coupon_information', coupon_information)
-      data.append('coupon_status', coupon_status)
-      data.append('coupon_img', coupon_img)
-
-      // for (var pair of data.entries()) {
-      //   console.log(pair[0] + ', ' + pair[1])
-      // }
+      data.append('coupon_name', this.cobaset.coupon_name)
+      data.append('coupon_code', this.cobaset.coupon_code)
+      data.append('coupon_discon', this.cobaset.coupon_discon)
+      data.append('cupon_min', this.cobaset.cupon_min)
+      data.append('cupon_max', this.cobaset.cupon_max)
+      data.append('coupon_start', this.cobaset.coupon_start)
+      data.append('coupon_end', this.cobaset.coupon_end)
+      data.append('coupon_information', this.cobaset.coupon_information)
+      data.append('coupon_status', this.cobaset.coupon_status)
+      data.append('coupon_img', this.cobaset.coupon_img)
+      for (var pair of data.entries()) {
+        console.log(pair[0] + ', ' + pair[1])
+      }
       this.updateCoupon({ data: data, id: this.couponId })
         .then(result => {
           this.makeToast(

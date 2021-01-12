@@ -10,6 +10,8 @@ import AddCoupon from '../views/AddCoupon.vue'
 import EditCoupon from '../views/EditCoupon.vue'
 import YourCart from '../views/YourCart.vue'
 import Dashboard from '../views/Dashboard.vue'
+import History from '../views/History.vue'
+import Profile from '../views/Profile.vue'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -35,17 +37,20 @@ const routes = [
   {
     path: '/editproduct/:id',
     name: 'EditProduct',
-    component: EditProduct
+    component: EditProduct,
+    meta: { requiresAuth: true }
   },
   {
     path: '/detailproduct/:id',
     name: 'DetailProduct',
-    component: DetailProduct
+    component: DetailProduct,
+    meta: { requiresAuth: true }
   },
   {
     path: '/addproduct',
     name: 'AddProduct',
-    component: AddProduct
+    component: AddProduct,
+    meta: { requiresAuth: true }
   },
   {
     path: '/addcoupon',
@@ -62,12 +67,26 @@ const routes = [
   {
     path: '/yourcart',
     name: 'YourCart',
-    component: YourCart
+    component: YourCart,
+    meta: { requiresAuth: true }
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/history',
+    name: 'History',
+    component: History,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+    meta: { requiresAuth: true }
   }
 ]
 

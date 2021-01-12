@@ -53,7 +53,10 @@
               alt="img"
               class="img"
             />
-            <p>{{ item.coupon_information }} {{ index }}</p>
+            <div class="flex-direction-row">
+              <h6>{{ item.coupon_name }}</h6>
+              <h6>{{ item.coupon_information }}</h6>
+            </div>
           </div>
         </b-card>
         <router-link to="/addcoupon" class="link">

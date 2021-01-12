@@ -91,6 +91,7 @@
 import Footer from '../components/_base/Footer'
 import Navbar from '../components/_base/Navbar'
 export default {
+  name: 'YourCart',
   components: {
     Footer,
     Navbar

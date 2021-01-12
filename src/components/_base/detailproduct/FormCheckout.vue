@@ -10,10 +10,26 @@
           </ul>
         </div>
         <div class="centered" style="margin-top:25px">
-          <img
-            src="../../../assets/img/coldbrew.png"
-            style="border-radius:50%; width:200px"
-          />
+          <div id="preview">
+            <div
+              v-if="productById.product_img === ''"
+              class="d-flex justify-content-center"
+              style="background-color:#d2d2d2;border-radius:50%;width:170px;height:170px"
+            >
+              <img
+                class="align-self-center"
+                src="../../../assets/img/camera.png"
+                alt=""
+              />
+            </div>
+            <img
+              v-else
+              class="round-img"
+              :src="'http://localhost:5000/product/' + productById.product_img"
+              alt=""
+              style="background-color:#d2d2d2;border-radius:50%;width:170px;height:170px"
+            />
+          </div>
           <br />
           <div>
             <b-button
