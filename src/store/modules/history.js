@@ -4,7 +4,7 @@ export default {
   modules: {},
   state: {
     history: [],
-    historyById: []
+    historyById: ''
   },
   mutations: {},
   actions: {
@@ -26,9 +26,8 @@ export default {
         axios
           .get(`${process.env.VUE_APP_PORT}/transaction/detail/${data}`)
           .then(response => {
-            console.log(response)
             context.state.historyById = response.data.data
-            resolve(response)
+            resolve(response.data.data)
           })
           .catch(error => {
             reject(error)

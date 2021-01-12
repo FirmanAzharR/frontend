@@ -101,7 +101,7 @@
         <b-modal
           id="modal-scrollable"
           scrollable
-          :title="'Detail History #' + getByIdHistory[0].transaction_number"
+          :title="'Detail History #'"
           ok-only
           ok-variant="success"
           button-size="sm"
@@ -121,7 +121,7 @@
                   :src="'http://localhost:5000/product/' + item.product_img"
                   alt="Image"
                   class="shadow-card"
-                  style="width:80px;height:80px"
+                  style="width:80px"
                 ></b-img>
               </div>
             </b-col>
@@ -196,11 +196,7 @@ export default {
     onDelete() {
       this.deleteHistory(this.id)
         .then(result => {
-          this.makeToast(
-            'History Deleted',
-            `Your History ${result} Deleted successfully`,
-            'success'
-          )
+          this.makeToast('History Deleted', ` ${result.data.msg} !!`, 'success')
           this.getHistorys(5)
         })
         .catch(error => {
