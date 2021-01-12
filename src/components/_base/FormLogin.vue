@@ -86,7 +86,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
-import alertkMixin from '../../store/mixins/alertMixin'
+import alertkMixin from '../../mixins/alertMixin'
 export default {
   props: ['typeForm'],
   name: 'Login',

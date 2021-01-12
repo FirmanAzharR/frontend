@@ -4,7 +4,7 @@ export default {
   modules: {},
   state: {
     history: [],
-    historyById: ''
+    historyById: []
   },
   mutations: {},
   actions: {
@@ -38,7 +38,7 @@ export default {
     deleteHistory(context, data) {
       return new Promise((resolve, reject) => {
         axios
-          .delete(`${process.env.VUE_APP_PORT}/coupon/${data}`)
+          .delete(`${process.env.VUE_APP_PORT}/transaction/${data}`)
           .then(response => {
             resolve(response)
           })

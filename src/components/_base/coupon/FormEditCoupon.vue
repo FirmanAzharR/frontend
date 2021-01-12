@@ -210,6 +210,7 @@ export default {
           //this.onReset()
         })
         .catch(error => {
+          console.log(error.msg)
           this.makeToast('Update Coupon Failed', error, 'danger')
         })
     }

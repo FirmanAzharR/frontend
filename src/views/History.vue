@@ -3,11 +3,19 @@
     <Navbar />
     <div class="bg">
       <b-container>
-        <h2 style="padding-top:80px; color:white" class="rubik" v-item-center>
+        <h2
+          style="padding-top:80px; color:white"
+          class="rubik shadow-text"
+          v-item-center
+        >
           Let's see what you have bought!
         </h2>
-        <p style="margin-bottom:80px;color:white;" class="rubik" v-item-center>
-          Press delete to delete item
+        <p
+          style="margin-bottom:80px;color:white;"
+          class="rubik shadow-text"
+          v-item-center
+        >
+          Press Icon delete to delete history
         </p>
         <b-row>
           <b-col
@@ -18,25 +26,135 @@
             v-for="(item, index) in getHistory"
             :key="index"
           >
-            <div>
+            <div class="centered">
               <b-card class="card-style">
-                <b-card-text>
-                  Invoice : {{ item.transaction_number }} <br />
-                  subtotal : {{ item.subtotal }}
-                </b-card-text>
-                <b-button @click="deleteConfirm()">delete</b-button>
-                <b-button
-                  v-b-modal.modal-center
-                  @click="getHistoryById(item.transaction_id)"
-                  >view</b-button
+                <div
+                  v-b-modal.modal-sm
+                  style="position:absolute;z-index:2;top:10px;right:10px"
+                  @click="
+                    confirmDelete(item.transaction_number, item.transaction_id)
+                  "
                 >
+                  <b-iconstack font-scale="2">
+                    <b-icon
+                      stacked
+                      icon="circle-fill"
+                      variant="danger"
+                    ></b-icon>
+                    <b-icon
+                      stacked
+                      icon="trash-fill"
+                      scale="0.5"
+                      variant="white"
+                    ></b-icon>
+                  </b-iconstack>
+                </div>
+                <b-row
+                  v-b-modal.modal-scrollable
+                  @click="getHistoryById(item.transaction_id)"
+                >
+                  <b-col cols="4" style="border-right:1px solid #d2d2d2">
+                    <b-img
+                      rounded="circle"
+                      thumbnail
+                      fluid
+                      :src="require('../assets/img/food-1.png')"
+                      alt="Image"
+                      class="shadow-card"
+                    ></b-img
+                  ></b-col>
+                  <b-col cols="8"
+                    ><b-card-text class="rubik">
+                      Invoice : <b>#{{ item.transaction_number }}</b> <br />
+                      Price : Rp. {{ item.total }} <br />
+                      {{ item.transaction_created_at.substr(0, 10) }}
+                    </b-card-text></b-col
+                  >
+                </b-row>
               </b-card>
             </div>
           </b-col>
         </b-row>
         <div style="padding-top:100px"></div>
-        <b-modal id="modal-center" centered :title="'Detail History  '">
-          <p class="my-4">{{ getByIdHistory[0] }}</p>
+        <b-modal
+          id="modal-sm"
+          centered
+          title="Delete history ?"
+          header-bg-variant="warning"
+          header-text-variant="dark"
+          body-bg-variant="light"
+          body-text-variant="dark"
+          footer-bg-variant="warning"
+          footer-text-variant="dark"
+          size="sm"
+        >
+          <h4>invoice #{{ invoice }}</h4>
+          <template #modal-footer="{ cancel }">
+            <b-button size="sm" variant="danger" @click="onDelete()">
+              OK
+            </b-button>
+            <b-button size="sm" @click="cancel()">
+              Cancel
+            </b-button>
+          </template>
+        </b-modal>
+        <b-modal
+          id="modal-scrollable"
+          scrollable
+          :title="'Detail History #' + getByIdHistory[0].transaction_number"
+          ok-only
+          ok-variant="success"
+          button-size="sm"
+        >
+          <b-row
+            v-for="(item, index) in getByIdHistory"
+            :key="index"
+            style="margin-bottom:20px"
+            class="rubik"
+          >
+            <b-col>
+              <div class="centered">
+                <b-img
+                  rounded="circle"
+                  thumbnail
+                  fluid
+                  :src="'http://localhost:5000/product/' + item.product_img"
+                  alt="Image"
+                  class="shadow-card"
+                  style="width:80px;height:80px"
+                ></b-img>
+              </div>
+            </b-col>
+            <b-col>
+              <div class="centered">
+                {{ item.product_name }} <br />
+                Rp. {{ item.product_price }} <br />
+                x {{ item.quantity }}
+              </div>
+            </b-col>
+            <b-col>
+              <div class="centered">Rp. {{ item.subtotal }}</div>
+            </b-col>
+          </b-row>
+          <hr />
+          <b-row>
+            <b-col>
+              <div class="centered rubik" style="font-weight:bold">
+                Subtotal <br />
+                Discon <br />
+                Fees <br />
+                Total <br />
+              </div>
+            </b-col>
+            <b-col>
+              <div class="centered rubik" style="font-weight:bold">
+                Rp. 130000 <br />
+                Rp. 10000 <br />
+                Rp. 10000 <br />
+                Rp. 120000 <br />
+              </div>
+            </b-col>
+          </b-row>
         </b-modal>
       </b-container>
     </div>
@@ -55,7 +173,10 @@ export default {
     Navbar
   },
   data() {
-    return {}
+    return {
+      invoice: '',
+      id: ''
+    }
   },
   created() {
     this.getHistorys(5)
@@ -72,46 +193,42 @@ export default {
         solid: true
       })
     },
-    onDelete(id) {
-      this.deleteHistory(id)
+    onDelete() {
+      this.deleteHistory(this.id)
         .then(result => {
           this.makeToast(
-            'Coupon Deleted',
+            'History Deleted',
             `Your History ${result} Deleted successfully`,
             'success'
           )
           this.getHistorys(5)
         })
         .catch(error => {
-          console.log(error.msg)
+          console.log(error)
           this.makeToast('Delete History Failed', 'Failed', 'danger')
         })
     },
-    deleteConfirm() {
-      this.boxTwo = ''
-      this.$bvModal
-        .msgBoxConfirm('Are you sure to delete this history ?', {
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'danger',
-          okTitle: 'YES',
-          cancelTitle: 'NO',
-          footerClass: 'p-2',
-          hideHeaderClose: false,
-          centered: true
-        })
-        .then(value => {
-          this.boxTwo = value
-        })
-        .catch(err => {
-          this.boxTwo = err
-        })
+    confirmDelete(inv, id) {
+      this.invoice = inv
+      this.id = id
     }
   }
 }
 </script>
 
 <style scoped>
+.shadow-card {
+  -webkit-box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.75);
+}
+.centered {
+  display: flex;
+  align-items: center;
+}
+.shadow-text {
+  text-shadow: 3px 3px 3px #313131;
+}
 .bg {
   /* The image used */
   background-image: url('../assets/img/history-bg.png');
@@ -126,7 +243,6 @@ export default {
 .rubik {
   font-family: 'Rubik', sans-serif;
 }
-
 .card-style {
   height: auto;
   width: auto;
@@ -134,6 +250,11 @@ export default {
   border-radius: 15px;
   margin-bottom: 30px;
   cursor: pointer;
+  border-bottom: 3px solid #d46804;
+}
+.img {
+  width: auto;
+  border-radius: 50%;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Rubik:wght@300;400;500;600;700&display=swap');
