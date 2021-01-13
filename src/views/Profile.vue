@@ -17,7 +17,7 @@
                   <div id="preview" class="centered">
                     <img v-if="url" :src="url" class="round-img" />
                     <div
-                      v-else
+                      v-else-if="form.user_img === ''"
                       class="d-flex justify-content-center round-img"
                       style="background-color:#d2d2d2;border-radius:50%;"
                     >
@@ -28,6 +28,12 @@
                         style="width:60px"
                       />
                     </div>
+                    <img
+                      v-else
+                      class="round-img"
+                      :src="'http://localhost:5000/profile/' + form.user_img"
+                      alt=""
+                    />
                     <b-iconstack
                       font-scale="2"
                       @click.prevent="chooseFiles()"
@@ -56,7 +62,7 @@
                   </div>
                   <br />
                   <div v-item-center class="rubik">
-                    <h4>{{ display_name }}</h4>
+                    <h4>{{ form.user_name }}</h4>
                     <p>{{ form.user_email }}</p>
                   </div>
                 </b-card>
@@ -118,7 +124,7 @@
                     <b-col cols="7">
                       <h5>Display name :</h5>
                       <b-form-input
-                        v-model="display_name"
+                        v-model="form.user_name"
                         class="input2"
                         type="text"
                         placeholder="Enter display name"
@@ -152,6 +158,7 @@
                   Do you want to save the change?
                 </h5>
                 <b-button
+                  @click="onSubmit()"
                   class="btn rubik shadow-card"
                   style="background-color:#6A4029;color:white"
                   >Save change</b-button
@@ -196,22 +203,35 @@ export default {
     return {
       url: null,
       display_name: 'Default name user',
-      form: {}
+      form: {
+        user_name: '',
+        first_name: '',
+        last_name: '',
+        user_address: '',
+        user_email: '',
+        user_phone: '',
+        user_img: ''
+      }
     }
   },
   created() {
-    this.getProfiles(5)
+    this.getProfiles(this.setUser.user_id)
     this.setData()
   },
   computed: {
-    ...mapGetters(['getProfile'])
+    ...mapGetters(['getProfile', 'setUser'])
   },
   methods: {
-    ...mapActions(['getProfiles']),
+    ...mapActions(['getProfiles', 'updateProfiles']),
 
     setData() {
-      this.form = this.getProfile
-      console.log(this.form)
+      this.form.user_name = this.getProfile.user_name
+      this.form.first_name = this.getProfile.first_name
+      this.form.last_name = this.getProfile.last_name
+      this.form.user_address = this.getProfile.user_address
+      this.form.user_email = this.getProfile.user_email
+      this.form.user_phone = this.getProfile.user_phone
+      this.form.user_img = this.getProfile.user_img
     },
     chooseFiles: function() {
       document.getElementById('fileUpload').click()
@@ -220,6 +240,40 @@ export default {
       console.log(e.target.files[0])
       const file = (this.form.user_img = e.target.files[0])
       this.url = URL.createObjectURL(file)
+    },
+    onSubmit() {
+      const {
+        user_name,
+        first_name,
+        last_name,
+        user_address,
+        user_email,
+        user_phone,
+        user_img
+      } = this.form
+      const data = new FormData()
+      data.append('user_name', user_name)
+      data.append('first_name', first_name)
+      data.append('last_name', last_name)
+      data.append('user_address', user_address)
+      data.append('user_email', user_email)
+      data.append('user_phone', user_phone)
+      data.append('user_img', user_img)
+      // for (var pair of data.entries()) {
+      //   console.log(pair[0] + ', ' + pair[1])
+      // }
+      this.updateProfiles({ data: data, id: this.setUser.user_id })
+        .then(result => {
+          this.makeToast(
+            `Update ${result.data.data.first_name} profil successfully`,
+            'Congratulations',
+            'success'
+          )
+          //this.onReset()
+        })
+        .catch(error => {
+          this.makeToast('Update Profil Failed', error, 'danger')
+        })
     },
     makeToast(bodyMsg, msg, variant) {
       this.$bvToast.toast(bodyMsg, {

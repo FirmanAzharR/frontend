@@ -179,10 +179,10 @@ export default {
     }
   },
   created() {
-    this.getHistorys(5)
+    this.getHistorys(this.setUser.user_id)
   },
   computed: {
-    ...mapGetters(['getHistory', 'getByIdHistory'])
+    ...mapGetters(['getHistory', 'getByIdHistory', 'setUser'])
   },
   methods: {
     ...mapActions(['getHistorys', 'deleteHistory', 'getHistoryById']),

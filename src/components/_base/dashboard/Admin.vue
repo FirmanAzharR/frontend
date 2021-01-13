@@ -8,36 +8,36 @@
         <b-col sm="12" md="12" lg="4" xl="4">
           <div class="shadow card-style">
             <b-card title="Today Income" class="card-style">
-              <h4 v-if="getDashboard.today[0].subtotal_transaksi">
+              <!-- <h4 v-if="getDashboard.today[0].subtotal_transaksi">
                 Rp. {{ getDashboard.today[0].subtotal_transaksi }}
               </h4>
               <h4 v-else>Rp. 0</h4>
               <b-card-text>
                 Total transaction :
                 {{ getDashboard.today[0].total_transaction }}
-              </b-card-text>
+              </b-card-text> -->
             </b-card>
           </div>
         </b-col>
         <b-col sm="12" md="12" lg="4" xl="4">
           <div class="shadow card-style">
-            <b-card title="Year Income" class="card-style">
+            <!-- <b-card title="Year Income" class="card-style">
               <h4>Rp. {{ getDashboard.year[0].subtotal_transaksi }}</h4>
               <b-card-text>
                 Total transaction :
                 {{ getDashboard.year[0].total_transaction }}
               </b-card-text>
-            </b-card>
+            </b-card> -->
           </div>
         </b-col>
         <b-col sm="12" md="12" lg="4" xl="4">
           <div class="shadow card-style">
-            <b-card title="Total Transaction" class="card-style">
+            <!-- <b-card title="Total Transaction" class="card-style">
               <h4>{{ getDashboard.total[0].total_transaction }}</h4>
               <b-card-text>
                 Total all transaction
               </b-card-text>
-            </b-card>
+            </b-card> -->
           </div>
         </b-col>
       </b-row>
@@ -80,7 +80,7 @@ export default {
     return {}
   },
   created() {
-    this.dashboard()
+    //this.dashboard()
   },
   computed: {
     ...mapGetters(['getDashboard'])
