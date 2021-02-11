@@ -51,16 +51,15 @@
                 </div>
                 <b-row
                   v-b-modal.modal-scrollable
-                  @click="getHistoryById(item.transaction_id)"
+                  @click="getDetailHistory(item.transaction_id)"
                 >
                   <b-col cols="4" style="border-right:1px solid #d2d2d2">
                     <b-img
-                      rounded="circle"
                       thumbnail
                       fluid
-                      :src="require('../assets/img/food-1.png')"
+                      :src="require('../assets/img/default-history.png')"
                       alt="Image"
-                      class="shadow-card"
+                      class="shadow-card img-round"
                     ></b-img
                   ></b-col>
                   <b-col cols="8"
@@ -101,7 +100,7 @@
         <b-modal
           id="modal-scrollable"
           scrollable
-          :title="'Detail History #'"
+          :title="'Detail History #' + getByIdTrans.transaction_number"
           ok-only
           ok-variant="success"
           button-size="sm"
@@ -121,19 +120,20 @@
                   :src="'http://localhost:5000/product/' + item.product_img"
                   alt="Image"
                   class="shadow-card"
-                  style="width:80px"
+                  style="width:80px;margin-top:5px;height:80px;object-fit:cover"
                 ></b-img>
               </div>
             </b-col>
             <b-col>
               <div class="centered">
+                ( {{ item.delivery }} ) <br />
                 {{ item.product_name }} <br />
-                Rp. {{ item.product_price }} <br />
-                x {{ item.quantity }}
+                Rp. {{ item.price }} <br />
+                x {{ item.quantity }} <br />
               </div>
             </b-col>
             <b-col>
-              <div class="centered">Rp. {{ item.subtotal }}</div>
+              <div class="centered">Rp. {{ item.price * item.quantity }}</div>
             </b-col>
           </b-row>
           <hr />
@@ -141,17 +141,17 @@
             <b-col>
               <div class="centered rubik" style="font-weight:bold">
                 Subtotal <br />
-                Discon <br />
-                Fees <br />
+                Discount <br />
+                Tax & Fees <br />
                 Total <br />
               </div>
             </b-col>
             <b-col>
               <div class="centered rubik" style="font-weight:bold">
-                Rp. 130000 <br />
-                Rp. 10000 <br />
-                Rp. 10000 <br />
-                Rp. 120000 <br />
+                Rp. {{ getByIdTrans.sub_total }} <br />
+                Rp. {{ getByIdTrans.discount }} <br />
+                Rp. {{ getByIdTrans.tax }} <br />
+                Rp. {{ getByIdTrans.total }} <br />
               </div>
             </b-col>
           </b-row>
@@ -182,16 +182,25 @@ export default {
     this.getHistorys(this.setUser.user_id)
   },
   computed: {
-    ...mapGetters(['getHistory', 'getByIdHistory', 'setUser'])
+    ...mapGetters(['getHistory', 'getByIdHistory', 'setUser', 'getByIdTrans'])
   },
   methods: {
-    ...mapActions(['getHistorys', 'deleteHistory', 'getHistoryById']),
+    ...mapActions([
+      'getHistorys',
+      'deleteHistory',
+      'getHistoryById',
+      'getTransById'
+    ]),
     makeToast(bodyMsg, msg, variant) {
       this.$bvToast.toast(bodyMsg, {
         title: msg,
         variant: variant,
         solid: true
       })
+    },
+    getDetailHistory(id) {
+      this.getHistoryById(id)
+      this.getTransById(id)
     },
     onDelete() {
       this.deleteHistory(this.id)
@@ -213,6 +222,12 @@ export default {
 </script>
 
 <style scoped>
+.img-round {
+  width: 115px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .shadow-card {
   -webkit-box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.75);

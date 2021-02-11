@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 style="text-align:center;color: #6A4029" class="rubik">
+    <h3 style="text-align:center;color: white" class="rubik shadow-text">
       See how your store progress so far
     </h3>
     <div style="margin-top:80px">
@@ -21,29 +21,29 @@
         </b-col>
         <b-col sm="12" md="12" lg="4" xl="4">
           <div class="shadow card-style">
-            <!-- <b-card title="Year Income" class="card-style">
-              <h4>Rp. {{ getDashboard.year[0].subtotal_transaksi }}</h4>
+            <b-card title="Year Income" class="card-style">
+              <!-- <h4>Rp. {{ getDashboard.year[0].subtotal_transaksi }}</h4>
               <b-card-text>
                 Total transaction :
                 {{ getDashboard.year[0].total_transaction }}
-              </b-card-text>
-            </b-card> -->
+              </b-card-text> -->
+            </b-card>
           </div>
         </b-col>
         <b-col sm="12" md="12" lg="4" xl="4">
           <div class="shadow card-style">
-            <!-- <b-card title="Total Transaction" class="card-style">
-              <h4>{{ getDashboard.total[0].total_transaction }}</h4>
+            <b-card title="Total Transaction" class="card-style">
+              <!-- <h4>{{ getDashboard.total[0].total_transaction }}</h4>
               <b-card-text>
                 Total all transaction
-              </b-card-text>
-            </b-card> -->
+              </b-card-text> -->
+            </b-card>
           </div>
         </b-col>
       </b-row>
     </div>
     <div style="margin-top:40px">
-      <h6>Untuk Filter</h6>
+      <h6 style="color:white">Untuk Filter</h6>
       <div class="shadow card-style">
         <b-card title="Card title" sub-title="Card subtitle" class="card-style">
           <b-card-text>
@@ -96,6 +96,9 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Rubik:wght@300;400;500;600;700&display=swap');
 .rubik {
   font-family: 'Rubik', sans-serif;
+}
+.shadow-text {
+  text-shadow: 3px 3px 3px #313131;
 }
 .shadow {
   -webkit-box-shadow: -2px -1px 18px 5px rgba(130, 130, 130, 0.47);

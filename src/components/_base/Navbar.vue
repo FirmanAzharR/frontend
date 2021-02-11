@@ -60,8 +60,10 @@
               <b-nav-item v-if="role !== undefined"
                 ><router-link to="/profile" class="link"
                   ><img
-                    style="border-radius:50px"
-                    src="../../assets/img/user.png"
+                    style="border-radius:50%;width:35px;height:35px;object-fit:cover"
+                    :src="
+                      'http://localhost:5000/profile/' + getProfile.user_img
+                    "
                     alt=""/></router-link
               ></b-nav-item>
               <b-nav-item
@@ -99,13 +101,13 @@ export default {
   },
   created() {
     this.role = this.setUser.user_role
-    //console.log(this.role)
+    this.getProfiles(this.setUser.user_id)
   },
   computed: {
-    ...mapGetters(['setUser'])
+    ...mapGetters(['setUser', 'getProfile'])
   },
   methods: {
-    ...mapActions(['getProducts', 'logout']),
+    ...mapActions(['getProducts', 'logout', 'getProfiles']),
     ...mapMutations([
       'handleChangePage',
       'handleChangeCategory',

@@ -32,9 +32,14 @@ export default {
     productSearchs(state, payload) {
       state.productSearch = payload
     },
+    setProductById(state, payload) {
+      state.productById = payload
+    },
     cart(state, payload) {
-      state.cart = [...state.cart, payload]
-      localStorage.setItem('cart', JSON.stringify(state.cart))
+      state.cart.push(payload)
+    },
+    setCart(state, payload) {
+      state.cart = payload
     }
   },
   actions: {
@@ -59,7 +64,7 @@ export default {
         axios
           .get(`${process.env.VUE_APP_PORT}/product/${id}`)
           .then(response => {
-            context.state.productById = response.data.data[0]
+            context.commit('setProductById', response.data.data[0])
             resolve(response)
           })
           .catch(error => {
@@ -121,6 +126,30 @@ export default {
             reject(error)
           })
       })
+    },
+    addTransaction(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(`${process.env.VUE_APP_PORT}/checkout/confirm`, payload)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    addDetailTransaction(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(`${process.env.VUE_APP_PORT}/checkout/confirm/detail`, payload)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     }
   },
   getters: {
@@ -143,13 +172,7 @@ export default {
       return state.productDetails
     },
     getCart(state) {
-      let getCart = localStorage.getItem('cart')
-      getCart = JSON.parse(getCart)
-      if (getCart) {
-        return (state.cart = getCart)
-      } else {
-        return (state.cart = [])
-      }
+      return state.cart
     }
   }
 }

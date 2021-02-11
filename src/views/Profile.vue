@@ -25,7 +25,7 @@
                         class="align-self-center"
                         src="../assets/img/user-no-img.png"
                         alt=""
-                        style="width:60px"
+                        style="width:60px;object-fit:cover"
                       />
                     </div>
                     <img
@@ -63,7 +63,7 @@
                   <br />
                   <div v-item-center class="rubik">
                     <h4>{{ form.user_name }}</h4>
-                    <p>{{ form.user_email }}</p>
+                    <p>{{ setUser.user_email }}</p>
                   </div>
                 </b-card>
               </div>
@@ -79,10 +79,11 @@
                     <b-col>
                       <h5>Email address :</h5>
                       <b-form-input
-                        v-model="form.user_email"
+                        v-model="setUser.user_email"
                         class="input2"
                         type="email"
                         placeholder="email"
+                        readonly
                       ></b-form-input
                     ></b-col>
                     <b-col>
@@ -166,6 +167,7 @@
                 <b-button
                   class="btn rubik shadow-card"
                   style="background-color:#FFBA33;color:#683F28"
+                  @click="cancle"
                   >Cancle</b-button
                 ><br />
                 <b-button
@@ -176,6 +178,7 @@
                 <b-button
                   class="btn rubik shadow-card"
                   style="background-color:white;color:#683F28;text-align:left"
+                  @click="logout"
                   >Logout ></b-button
                 >
               </div>
@@ -208,7 +211,6 @@ export default {
         first_name: '',
         last_name: '',
         user_address: '',
-        user_email: '',
         user_phone: '',
         user_img: ''
       }
@@ -222,8 +224,8 @@ export default {
     ...mapGetters(['getProfile', 'setUser'])
   },
   methods: {
-    ...mapActions(['getProfiles', 'updateProfiles']),
-
+    ...mapActions(['getProfiles', 'updateProfiles', 'logout']),
+    cancle() {},
     setData() {
       this.form.user_name = this.getProfile.user_name
       this.form.first_name = this.getProfile.first_name
@@ -337,6 +339,7 @@ export default {
   height: 130px;
   border-radius: 50%;
   margin-top: 40px;
+  object-fit: cover;
 }
 .btn-icons {
   cursor: pointer;

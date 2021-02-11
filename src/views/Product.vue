@@ -18,7 +18,7 @@
               <router-link
                 :to="{ name: 'AddProduct' }"
                 class="link"
-                style="background-color:#6A4029;color:white;padding:5px;border-radius:10px;margin-left:25px;font-weight:bold"
+                style="background-color:#6A4029;color:white;padding:5px;border-radius:25px;margin-left:25px;font-weight:500;padding:10px;border:none"
                 >Add Product</router-link
               >
               <b-nav fill align="center" class="font2" style="font-size: 20px">

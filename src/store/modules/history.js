@@ -4,7 +4,8 @@ export default {
   modules: {},
   state: {
     history: [],
-    historyById: ''
+    historyById: '',
+    transById: ''
   },
   mutations: {},
   actions: {
@@ -21,11 +22,28 @@ export default {
           })
       })
     },
+    getTransById(context, data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(
+            `${process.env.VUE_APP_PORT}/transaction/get/transaction/${data}`
+          )
+          .then(response => {
+            console.log(response)
+            context.state.transById = response.data.data[0]
+            resolve(response.data.data[0])
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
     getHistoryById(context, data) {
       return new Promise((resolve, reject) => {
         axios
           .get(`${process.env.VUE_APP_PORT}/transaction/detail/${data}`)
           .then(response => {
+            console.log(response)
             context.state.historyById = response.data.data
             resolve(response.data.data)
           })
@@ -53,6 +71,9 @@ export default {
     },
     getByIdHistory(state) {
       return state.historyById
+    },
+    getByIdTrans(state) {
+      return state.transById
     }
   }
 }

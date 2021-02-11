@@ -5,7 +5,11 @@ export default {
   state: {
     profile: ''
   },
-  mutations: {},
+  mutations: {
+    setProfile(state, payload) {
+      state.profile = payload
+    }
+  },
   actions: {
     getProfiles(context, payload) {
       return new Promise((resolve, reject) => {
@@ -13,7 +17,7 @@ export default {
           .get(`${process.env.VUE_APP_PORT}/profile/${payload}`)
           .then(response => {
             resolve(response)
-            context.state.profile = response.data.data[0]
+            context.commit('setProfile', response.data.data[0])
           })
           .catch(error => {
             reject(error)
@@ -21,8 +25,6 @@ export default {
       })
     },
     updateProfiles(context, payload) {
-      console.log(payload.id)
-      console.log(payload.data)
       return new Promise((resolve, reject) => {
         axios
           .patch(
@@ -30,15 +32,11 @@ export default {
             payload.data
           )
           .then(response => {
-            // console.log(payload.id)
-            // console.log(payload.data)
-            // console.log(response)
-            context.state.profile = response.data.data
+            context.commit('setProfile', response.data.data[0])
             resolve(response)
           })
           .catch(error => {
-            console.log(error)
-            reject(error)
+            reject(error.response)
           })
       })
     }

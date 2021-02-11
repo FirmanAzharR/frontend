@@ -59,11 +59,15 @@
                     class="input"
                     type="text"
                     placeholder="select start hour"
+                    v-model="form.delivery_hour_start"
+                    required
                   ></b-form-input>
                   <b-form-input
                     class="input"
                     type="text"
                     placeholder="select end hour"
+                    v-model="form.delivery_hour_end"
+                    required
                   ></b-form-input>
                 </div>
                 <div style="margin-top:100px">
@@ -114,96 +118,55 @@
                   required
                 ></b-form-textarea>
                 <br />
+                <h6>Product Price</h6>
+                <b-form-input
+                  class="input2"
+                  type="number"
+                  placeholder="Input Price"
+                  min="0"
+                  v-model="form.product_price"
+                  required
+                ></b-form-input>
+                <br />
                 <div style="margin-bottom:25px">
                   <h6>Product Size</h6>
                   <p>* Click size you want to use for this product</p>
                   <div class="d-flex">
-                    <b-form-checkbox
-                      v-model="size"
-                      value="1"
-                      @change="getSize()"
+                    <b-button
+                      :class="R !== '' ? 'style-sizeClick' : 'style-size'"
+                      @click="addSize('R', 1)"
+                      >R</b-button
                     >
-                      <b-button class="style-size">R</b-button>
-                    </b-form-checkbox>
-                    <b-form-checkbox
-                      v-model="size"
-                      value="2"
-                      @change="getSize()"
+                    <b-button
+                      :class="L !== '' ? 'style-sizeClick' : 'style-size'"
+                      @click="addSize('L', 2)"
+                      >L</b-button
                     >
-                      <b-button class="style-size">L</b-button>
-                    </b-form-checkbox>
-                    <b-form-checkbox
-                      v-model="size"
-                      value="3"
-                      @change="getSize()"
+                    <b-button
+                      :class="XL !== '' ? 'style-sizeClick' : 'style-size'"
+                      @click="addSize('XL', 3)"
+                      >XL</b-button
                     >
-                      <b-button class="style-size">XL</b-button>
-                    </b-form-checkbox>
-                    <div v-if="size.length < 0">
-                      <h6>Choose size to input Product Price</h6>
-                    </div>
-                    <div v-else-if="size.length === 1">
-                      <b-form-input
-                        type="number"
-                        required
-                        placeholder="Input price"
-                        v-model="price1"
-                      ></b-form-input>
-                    </div>
-                    <div v-else-if="size.length === 2">
-                      <b-form-input
-                        type="number"
-                        required
-                        placeholder="Input price"
-                        v-model="price1"
-                      ></b-form-input
-                      ><br />
-                      <b-form-input
-                        type="number"
-                        required
-                        placeholder="Input price"
-                        v-model="price2"
-                      ></b-form-input>
-                    </div>
-                    <div v-else-if="size.length === 3">
-                      <b-form-input
-                        type="number"
-                        required
-                        placeholder="Input price"
-                        v-model="price1"
-                      ></b-form-input
-                      ><br />
-                      <b-form-input
-                        type="number"
-                        required
-                        placeholder="Input price"
-                        v-model="price2"
-                      ></b-form-input
-                      ><br />
-                      <b-form-input
-                        type="number"
-                        required
-                        placeholder="Input price"
-                        v-model="price3"
-                      ></b-form-input>
-                    </div>
                   </div>
-                  <!-- <b-button class="style-size" style="font-size:12px"
-                    >200gr</b-button
-                  >
-                  <b-button class="style-size" style="font-size:12px"
-                    >300gr</b-button
-                  >
-                  <b-button class="style-size" style="font-size:12px"
-                    >500gr</b-button
-                  > -->
                 </div>
                 <div>
                   <h6>Input Delivery Methods</h6>
                   <p>* Click method you want to use for this product</p>
-                  <b-button class="style-size2">Home Delivery</b-button>
-                  <b-button class="style-size2">Dine in</b-button>
-                  <b-button class="style-size2">Take Away</b-button>
+                  <b-button
+                    :class="home !== '' ? 'style-size2Click' : 'style-size2'"
+                    @click="addDeliver('home', 1)"
+                    >Home Delivery</b-button
+                  >
+                  <b-button
+                    :class="dineIn !== '' ? 'style-size2Click' : 'style-size2'"
+                    @click="addDeliver('dineIn', 2)"
+                    >Dine in</b-button
+                  >
+                  <b-button
+                    :class="take !== '' ? 'style-size2Click' : 'style-size2'"
+                    @click="addDeliver('take', 3)"
+                    >Take Away</b-button
+                  >
                 </div>
                 <div style="margin-top:60px;margin-bottom:60px">
                   <b-button
@@ -240,11 +203,14 @@ export default {
   },
   data() {
     return {
+      R: '',
+      L: '',
+      XL: '',
       size: [],
-      price1: '',
-      price2: '',
-      price3: '',
-      priceSize: [],
+      home: '',
+      dineIn: '',
+      take: '',
+      deliveMethods: [],
       selected: null,
       url: null,
       options: [
@@ -258,18 +224,75 @@ export default {
         product_name: '',
         product_discon: '',
         product_information: '',
+        product_size: '',
+        product_price: '',
         product_img: '',
         product_status: 1,
         product_stock: '',
-        id_size: this.size,
-        product_price: '',
-        p_detail_status: 1
+        delivery_hour_start: '',
+        delivery_hour_end: '',
+        delivery_methods: ''
       }
     }
   },
   created() {},
   methods: {
     ...mapActions(['postProducts']),
+    removeArr(type, value) {
+      if (type === 'size') {
+        const index = this.size.indexOf(value)
+        if (index > -1) {
+          this.size.splice(index, 1)
+        }
+      } else if (type === 'delive') {
+        const index = this.deliveMethods.indexOf(value)
+        if (index > -1) {
+          this.deliveMethods.splice(index, 1)
+        }
+      }
+    },
+    addSize(name, value) {
+      if ((name === 'R') & (this.R === '')) {
+        this.R = name
+        this.size.push(value)
+      } else if ((name === 'R') & (this.R !== '')) {
+        this.R = ''
+        this.removeArr('size', value)
+      } else if ((name === 'L') & (this.L === '')) {
+        this.L = name
+        this.size.push(value)
+      } else if ((name === 'L') & (this.L !== '')) {
+        this.L = ''
+        this.removeArr('size', value)
+      } else if ((name === 'XL') & (this.XL === '')) {
+        this.XL = name
+        this.size.push(value)
+      } else if ((name === 'XL') & (this.XL !== '')) {
+        this.XL = ''
+        this.removeArr('size', value)
+      }
+    },
+    addDeliver(name, value) {
+      if ((name === 'home') & (this.home === '')) {
+        this.home = name
+        this.deliveMethods.push(value)
+      } else if ((name === 'home') & (this.home !== '')) {
+        this.home = ''
+        this.removeArr('delive', value)
+      } else if ((name === 'dineIn') & (this.dineIn === '')) {
+        this.dineIn = name
+        this.deliveMethods.push(value)
+      } else if ((name === 'dineIn') & (this.dineIn !== '')) {
+        this.dineIn = ''
+        this.removeArr('delive', value)
+      } else if ((name === 'take') & (this.take === '')) {
+        this.take = name
+        this.deliveMethods.push(value)
+      } else if ((name === 'take') & (this.take !== '')) {
+        this.take = ''
+        this.removeArr('delive', value)
+      }
+    },
     chooseFiles: function() {
       document.getElementById('fileUpload').click()
     },
@@ -283,62 +306,78 @@ export default {
     changeCategory() {
       this.form.category_id = this.selected
     },
-    getSize() {
-      this.form.id_size = this.size
-    },
-    getPrice() {
-      if (this.price1) {
-        this.priceSize.push(this.price1)
+    onReset() {
+      this.R = ''
+      this.L = ''
+      this.XL = ''
+      this.size = []
+      this.home = ''
+      this.dineIn = ''
+      this.take = ''
+      this.deliveMethods = []
+      this.selected = null
+      this.url = null
+      this.form = {
+        category_id: '',
+        product_name: '',
+        product_discon: '',
+        product_information: '',
+        product_size: '',
+        product_price: '',
+        product_img: '',
+        product_status: 1,
+        product_stock: '',
+        delivery_hour_start: '',
+        delivery_hour_end: '',
+        delivery_methods: ''
       }
-      if (this.price2) {
-        this.priceSize.push(this.price2)
-      }
-      if (this.price3) {
-        this.priceSize.push(this.price3)
-      }
-      this.form.product_price = this.priceSize
     },
     onSubmit() {
-      this.getPrice()
-      const {
-        category_id,
-        product_name,
-        product_discon,
-        product_information,
-        product_img,
-        product_status,
-        product_stock,
-        id_size,
-        product_price,
-        p_detail_status
-      } = this.form
-      const data = new FormData()
-      data.append('category_id', category_id)
-      data.append('product_name', product_name)
-      data.append('product_discon', product_discon)
-      data.append('product_information', product_information)
-      data.append('product_img', product_img)
-      data.append('product_status', product_status)
-      data.append('product_stock', product_stock)
-      data.append('id_size', id_size)
-      data.append('product_price', product_price)
-      data.append('p_detail_status', p_detail_status)
-      for (var pair of data.entries()) {
-        console.log(pair[0] + ', ' + pair[1])
+      if ((this.deliveMethods.length < 0) & (this.size.length < 0)) {
+        this.makeToast('Some input form empty', 'Fill input form', 'warning')
+      } else {
+        this.form.product_size = this.size.toString()
+        this.form.delivery_methods = this.deliveMethods.toString()
+        const {
+          category_id,
+          product_name,
+          product_discon,
+          product_information,
+          product_size,
+          product_price,
+          product_img,
+          product_status,
+          product_stock,
+          delivery_hour_start,
+          delivery_hour_end,
+          delivery_methods
+        } = this.form
+        const data = new FormData()
+        data.append('category_id', category_id)
+        data.append('product_name', product_name)
+        data.append('product_discon', product_discon)
+        data.append('product_information', product_information)
+        data.append('product_size', product_size)
+        data.append('product_price', product_price)
+        data.append('product_img', product_img)
+        data.append('product_status', product_status)
+        data.append('product_stock', product_stock)
+        data.append('delivery_hour_start', delivery_hour_start)
+        data.append('delivery_hour_end', delivery_hour_end)
+        data.append('delivery_methods', delivery_methods)
+        // for (var pair of data.entries()) {
+        //   console.log(pair[0] + ', ' + pair[1])
+        // }
+        this.postProducts(data)
+          .then(result => {
+            console.log(result)
+            this.makeToast(`Success add product`, 'Congratulations', 'success')
+            this.onReset()
+          })
+          .catch(error => {
+            this.makeToast('Insert Product Failed', error.response, 'danger')
+          })
       }
-      this.postProducts(data)
-        .then(result => {
-          //console.log(result)
-          this.makeToast(
-            `Product ${result.data.data[0].product_name} Inserted Successfully`,
-            'Congratulations',
-            'success'
-          )
-          //this.onReset()
-        })
-        .catch(error => {
-          this.makeToast('Insert Product Failed', error, 'danger')
-        })
     },
     handleFile(e) {
       console.log(e.target.files[0])
@@ -361,6 +400,17 @@ export default {
   font-size: 20px;
   margin-right: 60px;
 }
+.style-sizeClick {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: #6a4029;
+  font-weight: bold;
+  color: white;
+  font-size: 20px;
+  margin-right: 60px;
+}
 .style-size2 {
   border-radius: 10px;
   width: 160px;
@@ -369,6 +419,17 @@ export default {
   background-color: #ffba33;
   font-weight: bold;
   color: black;
+  font-size: 15px;
+  margin-right: 60px;
+}
+.style-size2Click {
+  border-radius: 10px;
+  width: 160px;
+  height: 45px;
+  border: none;
+  background-color: #6a4029;
+  font-weight: bold;
+  color: white;
   font-size: 15px;
   margin-right: 60px;
 }

@@ -12,7 +12,6 @@
             <li><a href="#">Favorite & Promo ></a>Edit Promo</li>
           </ul>
         </div>
-
         <FormAddCoupon />
       </b-container>
       <Footer />
