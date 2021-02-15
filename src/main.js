@@ -8,6 +8,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { AvatarPlugin } from 'bootstrap-vue'
 import { BadgePlugin } from 'bootstrap-vue'
 import VueConfirmDialog from 'vue-confirm-dialog'
+import 'animate.css'
 Vue.use(VueConfirmDialog)
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 Vue.use(BadgePlugin)

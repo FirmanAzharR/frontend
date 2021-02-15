@@ -1,55 +1,67 @@
 <template>
-  <div>
-    <h3 style="text-align:center;color: white" class="rubik shadow-text">
+  <div class="animate__animated animate__fadeIn">
+    <h3 style="text-align:center;color: white" class="shadow-text">
       See how your store progress so far
     </h3>
-    <div style="margin-top:80px">
+    <div style="margin-top:80px" class="popins">
       <b-row>
         <b-col sm="12" md="12" lg="4" xl="4">
           <div class="shadow card-style">
-            <b-card title="Today Income" class="card-style">
-              <!-- <h4 v-if="getDashboard.today[0].subtotal_transaksi">
-                Rp. {{ getDashboard.today[0].subtotal_transaksi }}
-              </h4>
-              <h4 v-else>Rp. 0</h4>
-              <b-card-text>
-                Total transaction :
-                {{ getDashboard.today[0].total_transaction }}
-              </b-card-text> -->
+            <b-card sub-title="Today Income" class="card-style">
+              <b-card-text style="margin:20px 0px">
+                <h3>Rp. {{ getCard.today[0].total_transaksi }}</h3>
+              </b-card-text>
             </b-card>
           </div>
         </b-col>
         <b-col sm="12" md="12" lg="4" xl="4">
           <div class="shadow card-style">
-            <b-card title="Year Income" class="card-style">
-              <!-- <h4>Rp. {{ getDashboard.year[0].subtotal_transaksi }}</h4>
-              <b-card-text>
-                Total transaction :
-                {{ getDashboard.year[0].total_transaction }}
-              </b-card-text> -->
+            <b-card sub-title="Year Income" class="card-style">
+              <b-card-text style="margin:20px 0px">
+                <h3>Rp. {{ getCard.year[0].total_transaksi }}</h3>
+              </b-card-text>
             </b-card>
           </div>
         </b-col>
         <b-col sm="12" md="12" lg="4" xl="4">
           <div class="shadow card-style">
-            <b-card title="Total Transaction" class="card-style">
-              <!-- <h4>{{ getDashboard.total[0].total_transaction }}</h4>
-              <b-card-text>
-                Total all transaction
-              </b-card-text> -->
+            <b-card sub-title="Total Transaction" class="card-style">
+              <b-card-text style="margin:20px 0px">
+                <h3>{{ getCard.total[0].total_transaction }} Data</h3>
+              </b-card-text>
             </b-card>
           </div>
         </b-col>
       </b-row>
     </div>
     <div style="margin-top:40px">
-      <h6 style="color:white">Untuk Filter</h6>
+      <b-dropdown
+        id="dropdown-dropright"
+        dropright
+        text="Filter"
+        variant="primary"
+        class="m-2"
+      >
+        <b-dropdown-item @click="filter('month')">Mounth</b-dropdown-item>
+        <b-dropdown-item @click="filter('year')">Year</b-dropdown-item>
+      </b-dropdown>
       <div class="shadow card-style">
-        <b-card title="Card title" sub-title="Card subtitle" class="card-style">
-          <b-card-text>
-            Some quick example text to build on the <em>card title</em> and make
-            up the bulk of the card's content.
-          </b-card-text>
+        <b-card
+          :title="
+            getFilter === 'month'
+              ? 'Chart Total Mounthly Transactions'
+              : 'Chart Total Year Transactions'
+          "
+          :sub-title="'Last Updated ' + dateNow"
+          class="card-style"
+        >
+          <br />
+          <div v-if="getFilter === 'month'">
+            <LineChartMonth />
+          </div>
+          <div v-else>
+            <LineChartYear />
+          </div>
         </b-card>
       </div>
     </div>
@@ -71,31 +83,49 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-
+import { mapActions, mapGetters, mapMutations } from 'vuex'
+import LineChartMonth from './LineChartMonth'
+import LineChartYear from './LineChartYear'
 export default {
   props: ['typeForm'],
   name: 'DashboardAdmin',
+  components: {
+    LineChartMonth,
+    LineChartYear
+  },
   data() {
-    return {}
+    return {
+      dateNow: ''
+    }
   },
   created() {
-    //this.dashboard()
+    this.dateNow = new Date()
+    this.cardActions()
   },
   computed: {
-    ...mapGetters(['getDashboard'])
+    ...mapGetters(['getCard', 'getFilter'])
   },
   methods: {
     // mapaction dan mapmutation
-    ...mapActions(['dashboard'])
+    ...mapActions(['cardActions', 'chartActions']),
+    ...mapMutations(['handleFilter']),
+    filter(value) {
+      this.filterValue = value
+      this.handleFilter(value)
+      this.chartActions()
+    }
   }
 }
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Rubik:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 .rubik {
   font-family: 'Rubik', sans-serif;
+}
+.popins {
+  font-family: 'Poppins', sans-serif;
 }
 .shadow-text {
   text-shadow: 3px 3px 3px #313131;
@@ -117,5 +147,14 @@ export default {
 .card-style {
   border-radius: 15px;
   border: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .card-style {
+    margin-bottom: 20px;
+  }
+  .btn {
+    margin-bottom: 20px;
+  }
 }
 </style>

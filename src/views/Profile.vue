@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <div class="bg">
-      <b-container>
+      <b-container class="animate__animated animate__fadeIn">
         <h2
           style="color:white;padding-top:70px;padding-bottom:70px;font-weight:bold"
           class="rubik shadow-text"
@@ -17,7 +17,9 @@
                   <div id="preview" class="centered">
                     <img v-if="url" :src="url" class="round-img" />
                     <div
-                      v-else-if="form.user_img === ''"
+                      v-else-if="
+                        form.user_img === 'none' || form.user_img === ''
+                      "
                       class="d-flex justify-content-center round-img"
                       style="background-color:#d2d2d2;border-radius:50%;"
                     >
@@ -173,18 +175,86 @@
                 <b-button
                   class="btn rubik shadow-card"
                   style="background-color:white;color:#683F28;text-align:left"
+                  @click="showModal"
                   >Edit Password ></b-button
                 ><br />
                 <b-button
                   class="btn rubik shadow-card"
                   style="background-color:white;color:#683F28;text-align:left"
-                  @click="logout"
+                  @click="handleLogout"
                   >Logout ></b-button
                 >
               </div>
             </b-col>
           </b-row>
         </div>
+        <b-modal ref="my-modal" hide-footer centered title="Change Password">
+          <b-form
+            @submit.prevent="updatePass"
+            @reset.prevent="cancleUpdatePass"
+          >
+            <b-form-input
+              type="password"
+              placeholder="Old password"
+              v-model="oldPass"
+              required
+              autocomplete
+              class="input2"
+            ></b-form-input>
+            <b-form-input
+              type="password"
+              placeholder="New password"
+              v-model="newPass"
+              required
+              autocomplete
+              class="input2"
+            ></b-form-input>
+
+            <b-form-input
+              type="password"
+              placeholder="Confirm password"
+              v-model="confirmPass"
+              required
+              autocomplete
+              class="input2"
+            ></b-form-input>
+            <h6
+              style="margin-top:20px;margin-bottom:20px;text-align:center"
+              v-if="loading === 1"
+            >
+              <b-icon
+                icon="circle-fill"
+                animation="throb"
+                font-scale="1"
+              ></b-icon>
+              Saving , Please Wait . . .
+            </h6>
+            <center>
+              <button
+                class="modal-btn rubik"
+                style="background-color:#6A4029"
+                type="submit"
+                v-if="newPass === confirmPass"
+              >
+                Save changes
+              </button>
+              <button class="modal-btn rubik" type="submit" v-else disabled>
+                Save changes
+              </button>
+              <button
+                class="modal-btn rubik"
+                style="background-color:#FFBA33;color:#6A4029"
+                type="reset"
+              >
+                Cancle
+              </button>
+            </center>
+            <br />
+            <label v-if="newPass !== confirmPass"
+              >*Confirm password doesn't match</label
+            >
+          </b-form>
+        </b-modal>
       </b-container>
       <div style="padding-bottom:70px"></div>
     </div>
@@ -205,6 +275,10 @@ export default {
   data() {
     return {
       url: null,
+      loading: 0,
+      oldPass: '',
+      newPass: '',
+      confirmPass: '',
       display_name: 'Default name user',
       form: {
         user_name: '',
@@ -224,8 +298,44 @@ export default {
     ...mapGetters(['getProfile', 'setUser'])
   },
   methods: {
-    ...mapActions(['getProfiles', 'updateProfiles', 'logout']),
+    ...mapActions([
+      'getProfiles',
+      'updateProfiles',
+      'updatePassword',
+      'logout'
+    ]),
     cancle() {},
+    showModal() {
+      this.$refs['my-modal'].show()
+    },
+    updatePass() {
+      this.loading = 1
+      const setData = {
+        old_pass: this.oldPass,
+        new_pass: this.newPass
+      }
+      this.updatePassword({ data: setData, id: this.setUser.user_id })
+        .then(result => {
+          setTimeout(() => {
+            this.loading = 0
+            this.makeToast(`${result.data.msg}`, 'Done', 'success')
+            this.$refs['my-modal'].hide()
+            this.reset()
+          }, 1500)
+        })
+        .catch(error => {
+          this.makeToast(`${error.data.msg}`, 'Failed', 'danger')
+        })
+    },
+    cancleUpdatePass() {
+      this.reset()
+      this.$refs['my-modal'].hide()
+    },
+    reset() {
+      this.oldPass = ''
+      this.newPass = ''
+      this.confirmPass = ''
+    },
     setData() {
       this.form.user_name = this.getProfile.user_name
       this.form.first_name = this.getProfile.first_name
@@ -277,6 +387,22 @@ export default {
           this.makeToast('Update Profil Failed', error, 'danger')
         })
     },
+    handleLogout() {
+      this.$confirm({
+        title: 'Logout?',
+        message: 'Are you sure you want to logout?',
+        button: {
+          no: 'No',
+          yes: 'Yes'
+        },
+
+        callback: confirm => {
+          if (confirm) {
+            this.logout()
+          }
+        }
+      })
+    },
     makeToast(bodyMsg, msg, variant) {
       this.$bvToast.toast(bodyMsg, {
         title: msg,
@@ -289,6 +415,16 @@ export default {
 </script>
 
 <style scoped>
+.modal-btn {
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  margin: 0 10px;
+  border-radius: 15px;
+}
+.modal-btn:disabled {
+  background-color: darkgrey;
+}
 .shadow-card {
   -webkit-box-shadow: 0px 4px 22px -1px rgba(0, 0, 0, 1);
   -moz-box-shadow: 0px 4px 22px -1px rgba(0, 0, 0, 1);

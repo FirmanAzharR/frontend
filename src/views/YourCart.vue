@@ -46,7 +46,7 @@
           </div>
         </b-sidebar>
       </div>
-      <b-container>
+      <b-container class="animate__animated animate__fadeIn">
         <h2
           style="padding-top:60px;margin-bottom:60px; color:white;font-weight:700;max-width:250px"
           class="rubik shadow-text"
@@ -55,7 +55,7 @@
         </h2>
         <b-row>
           <b-col sm="12" md="6" lg="6" xl="6">
-            <div class="rubik" style="max-width:450px;margin-bottom: 150px;">
+            <div class="rubik margin-btm" style="max-width:450px;">
               <b-card>
                 <h3 class="sub-title">Order Summary</h3>
                 <div class="list-group">
@@ -67,11 +67,11 @@
                   >
                     <h4 style="cursor:pointer" @click="removeCart(index)">-</h4>
                     <img
-                      style="object-fit:cover;border-radius:15px;width:80px;height:90px"
+                      class="order-img"
                       :src="'http://localhost:5000/product/' + item.product_img"
                       alt=""
                     />
-                    <div>
+                    <div class="sm-font">
                       <ul style="line-height:20px">
                         <li>{{ item.product_name }}</li>
                         <li>x {{ item.quantity }}</li>
@@ -80,7 +80,7 @@
                         <li v-else>Extra Large</li>
                       </ul>
                     </div>
-                    <div>IDR {{ item.price }}</div>
+                    <div class="sm-font">IDR {{ item.price }}</div>
                   </div>
                 </div>
                 <hr />
@@ -106,9 +106,9 @@
                 <label style="color:#7D4F2A" v-else hidden>*Use coupon</label>
               </b-card>
               <b-button
+                block
                 v-b-toggle.sidebar-right
                 class="btn-style rubik"
-                style="width:450px;max-width:450px;"
                 variant="warning"
                 >Add Coupon</b-button
               >
@@ -200,10 +200,15 @@
                 </b-card-text>
               </b-card>
             </div>
-            <vue-confirm-dialog></vue-confirm-dialog>
             <b-button
-              class="btn-style rubik"
-              style="width:450px;max-width:450px;"
+              class="btn-style rubik btn-style-large"
+              variant="warning"
+              @click="handleClick"
+              >Confirm and Pay</b-button
+            >
+            <b-button
+              block
+              class="btn-style rubik btn-style-small"
               variant="warning"
               @click="handleClick"
               >Confirm and Pay</b-button
@@ -363,6 +368,23 @@ export default {
 </script>
 
 <style scoped>
+.order-img {
+  object-fit: cover;
+  border-radius: 15px;
+  width: 80px;
+  height: 90px;
+}
+.margin-btm {
+  margin-bottom: 150px;
+}
+.btn-style-large {
+  width: 450px;
+  max-width: 450px;
+}
+.add-coupon {
+  width: 450px;
+  max-width: 450px;
+}
 .pay-konten {
   display: flex;
   justify-content: left;
@@ -451,4 +473,36 @@ export default {
   color: #4d3a30;
 }
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Rubik:wght@300;400;500;600;700&display=swap');
+
+@media only screen and (max-width: 600px) {
+  .sm-font {
+    font-size: 13px;
+  }
+  .order-img {
+    border-radius: 15px;
+    width: 60px;
+    height: 70px;
+  }
+  .add-coupon {
+    width: 330px;
+  }
+  .btn-style {
+    margin-top: 10px;
+  }
+  .margin-btm {
+    margin-bottom: 50px;
+  }
+  .btn-style-large {
+    display: none;
+  }
+  .btn-style-small {
+    margin-bottom: 40px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .btn-style-small {
+    display: none;
+  }
+}
 </style>

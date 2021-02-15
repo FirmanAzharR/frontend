@@ -3,18 +3,46 @@ import axios from 'axios'
 export default {
   modules: {},
   state: {
-    dash: ''
+    chart: '',
+    card: '',
+    dataReady: false,
+    filter: 'month'
   },
-  mutations: {},
+  mutations: {
+    setCard(state, payload) {
+      state.card = payload
+    },
+    setChart(state, payload) {
+      state.chart = payload
+      state.dataReady = true
+    },
+    handleFilter(state, payload) {
+      state.filter = payload
+    }
+  },
   actions: {
-    dashboard(context) {
+    cardActions(context) {
       return new Promise((resolve, reject) => {
         axios
           .get(`${process.env.VUE_APP_PORT}/dashboard`)
           .then(result => {
             resolve(result)
-            //console.log(result)
-            context.state.dash = result.data.data
+            context.commit('setCard', result.data.data)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    chartActions(context) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(
+            `${process.env.VUE_APP_PORT}/dashboard/chart/${context.state.filter}`
+          )
+          .then(result => {
+            resolve(result)
+            context.commit('setChart', result.data.data)
           })
           .catch(error => {
             reject(error)
@@ -23,8 +51,17 @@ export default {
     }
   },
   getters: {
-    getDashboard(state) {
-      return state.dash
+    getChart(state) {
+      return state.chart
+    },
+    getCard(state) {
+      return state.card
+    },
+    statusData(state) {
+      return state.dataReady
+    },
+    getFilter(state) {
+      return state.filter
     }
   }
 }

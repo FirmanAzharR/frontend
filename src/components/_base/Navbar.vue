@@ -1,5 +1,6 @@
 <template>
   <div>
+    <vue-confirm-dialog></vue-confirm-dialog>
     <b-container class="p-0">
       <b-navbar toggleable="lg" style="margin-top:20px;margin-bottom:20px;">
         <b-navbar-brand href="#" class="brand" style="font-size:23px">
@@ -58,8 +59,17 @@
                   ><img src="../../assets/img/chat.png" alt=""/></router-link
               ></b-nav-item>
               <b-nav-item v-if="role !== undefined"
-                ><router-link to="/profile" class="link"
-                  ><img
+                ><router-link to="/profile" class="link">
+                  <img
+                    v-if="
+                      getProfile.user_img === '' ||
+                        getProfile.user_img === 'none'
+                    "
+                    style="border-radius:50%;width:25px;height:25px;object-fit:cover"
+                    src="../../assets/img/user-no-img.png"
+                    alt=""/>
+                  <img
+                    v-else
                     style="border-radius:50%;width:35px;height:35px;object-fit:cover"
                     :src="
                       'http://localhost:5000/profile/' + getProfile.user_img
@@ -67,7 +77,10 @@
                     alt=""/></router-link
               ></b-nav-item>
               <b-nav-item
-                ><router-link to="/login" class="link" v-if="role === undefined"
+                ><router-link
+                  to="/login"
+                  class="btn-login"
+                  v-if="role === undefined"
                   >Login</router-link
                 ></b-nav-item
               >
@@ -76,11 +89,11 @@
                   >Logout</router-link
                 ></b-nav-item
               >
-              <b-nav-item
-                ><router-link to="#" id="btn" v-if="role === undefined"
+              <!-- <b-nav-item
+                ><router-link to="/login" id="btn" v-if="role === undefined"
                   >Sign Up</router-link
                 ></b-nav-item
-              >
+              > -->
             </b-navbar-nav>
           </b-navbar-nav>
         </b-collapse>
@@ -115,7 +128,20 @@ export default {
       'productSearchs'
     ]),
     handleLogout() {
-      this.logout()
+      this.$confirm({
+        title: 'Logout?',
+        message: 'Are you sure you want to logout?',
+        button: {
+          no: 'No',
+          yes: 'Yes'
+        },
+
+        callback: confirm => {
+          if (confirm) {
+            this.logout()
+          }
+        }
+      })
     },
     search() {
       this.handleChangeCategory('')
@@ -145,10 +171,17 @@ export default {
   box-shadow: 0 0 0 0.2rem rgba(163, 100, 65, 0.25);
 }
 #btn {
-  padding: 10px;
+  padding: 5px;
   border-radius: 15px;
   background-color: #ffba33;
   color: #6a4029;
   text-decoration: none;
+}
+.btn-login {
+  background-color: #6a4029 !important;
+  color: white !important;
+  border-radius: 20px !important;
+  border: none !important;
+  padding: 10px 25px !important;
 }
 </style>

@@ -10,15 +10,12 @@
           />Coffeeland
         </div>
         <div class="align-self-center">
-          <b-button
-            class="btn-style"
-            :value="typeForm"
-            @click="changeForm('signup')"
+          <b-button class="btn-style" @click="setPage('signup')"
             >Sign Up</b-button
           >
         </div>
       </div>
-      <div style="padding:80px;margin-top:20px">
+      <div class="padding-login">
         <h3 v-title style="margin-bottom:50px;">
           Login
         </h3>
@@ -39,11 +36,14 @@
             type="password"
             class="input"
             placeholder="Enter your password"
+            autocomplete="current-password"
             required
           ></b-form-input>
           <br />
-          <a href="#" :value="typeForm" @click="changeForm('forgot')"
-            ><h6 style="margin-bottom:40px">Forgot password?</h6></a
+          <a href="#"
+            ><h6 style="margin-bottom:40px" @click="setPage('forgot')">
+              Forgot password?
+            </h6></a
           >
           <b-button
             type="submit"
@@ -71,11 +71,10 @@
           </h6>
           <br />
           <b-button
-            :value="typeForm"
-            @click="changeForm('signup')"
             block
             class="btn-style2 shadow"
             style="color:white;background-color:#6A4029"
+            @click="setPage('signup')"
             >Sign up here</b-button
           ><br />
         </b-form>
@@ -85,10 +84,9 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import alertkMixin from '../../mixins/alertMixin'
 export default {
-  props: ['typeForm'],
   name: 'Login',
   mixins: [alertkMixin],
   data() {
@@ -99,21 +97,11 @@ export default {
       }
     }
   },
-  computed: {
-    // ...mapState(['name']),
-    //rename pemanggilan data dalam bentuk obj
-    ...mapState({ dataName: 'name' })
-  },
+  computed: {},
   methods: {
-    changeForm(data) {
-      const changeForm = data
-      this.$emit('changeForm', changeForm)
-    },
-    // mapaction dan mapmutation
     ...mapActions(['login']),
-    ...mapMutations(['handleFormLogin']),
+    ...mapMutations(['setPage']),
     onSubmit() {
-      //console.log(this.form)
       this.login(this.form)
         .then(result => {
           this.makeToast(
@@ -143,6 +131,10 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Rubik:wght@300;400;500;600;700&display=swap');
 .rubik {
   font-family: 'Rubik', sans-serif;
+}
+.padding-login {
+  padding: 80px;
+  margin-top: 20px;
 }
 .before-footer-login {
   margin-top: 156px;
@@ -184,5 +176,12 @@ export default {
   -webkit-box-shadow: 1px 2px 8px 0px #2e2d2d54;
   -moz-box-shadow: 1px 2px 8px 0px #2e2d2d54;
   box-shadow: 1px 2px 8px 0px #2e2d2d54;
+}
+
+@media only screen and (max-width: 600px) {
+  .padding-login {
+    padding: 30px;
+    margin-top: 10px;
+  }
 }
 </style>

@@ -5,19 +5,19 @@
       <b-container>
         <h2
           style="padding-top:80px; color:white"
-          class="rubik shadow-text"
+          class="rubik shadow-text animate__animated animate__fadeIn"
           v-item-center
         >
           Let's see what you have bought!
         </h2>
         <p
           style="margin-bottom:80px;color:white;"
-          class="rubik shadow-text"
+          class="rubik shadow-text animate__animated animate__fadeIn"
           v-item-center
         >
           Press Icon delete to delete history
         </p>
-        <b-row>
+        <b-row class="animate__animated animate__fadeIn">
           <b-col
             sm="6"
             md="4"
@@ -29,10 +29,9 @@
             <div class="centered">
               <b-card class="card-style">
                 <div
-                  v-b-modal.modal-sm
                   style="position:absolute;z-index:2;top:10px;right:10px"
                   @click="
-                    confirmDelete(item.transaction_number, item.transaction_id)
+                    handleClick(item.transaction_number, item.transaction_id)
                   "
                 >
                   <b-iconstack font-scale="2">
@@ -76,28 +75,6 @@
         </b-row>
         <div style="padding-top:100px"></div>
         <b-modal
-          id="modal-sm"
-          centered
-          title="Delete history ?"
-          header-bg-variant="warning"
-          header-text-variant="dark"
-          body-bg-variant="light"
-          body-text-variant="dark"
-          footer-bg-variant="warning"
-          footer-text-variant="dark"
-          size="sm"
-        >
-          <h4>invoice #{{ invoice }}</h4>
-          <template #modal-footer="{ cancel }">
-            <b-button size="sm" variant="danger" @click="onDelete()">
-              OK
-            </b-button>
-            <b-button size="sm" @click="cancel()">
-              Cancel
-            </b-button>
-          </template>
-        </b-modal>
-        <b-modal
           id="modal-scrollable"
           scrollable
           :title="'Detail History #' + getByIdTrans.transaction_number"
@@ -129,7 +106,7 @@
                 ( {{ item.delivery }} ) <br />
                 {{ item.product_name }} <br />
                 Rp. {{ item.price }} <br />
-                x {{ item.quantity }} <br />
+                x {{ item.quantity }} ({{ item.size }}) <br />
               </div>
             </b-col>
             <b-col>
@@ -202,20 +179,30 @@ export default {
       this.getHistoryById(id)
       this.getTransById(id)
     },
-    onDelete() {
-      this.deleteHistory(this.id)
+    onDelete(id) {
+      this.deleteHistory(id)
         .then(result => {
           this.makeToast('History Deleted', ` ${result.data.msg} !!`, 'success')
-          this.getHistorys(5)
+          this.getHistorys(this.setUser.user_id)
         })
         .catch(error => {
           console.log(error)
           this.makeToast('Delete History Failed', 'Failed', 'danger')
         })
     },
-    confirmDelete(inv, id) {
-      this.invoice = inv
-      this.id = id
+    handleClick(transNumber, TansID) {
+      this.$confirm({
+        message: `Are you sure delete history #${transNumber}?`,
+        button: {
+          no: 'No',
+          yes: 'Yes'
+        },
+        callback: confirm => {
+          if (confirm) {
+            this.onDelete(TansID)
+          }
+        }
+      })
     }
   }
 }

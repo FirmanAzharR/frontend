@@ -23,15 +23,12 @@
     </div>
     <div class="top-float">
       <b-container>
-        <b-card title="Card title" sub-title="Card subtitle">
-          <b-card-text>
-            Some quick example text to build on the
-            <em>card title</em> and make up the bulk of the card's content. and
-            make up the bulk of the card's content. and make up the bulk of the
-            card's content. and make up the bulk of the card's content. and make
-            up the bulk of the card's content. and make up the bulk of the
-            card's content.
-          </b-card-text>
+        <b-card>
+          <div class="dash-icon">
+            <img src="../assets/img/home-location.png" />
+            <img src="../assets/img/home-love.png" />
+            <img src="../assets/img/home-user.png" />
+          </div>
         </b-card>
       </b-container>
     </div>
@@ -62,6 +59,7 @@
                 ></b-icon
                 >High quality beans
               </li>
+
               <li>
                 <b-icon
                   icon="check-circle-fill"
@@ -70,6 +68,7 @@
                 ></b-icon
                 >Healthy meals, you can request the ingredients
               </li>
+
               <li>
                 <b-icon
                   icon="check-circle-fill"
@@ -78,6 +77,7 @@
                 ></b-icon
                 >Chat with our staff to get better experience for ordering
               </li>
+
               <li>
                 <b-icon
                   icon="check-circle-fill"
@@ -130,7 +130,6 @@
                   Some quick example text to build on the card title and make up
                   the bulk of the card's content.
                 </b-card-text>
-
                 <b-button href="#" variant="primary">Go somewhere</b-button>
               </b-card>
             </b-col>
@@ -148,7 +147,6 @@
                   Some quick example text to build on the card title and make up
                   the bulk of the card's content.
                 </b-card-text>
-
                 <b-button href="#" variant="primary">Go somewhere</b-button>
               </b-card>
             </b-col>
@@ -196,7 +194,6 @@
                 Some quick example text to build on the
                 <em>card title</em> and make up the bulk of the card's content.
               </b-card-text>
-
               <b-card-text>A second paragraph of text in the card.</b-card-text>
             </b-card>
           </b-col>
@@ -206,14 +203,12 @@
                 Some quick example text to build on the
                 <em>card title</em> and make up the bulk of the card's content.
               </b-card-text>
-
               <b-card-text>A second paragraph of text in the card.</b-card-text>
             </b-card>
           </b-col>
         </b-row>
       </div>
     </b-container>
-
     <div class="bottom-float">
       <b-container>
         <b-card title="Card title" sub-title="Card subtitle">
@@ -248,6 +243,9 @@ export default {
 body,
 html {
   height: 100%;
+}
+.dash-icon {
+  display: flex;
 }
 .responsive {
   width: 100%;

@@ -40,7 +40,6 @@ export default {
   },
   created() {
     this.role = this.setUser.user_role
-    console.log(this.role)
   },
   computed: {
     ...mapGetters(['setUser'])

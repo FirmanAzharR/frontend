@@ -33,13 +33,13 @@
           <br />
           <div>
             <b-button
+              v-if="setUser.user_role === 1"
               pill
               style="background-color:#6A4029;color:white;border:none"
               @click.prevent="handleClick"
               >Delete Product&nbsp;&nbsp;<b-icon-trash></b-icon-trash
             ></b-button>
           </div>
-          <vue-confirm-dialog></vue-confirm-dialog>
         </div>
       </b-col>
       <b-col xl="7" lg="7" md="12" sm="12">
@@ -57,6 +57,7 @@
             <div style="margin-bottom:20px">Delivery and Time</div>
             <div>
               <b-button
+                v-if="productById.delivery_methods.split(',').length > 0"
                 @click="addDelivery('dineIn')"
                 :class="
                   dineIn !== '' ? 'button-style-card2' : 'button-style-card'
@@ -64,6 +65,7 @@
                 >Dine in</b-button
               >
               <b-button
+                v-if="productById.delivery_methods.split(',').length > 1"
                 @click="addDelivery('home')"
                 :class="
                   home !== '' ? 'button-style-card2' : 'button-style-card'
@@ -71,6 +73,7 @@
                 >Door Delivery</b-button
               >
               <b-button
+                v-if="productById.delivery_methods.split(',').length > 2"
                 @click="addDelivery('take')"
                 :class="
                   take !== '' ? 'button-style-card2' : 'button-style-card'
@@ -159,6 +162,7 @@
               >Add to Cart</b-button
             ><br />
             <router-link
+              v-if="setUser.user_role === 1"
               class="button-style"
               style="background-color:#FFBA33;color:#6A4029;text-align:center"
               :to="{
@@ -277,12 +281,16 @@ export default {
       normalPrice: 0
     }
   },
+  mounted() {
+    //this.getProductById(this.productId)
+  },
   created() {
     this.getProductById(this.productId)
   },
   computed: {
     ...mapGetters({
-      productById: 'getProductById'
+      productById: 'getProductById',
+      setUser: 'setUser'
     })
   },
   methods: {

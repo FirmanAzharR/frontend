@@ -93,8 +93,7 @@ export default {
             resolve(response)
           })
           .catch(error => {
-            console.log(error)
-            reject(error)
+            reject(error.response)
           })
       })
     },
@@ -110,7 +109,7 @@ export default {
           })
           .catch(error => {
             //console.log(error)
-            reject(error)
+            reject(error.response)
             //console.log(reject)
           })
       })

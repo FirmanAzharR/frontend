@@ -11,17 +11,17 @@
             md="12"
             sm="12"
             style="border-right: 1px solid #d2d2d2"
-            ><HomePromo
+            ><HomePromo class="animate__animated animate__fadeIn"
           /></b-col>
           <b-col xl="8" md="12" sm="12">
-            <div style="padding:20px">
+            <div v-if="setUser.user_role === 1" style="padding:20px">
               <router-link
                 :to="{ name: 'AddProduct' }"
                 class="link"
                 style="background-color:#6A4029;color:white;padding:5px;border-radius:25px;margin-left:25px;font-weight:500;padding:10px;border:none"
                 >Add Product</router-link
               >
-              <b-nav fill align="center" class="font2" style="font-size: 20px">
+              <b-nav fill align="center" class="font2 nav-font-size">
                 <b-nav-item
                   ><router-link to="#" class="link"
                     >Favorite & Promo</router-link
@@ -70,7 +70,10 @@
                   >
                 </b-nav-item-dropdown>
               </b-nav>
-              <div style="margin-top:30px">
+              <div
+                style="margin-top:30px"
+                class="animate__animated animate__fadeIn"
+              >
                 <b-row>
                   <b-col
                     xl="3"
@@ -182,7 +185,8 @@ export default {
       products: 'getDataProduct',
       page: 'getPageProduct',
       limit: 'getLimitProduct',
-      rows: 'getTotalRowsProduct'
+      rows: 'getTotalRowsProduct',
+      setUser: 'setUser'
     })
     // rows() {
     //   return this.totalRows
@@ -230,6 +234,9 @@ export default {
 </script>
 
 <style>
+.nav-font-size {
+  font-size: 20px;
+}
 .font1 {
   font-family: 'Poppins', sans-serif;
 }
@@ -268,5 +275,25 @@ export default {
   position: absolute;
   top: 15px;
   left: 120px;
+}
+
+@media only screen and (max-width: 600px) {
+  .nav-font-size {
+    font-size: 17px;
+  }
+  .card-item {
+    max-width: 9rem;
+    height: 13rem;
+    width: 9rem;
+  }
+  .item-img {
+    width: 110px;
+    height: 110px;
+  }
+  .badge-pos {
+    position: absolute;
+    top: 15px;
+    left: 100px;
+  }
 }
 </style>

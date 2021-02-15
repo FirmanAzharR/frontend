@@ -4,7 +4,8 @@ export default {
   modules: {},
   state: {
     user: {},
-    token: localStorage.getItem('token') || null
+    token: localStorage.getItem('token') || null,
+    typePage: 'signin'
   },
   mutations: {
     setUser(state, payload) {
@@ -14,6 +15,9 @@ export default {
     delUser(state) {
       state.user = {}
       state.token = null
+    },
+    setPage(state, payload) {
+      state.typePage = payload
     }
   },
   actions: {
@@ -24,6 +28,18 @@ export default {
           .then(result => {
             context.commit('setUser', result.data.data)
             localStorage.setItem('token', result.data.data.token)
+            resolve(result)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
+    },
+    forgotPass(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(`${process.env.VUE_APP_PORT}/user/forgot`, payload)
+          .then(result => {
             resolve(result)
           })
           .catch(error => {
@@ -82,6 +98,9 @@ export default {
     },
     setUser(state) {
       return state.user
+    },
+    getPage(state) {
+      return state.typePage
     }
   }
 }

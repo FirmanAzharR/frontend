@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container>
+    <b-container class="">
       <div class="d-flex justify-content-between" style="padding:30px">
         <div class="align-self-center" style="font-weight:bold;font-size:20px">
           <img
@@ -10,15 +10,12 @@
           />Coffeeland
         </div>
         <div class="align-self-center">
-          <b-button
-            class="btn-style"
-            :value="typeForm"
-            @click="changeForm('signin')"
+          <b-button class="btn-style" @click="setPage('signin')"
             >Login</b-button
           >
         </div>
       </div>
-      <div style="padding:80px;margin-top:20px">
+      <div class="padding-signup">
         <h3
           style="text-align:center;color:#7d4f2a;margin-bottom:50px;font-weight:bold"
         >
@@ -41,6 +38,7 @@
             type="password"
             class="input"
             placeholder="Enter your password"
+            autocomplete="current-password"
             required
           ></b-form-input>
           <label for="" class="label-input">Phone Number :</label>
@@ -78,11 +76,10 @@
           </h6>
           <br />
           <b-button
-            :value="typeForm"
-            @click="changeForm('signin')"
             block
             class="btn-style2 shadow"
             style="color:white;background-color:#6A4029"
+            @click="setPage('signin')"
             >Login here</b-button
           ><br />
         </b-form>
@@ -92,10 +89,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
-  props: ['typeForm'],
   name: 'SignUp',
   data() {
     return {
@@ -108,12 +104,8 @@ export default {
     }
   },
   methods: {
-    // mapaction dan mapmutation
     ...mapActions(['signup']),
-    changeForm(data) {
-      const changeForm = data
-      this.$emit('changeForm', changeForm)
-    },
+    ...mapMutations(['setPage']),
     makeToast(bodyMsg, msg, variant) {
       this.$bvToast.toast(bodyMsg, {
         title: msg,
@@ -149,6 +141,10 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Rubik:wght@300;400;500;600;700&display=swap');
 .rubik {
   font-family: 'Rubik', sans-serif;
+}
+.padding-signup {
+  padding: 80px;
+  margin-top: 20px;
 }
 .responsive {
   width: 100%;
@@ -187,5 +183,11 @@ export default {
   -webkit-box-shadow: 1px 2px 8px 0px #2e2d2d54;
   -moz-box-shadow: 1px 2px 8px 0px #2e2d2d54;
   box-shadow: 1px 2px 8px 0px #2e2d2d54;
+}
+@media only screen and (max-width: 600px) {
+  .padding-signup {
+    padding: 30px;
+    margin-top: 10px;
+  }
 }
 </style>

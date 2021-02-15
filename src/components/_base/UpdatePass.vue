@@ -15,20 +15,31 @@
       </div>
       <div class="padding-forgot">
         <h1 class="font-sm" style="text-align:center;font-weight:bold">
-          Forgot your password?
+          Update your password !
         </h1>
         <br />
-        <h4 class="font-sm2" style="margin-bottom:100px;text-align:center">
+        <h4 class="font-sm2 margin-btm" style="text-align:center">
           Don’t worry, we got your back!
         </h4>
-        <b-form @submit.prevent="sendMail">
+        <b-form @submit.prevent="updateForgotPass">
+          <label for="" class="label-input">New password</label>
           <b-form-input
-            type="email"
+            type="password"
             class="input"
             autocomplete="off"
-            placeholder="Enter your email address to get link"
+            placeholder="Enter new password"
             required
-            v-model="email"
+            v-model="form.newPass"
+          ></b-form-input
+          ><br />
+          <label for="" class="label-input">Confirm password</label>
+          <b-form-input
+            type="password"
+            class="input"
+            autocomplete="off"
+            placeholder="Confirm new password"
+            required
+            v-model="form.confirmPass"
           ></b-form-input
           ><br />
           <b-button
@@ -36,49 +47,26 @@
             class="btn-style2 shadow"
             style="background-color:#FFBA33;color:#7D4F2A"
             type="submit"
-            >Send</b-button
+            v-if="form.newPass === form.confirmPass"
+            >Save Changes</b-button
           >
-          <h6
-            style="margin-bottom:40px;margin-top:40px;text-align:center"
-            v-if="sendNotif === 1"
+          <b-button
+            block
+            class="btn-style2 shadow"
+            type="submit"
+            v-else
+            disabled
+            >Save Changes</b-button
           >
-            <b-icon
-              icon="circle-fill"
-              animation="throb"
-              font-scale="1"
-            ></b-icon>
-            Sending , Please Wait . . .
-          </h6>
-          <h6
-            style="margin-bottom:40px;margin-top:40px;text-align:center"
-            v-if="sendNotif === 2"
-          >
-            <b-icon
-              icon="arrow-clockwise"
-              animation="spin"
-              font-scale="1"
-            ></b-icon>
-            Failed send link reset password, Please try again or Check your
-            email
-          </h6>
-          <h6 style="margin-bottom:40px;margin-top:40px;text-align:center">
-            Click Resend Link if you didn’t receive any link in 2 minutes
-          </h6>
+          <br />
           <b-button
             block
             class="btn-style2 shadow"
             style="color:white;background-color:#6A4029"
-            type="submit"
-            >Resend Link</b-button
+            @click="setPage('signin')"
+            >Login here</b-button
           ><br />
         </b-form>
-        <b-button
-          block
-          class="btn-style2 shadow"
-          style="color:white;background-color:#6A4029"
-          @click="setPage('signin')"
-          >Login here</b-button
-        ><br />
       </div>
     </b-container>
   </div>
@@ -86,31 +74,36 @@
 
 <script>
 import { mapActions, mapMutations } from 'vuex'
-import alertMixin from '../../mixins/alertMixin.js'
+import alertMixin from '../../mixins/alertMixin'
 export default {
-  name: 'Forgot',
+  name: 'UpdatePass',
   mixins: [alertMixin],
   data() {
     return {
-      email: '',
-      sendNotif: 0
+      form: {
+        confirmPass: '',
+        newPass: '',
+        key: ''
+      }
     }
   },
+  created() {},
   methods: {
-    ...mapActions(['forgotPass']),
+    ...mapActions(['updateForgotPassword']),
     ...mapMutations(['setPage']),
-    sendMail() {
-      this.sendNotif = 1
-      const dataMail = {
-        email: this.email
+    updateForgotPass() {
+      this.form.key = this.$route.query.key
+      const setData = {
+        key_reset: this.form.key,
+        new_pass: this.form.newPass
       }
-      this.forgotPass(dataMail)
+      this.updateForgotPassword(setData)
         .then(result => {
-          this.sendNotif = 0
           this.makeToast('Done', `${result.data.msg}`, 'success')
+          this.form.newPass = ''
+          this.form.confirmPass = ''
         })
         .catch(error => {
-          this.sendNotif = 2
           this.makeToast('Failed', `${error.data.msg}`, 'danger')
         })
     }
@@ -127,6 +120,9 @@ export default {
   width: 100%;
   height: auto;
 }
+.margin-btm {
+  margin-bottom: 100px;
+}
 .btn-style {
   padding: 10px;
   width: 120px;
@@ -142,6 +138,14 @@ export default {
   border-radius: 20px;
   font-weight: 600;
   border: none;
+}
+.btn-style2:disabled {
+  padding: 10px;
+  height: 55px;
+  border-radius: 20px;
+  font-weight: 600;
+  border: none;
+  background-color: darkgrey;
 }
 .label-input {
   color: #868b95;
@@ -175,6 +179,9 @@ export default {
   }
   .font-sm2 {
     font-size: 20px;
+  }
+  .margin-btm {
+    margin-bottom: 50px;
   }
 }
 </style>

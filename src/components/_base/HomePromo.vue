@@ -19,6 +19,7 @@
         >
           <div style="font-size: 2rem;position: absolute;right:10px;top:0px;">
             <router-link
+              v-if="setUser.user_role === 1"
               :to="{
                 name: 'EditCoupon',
                 params: { id: item.id_coupon }
@@ -32,6 +33,7 @@
               ></b-icon>
             </router-link>
             <div
+              v-if="setUser.user_role === 1"
               style="font-size: 2rem;position: absolute;right:0px;top:80px;cursor:pointer;"
             >
               <b-icon
@@ -59,7 +61,11 @@
             </div>
           </div>
         </b-card>
-        <router-link to="/addcoupon" class="link">
+        <router-link
+          to="/addcoupon"
+          class="link"
+          v-if="setUser.user_role === 1"
+        >
           <b-button block id="btn">
             Add Coupon
           </b-button>
@@ -104,7 +110,7 @@ export default {
     this.getCoupon()
   },
   computed: {
-    ...mapGetters(['getCoupons', 'getCouponName'])
+    ...mapGetters(['getCoupons', 'getCouponName', 'setUser'])
   },
   methods: {
     ...mapActions(['getCoupon', 'deleteCoupon', 'getCouponsById']),

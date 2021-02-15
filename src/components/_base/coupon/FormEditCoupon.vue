@@ -48,6 +48,7 @@
                   Browse Image
                 </button>
               </div>
+              <br /><br />
             </div>
           </b-col>
           <b-col xl="8" lg="8" md="8" sm="12">

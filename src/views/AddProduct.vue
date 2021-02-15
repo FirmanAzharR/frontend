@@ -4,7 +4,7 @@
       <Navbar />
       <b-container
         fluid
-        class="bv-example-row"
+        class="bv-example-row animate__animated animate__fadeIn"
         style="border-top: 1px solid #d2d2d2;"
       >
         <div>
@@ -53,7 +53,7 @@
                     Browse Image
                   </button>
                 </div>
-                <div style="margin-top:70px">
+                <div class="space">
                   <h6>Delivery Hour:</h6>
                   <b-form-input
                     class="input"
@@ -70,7 +70,7 @@
                     required
                   ></b-form-input>
                 </div>
-                <div style="margin-top:100px">
+                <div class="space2">
                   <h6>Input stok</h6>
                   <b-form-input
                     class="input"
@@ -168,16 +168,16 @@
                     >Take Away</b-button
                   >
                 </div>
-                <div style="margin-top:60px;margin-bottom:60px">
+                <div class="space3">
                   <b-button
                     type="submit"
-                    class="btn-style2"
-                    style="background-color:#6A4029;width:250px;margin-right:100px"
+                    class="btn-style2 margin-right"
+                    style="background-color:#6A4029;"
                     >Save</b-button
                   >
                   <b-button
                     class="btn-style2"
-                    style="background-color:#E7EAED;color:#7B7B7B;width:250px"
+                    style="background-color:#E7EAED;color:#7B7B7B;"
                     >Cancle</b-button
                   >
                 </div>
@@ -375,20 +375,43 @@ export default {
             this.onReset()
           })
           .catch(error => {
-            this.makeToast('Insert Product Failed', error.response, 'danger')
+            this.makeToast('Insert Product Failed', error.data.msg, 'danger')
           })
       }
     },
     handleFile(e) {
-      console.log(e.target.files[0])
-      const file = (this.form.product_img = e.target.files[0])
-      this.url = URL.createObjectURL(file)
+      if (
+        (e.target.files[0].type !== 'image/png') &
+        (e.target.files[0].type != 'image/jpeg')
+      ) {
+        this.makeToast(
+          'Image must be JPG or PNG',
+          'Wrong format image',
+          'warning'
+        )
+      } else {
+        const file = (this.form.product_img = e.target.files[0])
+        this.url = URL.createObjectURL(file)
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+.margin-right {
+  margin-right: 100px;
+}
+.space {
+  margin-top: 70px;
+}
+.space2 {
+  margin-top: 100px;
+}
+.space3 {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
 .style-size {
   border-radius: 50%;
   width: 50px;
@@ -441,7 +464,7 @@ export default {
   border-radius: 15px;
 }
 .btn-style2 {
-  width: auto;
+  width: 250px;
   padding: 17px;
   font-weight: bold;
   border: none;
@@ -464,5 +487,45 @@ export default {
   width: 170px;
   height: 170px;
   border-radius: 50%;
+  object-fit: cover;
+}
+
+@media only screen and (max-width: 600px) {
+  .space {
+    margin-top: 30px;
+  }
+  .space2 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  .input {
+    width: 320px !important;
+    margin-bottom: 20px !important;
+  }
+  .style-size2 {
+    width: 200px;
+    margin-bottom: 10px;
+  }
+  .style-size2Click {
+    width: 200px;
+    margin-bottom: 10px;
+  }
+  .space3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .btn-style2 {
+    width: 300px;
+    margin-bottom: 20px;
+  }
+  .margin-right {
+    margin-right: 0px;
+  }
+  .style-size {
+    margin-right: 30px;
+  }
+  .style-sizeClick {
+    margin-right: 30px;
+  }
 }
 </style>

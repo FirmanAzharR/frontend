@@ -39,6 +39,36 @@ export default {
             reject(error.response)
           })
       })
+    },
+    updatePassword(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(
+            `${process.env.VUE_APP_PORT}/profile/password/${payload.id}`,
+            payload.data
+          )
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
+    },
+    updateForgotPassword(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(
+            `${process.env.VUE_APP_PORT}/profile/forgot/password/update`,
+            payload
+          )
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
     }
   },
   getters: {

@@ -43,6 +43,7 @@
                 </button>
               </div>
             </div>
+            <br /><br />
           </b-col>
           <b-col xl="8" lg="8" md="8" sm="12">
             <h6>Coupon Name</h6>
