@@ -40,8 +40,46 @@
                 >History</router-link
               ></b-nav-item
             >
+            <b-nav-item>
+              <b-form-input
+                id="search"
+                style=""
+                placeholder="Search Product"
+                type="text"
+                v-model="cari"
+                @keyup.enter="search"
+              >
+              </b-form-input>
+            </b-nav-item>
+            <b-nav-item>
+              <router-link to="/profile" class="link">
+                <img
+                  v-if="
+                    getProfile.user_img === '' || getProfile.user_img === 'none'
+                  "
+                  style="border-radius:50%;width:25px;height:25px;object-fit:cover"
+                  src="../../assets/img/user-no-img.png"
+                  alt=""/>
+                <img
+                  v-else
+                  style="border-radius:50%;width:35px;height:35px;object-fit:cover"
+                  :src="'http://localhost:5000/profile/' + getProfile.user_img"
+                  alt=""
+              /></router-link>
+            </b-nav-item>
+            <b-nav-item v-if="role !== undefined" @click="handleLogout"
+              ><router-link to="#" class="link">Logout</router-link></b-nav-item
+            >
+            <b-nav-item
+              ><router-link
+                to="/login"
+                class="btn-login"
+                v-if="role === undefined"
+                >Login</router-link
+              ></b-nav-item
+            >
           </b-nav>
-          <b-nav>
+          <!-- <b-nav>
             <b-form-input
               id="search"
               style=""
@@ -51,14 +89,14 @@
               @keyup.enter="search"
             >
             </b-form-input>
-          </b-nav>
-          <b-navbar-nav class="ml-5">
-            <b-navbar-nav right>
-              <b-nav-item v-if="role !== undefined"
+          </b-nav> -->
+          <!-- <b-navbar-nav class="ml-5">
+            <b-navbar-nav right> -->
+          <!-- <b-nav-item v-if="role !== undefined"
                 ><router-link to="#" class="link"
                   ><img src="../../assets/img/chat.png" alt=""/></router-link
-              ></b-nav-item>
-              <b-nav-item v-if="role !== undefined"
+              ></b-nav-item> -->
+          <!-- <b-nav-item v-if="role !== undefined"
                 ><router-link to="/profile" class="link">
                   <img
                     v-if="
@@ -75,27 +113,27 @@
                       'http://localhost:5000/profile/' + getProfile.user_img
                     "
                     alt=""/></router-link
-              ></b-nav-item>
-              <b-nav-item
+              ></b-nav-item> -->
+          <!-- <b-nav-item
                 ><router-link
                   to="/login"
                   class="btn-login"
                   v-if="role === undefined"
                   >Login</router-link
                 ></b-nav-item
-              >
-              <b-nav-item v-if="role !== undefined" @click="handleLogout"
+              > -->
+          <!-- <b-nav-item v-if="role !== undefined" @click="handleLogout"
                 ><router-link to="#" class="link"
                   >Logout</router-link
                 ></b-nav-item
-              >
-              <!-- <b-nav-item
+              > -->
+          <!-- <b-nav-item
                 ><router-link to="/login" id="btn" v-if="role === undefined"
                   >Sign Up</router-link
                 ></b-nav-item
               > -->
-            </b-navbar-nav>
-          </b-navbar-nav>
+          <!-- </b-navbar-nav>
+          </b-navbar-nav> -->
         </b-collapse>
       </b-navbar>
     </b-container>
