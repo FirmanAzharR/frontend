@@ -61,20 +61,20 @@
                 </div>
                 <div style="margin-top:70px">
                   <h6>Delivery Hour:</h6>
-                  <b-form-input
+                  <label>Start</label>
+                  <b-form-timepicker
                     class="input"
-                    type="text"
-                    placeholder="select start hour"
                     v-model="productById.delivery_hour_start"
-                  ></b-form-input>
-                  <b-form-input
+                    locale="id"
+                  ></b-form-timepicker>
+                  <label>End</label>
+                  <b-form-timepicker
                     class="input"
-                    type="text"
-                    placeholder="select end hour"
                     v-model="productById.delivery_hour_end"
-                  ></b-form-input>
+                    locale="id"
+                  ></b-form-timepicker>
                 </div>
-                <div style="margin-top:100px">
+                <div class="margin-input">
                   <h6>Input stok</h6>
                   <b-form-input
                     class="input"
@@ -136,7 +136,7 @@
                 <div style="margin-bottom:25px">
                   <h6>Product Size</h6>
                   <p>* Click size you want to use for this product</p>
-                  <div class="d-flex">
+                  <div class="d-flex justify-content-center">
                     <b-button
                       :class="R !== '' ? 'style-sizeClick' : 'style-size'"
                       @click="addSize('R', 1)"
@@ -157,32 +157,41 @@
                 <div>
                   <h6>Input Delivery Methods</h6>
                   <p>* Click method you want to use for this product</p>
-                  <b-button
-                    :class="home !== '' ? 'style-size2Click' : 'style-size2'"
-                    @click="addDeliver('home', 1)"
-                    >Home Delivery</b-button
-                  >
-                  <b-button
-                    :class="dineIn !== '' ? 'style-size2Click' : 'style-size2'"
-                    @click="addDeliver('dineIn', 2)"
-                    >Dine in</b-button
-                  >
-                  <b-button
-                    :class="take !== '' ? 'style-size2Click' : 'style-size2'"
-                    @click="addDeliver('take', 3)"
-                    >Take Away</b-button
-                  >
+                  <center>
+                    <b-button
+                      style="margin-bottom:10px !important"
+                      :class="home !== '' ? 'style-size2Click' : 'style-size2'"
+                      @click="addDeliver('home', 1)"
+                      >Home Delivery</b-button
+                    >
+                    <b-button
+                      style="margin-bottom:10px"
+                      :class="
+                        dineIn !== '' ? 'style-size2Click' : 'style-size2'
+                      "
+                      @click="addDeliver('dineIn', 2)"
+                      >Dine in</b-button
+                    >
+                    <b-button
+                      style="margin-bottom:10px"
+                      :class="take !== '' ? 'style-size2Click' : 'style-size2'"
+                      @click="addDeliver('take', 3)"
+                      >Take Away</b-button
+                    >
+                  </center>
                 </div>
-                <div style="margin-top:60px;margin-bottom:60px">
+                <div
+                  style="margin-top:60px;margin-bottom:60px;text-align:center"
+                >
                   <b-button
                     type="submit"
                     class="btn-style2"
-                    style="background-color:#6A4029;width:250px;margin-right:100px"
+                    style="background-color:#6A4029;width:250px;margin:10px"
                     >Save Changes</b-button
                   >
                   <b-button
                     class="btn-style2"
-                    style="background-color:#E7EAED;color:#7B7B7B;width:250px"
+                    style="background-color:#E7EAED;color:#7B7B7B;width:250px;margin:10px"
                     >Cancle</b-button
                   >
                 </div>
@@ -233,33 +242,18 @@ export default {
     this.size = this.productById.product_size.split(',').map(function(item) {
       return parseInt(item, 10)
     })
+    this.getSize(1)
+    this.getSize(2)
+    this.getSize(3)
+
     this.deliveMethods = this.productById.delivery_methods
       .split(',')
       .map(function(deliv) {
         return parseInt(deliv, 10)
       })
-    const x = this.size.length
-    if ((x > 0) & (x < 2)) {
-      this.R = 'R'
-    } else if ((x > 1) & (x < 3)) {
-      this.R = 'R'
-      this.L = 'L'
-    } else if ((x > 2) & (x < 4)) {
-      this.R = 'R'
-      this.L = 'L'
-      this.XL = 'XL'
-    }
-    const y = this.deliveMethods.length
-    if ((y > 0) & (y < 2)) {
-      this.home = 'home'
-    } else if ((y > 1) & (y < 3)) {
-      this.home = 'home'
-      this.dineIn = 'dineIn'
-    } else if ((y > 2) & (y < 4)) {
-      this.home = 'home'
-      this.dineIn = 'dineIn'
-      this.take = 'take'
-    }
+    this.getDeliveMethods(1)
+    this.getDeliveMethods(2)
+    this.getDeliveMethods(3)
   },
   computed: {
     ...mapGetters({
@@ -268,6 +262,26 @@ export default {
   },
   methods: {
     ...mapActions(['getProductById', 'patchProducts']),
+    getSize(val) {
+      const x = this.size.indexOf(val)
+      if ((val === 1) & (x !== -1)) {
+        this.R = 'R'
+      } else if ((val === 2) & (x !== -1)) {
+        this.L = 'L'
+      } else if ((val === 3) & (x !== -1)) {
+        this.XL = 'XL'
+      }
+    },
+    getDeliveMethods(val) {
+      const x = this.deliveMethods.indexOf(val)
+      if ((val === 1) & (x !== -1)) {
+        this.home = 'home'
+      } else if ((val === 2) & (x !== -1)) {
+        this.dineIn = 'dineIn'
+      } else if ((val === 3) & (x !== -1)) {
+        this.take = 'take'
+      }
+    },
     removeArr(type, value) {
       if (type === 'size') {
         const index = this.size.indexOf(value)
@@ -394,6 +408,9 @@ export default {
 </script>
 
 <style scoped>
+.margin-input {
+  margin-top: 100px;
+}
 .style-size {
   border-radius: 50%;
   width: 50px;
@@ -470,5 +487,11 @@ export default {
   height: 170px;
   border-radius: 50%;
   object-fit: cover;
+}
+@media only screen and (max-width: 600px) {
+  .margin-input {
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
 }
 </style>

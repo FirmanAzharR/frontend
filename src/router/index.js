@@ -12,6 +12,7 @@ import YourCart from '../views/YourCart.vue'
 import Dashboard from '../views/Dashboard.vue'
 import History from '../views/History.vue'
 import Profile from '../views/Profile.vue'
+import ConfirmOrder from '../views/ConfirmOrder.vue'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -86,6 +87,12 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/confirm-order',
+    name: 'Confirm',
+    component: ConfirmOrder,
     meta: { requiresAuth: true }
   }
 ]

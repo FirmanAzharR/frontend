@@ -8,6 +8,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { AvatarPlugin } from 'bootstrap-vue'
 import { BadgePlugin } from 'bootstrap-vue'
 import VueConfirmDialog from 'vue-confirm-dialog'
+import { FormTimepickerPlugin } from 'bootstrap-vue'
 import 'animate.css'
 Vue.use(VueConfirmDialog)
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
@@ -18,6 +19,7 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 Vue.config.productionTip = false
+Vue.use(FormTimepickerPlugin)
 
 Vue.directive('title', el => {
   ;(el.style.fontFamily = 'Rubik, sans-serif'),

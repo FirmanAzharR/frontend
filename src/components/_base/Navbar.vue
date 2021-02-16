@@ -4,20 +4,22 @@
     <b-container class="p-0">
       <b-navbar toggleable="lg" style="margin-top:20px;margin-bottom:20px;">
         <b-navbar-brand href="#" class="brand" style="font-size:23px">
-          <img
-            src="../../assets/img/coffee-logo.png"
-            width="30"
-            height="30"
-            class="d-inline-block align-top"
-            alt=""
-            loading="lazy"
-          />
-          Coffeeland
+          <router-link to="/" class="brand">
+            <img
+              src="../../assets/img/coffee-logo.png"
+              width="30"
+              height="30"
+              class="d-inline-block align-top"
+              alt=""
+              loading="lazy"
+            />
+            Coffeeland
+          </router-link>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-nav class="ml-auto">
-            <b-nav-item href="#"
+            <b-nav-item href="#" v-if="role !== 1"
               ><router-link to="/" class="link">Home</router-link></b-nav-item
             >
             <b-nav-item href="#" v-if="role !== undefined"
@@ -35,12 +37,17 @@
                 >Your Cart</router-link
               ></b-nav-item
             >
+            <b-nav-item href="#" v-if="role === 1"
+              ><router-link to="/confirm-order" class="link"
+                >Confirm Order</router-link
+              ></b-nav-item
+            >
             <b-nav-item href="#"
               ><router-link to="/history" class="link"
                 >History</router-link
               ></b-nav-item
             >
-            <b-nav-item>
+            <b-nav-item v-if="role !== undefined">
               <b-form-input
                 id="search"
                 style=""
@@ -51,7 +58,7 @@
               >
               </b-form-input>
             </b-nav-item>
-            <b-nav-item>
+            <b-nav-item v-if="role !== undefined">
               <router-link to="/profile" class="link">
                 <img
                   v-if="
@@ -198,7 +205,13 @@ export default {
 .brand {
   font-weight: bold;
   font-size: 20px;
+  color: #6a4029;
 }
+.brand:hover {
+  color: #6a4029;
+  text-decoration: none;
+}
+
 #search {
   border-radius: 15px;
   width: 150px;

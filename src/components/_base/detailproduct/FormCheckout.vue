@@ -49,15 +49,16 @@
         </p>
       </b-col>
     </b-row>
-
     <b-row style="margin-top:50px">
       <b-col xl="5" lg="5" md="12" sm="12">
         <div class=" d-flex justify-content-center align-items-center">
-          <b-card class="shadow-card card-style">
+          <b-card class="shadow-card card-style space">
             <div style="margin-bottom:20px">Delivery and Time</div>
             <div>
               <b-button
-                v-if="productById.delivery_methods.split(',').length > 0"
+                v-if="
+                  productById.delivery_methods.split(',').indexOf('1') !== -1
+                "
                 @click="addDelivery('dineIn')"
                 :class="
                   dineIn !== '' ? 'button-style-card2' : 'button-style-card'
@@ -65,7 +66,9 @@
                 >Dine in</b-button
               >
               <b-button
-                v-if="productById.delivery_methods.split(',').length > 1"
+                v-if="
+                  productById.delivery_methods.split(',').indexOf('2') !== -1
+                "
                 @click="addDelivery('home')"
                 :class="
                   home !== '' ? 'button-style-card2' : 'button-style-card'
@@ -73,7 +76,9 @@
                 >Door Delivery</b-button
               >
               <b-button
-                v-if="productById.delivery_methods.split(',').length > 2"
+                v-if="
+                  productById.delivery_methods.split(',').indexOf('3') !== -1
+                "
                 @click="addDelivery('take')"
                 :class="
                   take !== '' ? 'button-style-card2' : 'button-style-card'
@@ -111,6 +116,38 @@
                 v-else
                 v-model="timeReservation"
               />
+            </div>
+          </b-card>
+        </div>
+        <div
+          class=" d-flex justify-content-center align-items-center small-display space"
+        >
+          <b-card
+            class="shadow-card card-style d-flex justify-content-center align-items-center"
+            style="padding:10px"
+          >
+            <div style="text-align:center;margin-bottom:10px">
+              Choose a size
+            </div>
+            <div class="d-flex justify-content-center">
+              <b-button
+                v-if="productById.product_size.indexOf('1') !== -1"
+                :class="R !== '' ? 'style-sizeClick' : 'style-size'"
+                @click="addSize('R', 1)"
+                >R</b-button
+              >
+              <b-button
+                v-if="productById.product_size.indexOf('2') !== -1"
+                :class="L !== '' ? 'style-sizeClick' : 'style-size'"
+                @click="addSize('L', 2)"
+                >L</b-button
+              >
+              <b-button
+                v-if="productById.product_size.indexOf('3') !== -1"
+                :class="XL !== '' ? 'style-sizeClick' : 'style-size'"
+                @click="addSize('XL', 3)"
+                >XL</b-button
+              >
             </div>
           </b-card>
         </div>
@@ -178,7 +215,9 @@
     </b-row>
     <b-row style="margin-top:30px;margin-bottom:30px">
       <b-col xl="5" lg="5" md="12" sm="12">
-        <div class=" d-flex justify-content-center align-items-center">
+        <div
+          class=" d-flex justify-content-center align-items-center large-disp"
+        >
           <b-card
             class="shadow-card card-style d-flex justify-content-center align-items-center"
             style="padding:10px"
@@ -188,19 +227,19 @@
             </div>
             <div class="d-flex justify-content-center">
               <b-button
-                v-if="productById.product_size.split(',').length > 0"
+                v-if="productById.product_size.indexOf('1') !== -1"
                 :class="R !== '' ? 'style-sizeClick' : 'style-size'"
                 @click="addSize('R', 1)"
                 >R</b-button
               >
               <b-button
-                v-if="productById.product_size.split(',').length > 1"
+                v-if="productById.product_size.indexOf('2') !== -1"
                 :class="L !== '' ? 'style-sizeClick' : 'style-size'"
                 @click="addSize('L', 2)"
                 >L</b-button
               >
               <b-button
-                v-if="productById.product_size.split(',').length > 2"
+                v-if="productById.product_size.indexOf('3') !== -1"
                 :class="XL !== '' ? 'style-sizeClick' : 'style-size'"
                 @click="addSize('XL', 3)"
                 >XL</b-button
@@ -215,7 +254,7 @@
             <b-col cols="2">
               <div class="d-flex justify-content-center align-items-center">
                 <img
-                  style="border-radius:50%;width:90px"
+                  class="checkout-img"
                   :src="
                     'http://localhost:5000/product/' + productById.product_img
                   "
@@ -238,7 +277,10 @@
               cols="5"
               class="d-flex justify-content-center align-items-center"
             >
-              <h6 style="margin-right:20px;font-size:20px;font-weight:bold">
+              <h6
+                class="checkout-text"
+                style="margin-right:20px;font-size:20px;font-weight:bold"
+              >
                 Checkout
               </h6>
               <router-link to="/yourcart" class="link">
@@ -492,6 +534,9 @@ export default {
 </script>
 
 <style scoped>
+.small-display {
+  display: none;
+}
 .card-style {
   border: none;
   border-radius: 15px;
@@ -556,10 +601,29 @@ export default {
   -webkit-box-shadow: 1px 3px 12px 2px #2e2d2d54;
   box-shadow: 1px 3px 10px 0px #2e2d2d54;
 }
-
 .shadow-card {
   -webkit-box-shadow: 1px 3px 10px 0px #2e2d2d54;
   -moz-box-shadow: 1px 3px 10px 0px #2e2d2d54;
   box-shadow: 1px 3px 10px 0px #2e2d2d54;
+}
+.checkout-img {
+  border-radius: 50%;
+  width: 90px;
+}
+
+@media only screen and (max-width: 600px) {
+  .checkout-text {
+    display: none !important;
+  }
+  .checkout-img {
+    width: 70px;
+    margin-left: 30px;
+  }
+  .large-disp {
+    display: none !important;
+  }
+  .space {
+    margin-bottom: 20px;
+  }
 }
 </style>
