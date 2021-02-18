@@ -120,7 +120,7 @@
           </b-card>
         </div>
         <div
-          class=" d-flex justify-content-center align-items-center small-display space"
+          class="small-display d-flex justify-content-center align-items-center space"
         >
           <b-card
             class="shadow-card card-style d-flex justify-content-center align-items-center"
@@ -535,7 +535,7 @@ export default {
 
 <style scoped>
 .small-display {
-  display: none;
+  display: none !important;
 }
 .card-style {
   border: none;
