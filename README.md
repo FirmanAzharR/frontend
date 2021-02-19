@@ -1,4 +1,4 @@
-<h1 align='center'>Vue JS - Coffeeland - Coffeeshop</h1>
+<h1 align='center'>Vue JS - Coffeeland</h1>
   <p align="center">
     <a href="https://coffeeland-shop.netlify.app/">View Demo</a>
     ·
