@@ -11,7 +11,7 @@
 
 ## About The Project
 
-Coffeeland is a website designed for the sale of existing products at Coffeeland cafes
+Coffeeland is an application developed to sell food and beverages in Coffeeland cafes. This application was developed using Express Js on the backend and Vue Js on the frontend.
 
 ## Built With
 

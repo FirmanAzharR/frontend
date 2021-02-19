@@ -534,9 +534,9 @@ export default {
 </script>
 
 <style scoped>
-.small-display {
+/* .small-display {
   display: none !important;
-}
+} */
 .card-style {
   border: none;
   border-radius: 15px;
@@ -619,9 +619,9 @@ export default {
     width: 70px;
     margin-left: 30px;
   }
-  .large-disp {
+  /* .large-disp {
     display: none !important;
-  }
+  } */
   .space {
     margin-bottom: 20px;
   }
