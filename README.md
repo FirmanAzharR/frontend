@@ -42,6 +42,6 @@ VUE_APP_URL=localhost:5000
 - [Axios](https://www.npmjs.com/package/axios)
 - [Vuex](https://vuex.vuejs.org/)
 
-## License - TEAM GDJ
+## License
 
 © [Firman Azhar Riyadi](https://github.com/FirmanAzharR)<br>
