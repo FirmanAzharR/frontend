@@ -100,7 +100,7 @@
                               :src="
                                 item.product_img === ''
                                   ? require('../assets/img/food-1.png')
-                                  : 'http://localhost:5000/product/' +
+                                  : 'http://localhost:5000/api1/fileUploadsApi1/product/' +
                                     item.product_img
                               "
                               alt=""
