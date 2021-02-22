@@ -33,7 +33,9 @@
                     <img
                       v-else
                       class="round-img"
-                      :src="'http://localhost:5000/profile/' + form.user_img"
+                      :src="
+                        `${ENV}/api1/fileUploadsApi1/profile/` + form.user_img
+                      "
                       alt=""
                     />
                     <b-iconstack
@@ -274,6 +276,7 @@ export default {
   },
   data() {
     return {
+      ENV: `${process.env.VUE_APP_PORT}`,
       url: null,
       loading: 0,
       oldPass: '',
@@ -350,8 +353,20 @@ export default {
     },
     handleFile(e) {
       console.log(e.target.files[0])
-      const file = (this.form.user_img = e.target.files[0])
-      this.url = URL.createObjectURL(file)
+      if (
+        (e.target.files[0].type !== 'image/png') &
+        (e.target.files[0].type !== 'image/jpg') &
+        (e.target.files[0].type !== 'image/jpeg')
+      ) {
+        this.makeToast(
+          'Update Profil Failed',
+          'File must be PNG,JPG or JPEG',
+          'danger'
+        )
+      } else {
+        const file = (this.form.user_img = e.target.files[0])
+        this.url = URL.createObjectURL(file)
+      }
     },
     onSubmit() {
       const {

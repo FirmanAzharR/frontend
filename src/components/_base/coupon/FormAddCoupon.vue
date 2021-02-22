@@ -216,7 +216,7 @@ export default {
           //this.onReset()
         })
         .catch(error => {
-          this.makeToast('Insert Coupon Failed', error, 'danger')
+          this.makeToast('Insert Coupon Failed', error.data.msg, 'danger')
         })
     }
   }

@@ -70,7 +70,9 @@
                 <img
                   v-else
                   style="border-radius:50%;width:35px;height:35px;object-fit:cover"
-                  :src="'http://localhost:5000/profile/' + getProfile.user_img"
+                  :src="
+                    `${ENV}/api1/fileUploadsApi1/profile/` + getProfile.user_img
+                  "
                   alt=""
               /></router-link>
             </b-nav-item>
@@ -154,7 +156,8 @@ export default {
   data() {
     return {
       cari: '',
-      role: ''
+      role: '',
+      ENV: `${process.env.VUE_APP_PORT}`
     }
   },
   created() {

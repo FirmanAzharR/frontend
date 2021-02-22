@@ -23,7 +23,9 @@
                 <img
                   v-else
                   class="round-img"
-                  :src="'http://localhost:5000/coupon/' + cobaset.coupon_img"
+                  :src="
+                    `${ENV}/api1/fileUploadsApi1/coupon/` + cobaset.coupon_img
+                  "
                   alt=""
                 />
               </div>
@@ -152,6 +154,7 @@ export default {
   name: 'EditCoupon',
   data() {
     return {
+      ENV: `${process.env.VUE_APP_PORT}`,
       url: null,
       couponId: (this.id = this.$route.params.id),
       coupon_start: '',
@@ -211,8 +214,7 @@ export default {
           //this.onReset()
         })
         .catch(error => {
-          console.log(error.msg)
-          this.makeToast('Update Coupon Failed', error, 'danger')
+          this.makeToast('Update Coupon Failed', error.data.msg, 'danger')
         })
     }
   }

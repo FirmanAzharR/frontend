@@ -50,7 +50,7 @@
               :src="
                 item.coupon_img === ''
                   ? require('../../assets/img/aside-icon2.png')
-                  : 'http://localhost:5000/coupon/' + item.coupon_img
+                  : `${ENV}/api1/fileUploadsApi1/coupon/` + item.coupon_img
               "
               alt="img"
               class="img"
@@ -103,6 +103,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      ENV: `${process.env.VUE_APP_PORT}`,
       couponId: ''
     }
   },

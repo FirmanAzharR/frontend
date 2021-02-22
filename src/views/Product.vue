@@ -100,7 +100,7 @@
                               :src="
                                 item.product_img === ''
                                   ? require('../assets/img/food-1.png')
-                                  : 'http://localhost:5000/api1/fileUploadsApi1/product/' +
+                                  : `${ENV}/api1/fileUploadsApi1/product/` +
                                     item.product_img
                               "
                               alt=""
@@ -169,6 +169,7 @@ export default {
   },
   data() {
     return {
+      ENV: `${process.env.VUE_APP_PORT}`,
       user: 1,
       // products: [],
       // productSearch: '',

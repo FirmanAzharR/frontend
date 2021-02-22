@@ -18,7 +18,8 @@
                     :src="
                       item.coupon_img === ''
                         ? require('../assets/img/aside-icon2.png')
-                        : 'http://localhost:5000/coupon/' + item.coupon_img
+                        : `${ENV}/api1/fileUploadsApi1/coupon/` +
+                          item.coupon_img
                     "
                     alt="img"
                     class="img"
@@ -68,7 +69,10 @@
                     <h4 style="cursor:pointer" @click="removeCart(index)">-</h4>
                     <img
                       class="order-img"
-                      :src="'http://localhost:5000/product/' + item.product_img"
+                      :src="
+                        `${ENV}/api1/fileUploadsApi1/product/` +
+                          item.product_img
+                      "
                       alt=""
                     />
                     <div class="sm-font">
@@ -235,6 +239,7 @@ export default {
   },
   data() {
     return {
+      ENV: `${process.env.VUE_APP_PORT}`,
       invoice: '',
       selected: '',
       carts: [],

@@ -36,7 +36,7 @@ export default {
             resolve(response)
           })
           .catch(error => {
-            reject(error.response)
+            reject(error.response.data.msg)
           })
       })
     },

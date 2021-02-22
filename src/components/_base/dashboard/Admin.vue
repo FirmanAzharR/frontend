@@ -9,7 +9,12 @@
           <div class="shadow card-style">
             <b-card sub-title="Today Income" class="card-style">
               <b-card-text style="margin:20px 0px">
-                <h3>Rp. {{ getCard.today[0].total_transaksi }}</h3>
+                <h3 v-if="getCard.today[0].total_transaksi !== null">
+                  Rp. {{ getCard.today[0].total_transaksi }}
+                </h3>
+                <h3 v-else>
+                  Rp. 0
+                </h3>
               </b-card-text>
             </b-card>
           </div>

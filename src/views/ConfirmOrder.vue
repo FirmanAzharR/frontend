@@ -23,7 +23,10 @@
                   >
                     <img
                       class="order-img"
-                      :src="'http://localhost:5000/product/' + item.product_img"
+                      :src="
+                        `${ENV}/api1/fileUploadsApi1/product/` +
+                          item.product_img
+                      "
                       alt=""
                     />
                     <div class="sm-font">
@@ -212,6 +215,7 @@ export default {
   },
   data() {
     return {
+      ENV: `${process.env.VUE_APP_PORT}`,
       clickStatus: 0,
       selected: '',
       res: '',

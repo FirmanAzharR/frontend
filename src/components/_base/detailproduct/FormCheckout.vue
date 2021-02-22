@@ -25,7 +25,9 @@
             <img
               v-else
               class="round-img"
-              :src="'http://localhost:5000/product/' + productById.product_img"
+              :src="
+                `${ENV}/api1/fileUploadsApi1/product/` + productById.product_img
+              "
               alt=""
               style="background-color:#d2d2d2;border-radius:50%;width:170px;height:170px"
             />
@@ -256,7 +258,8 @@
                 <img
                   class="checkout-img"
                   :src="
-                    'http://localhost:5000/product/' + productById.product_img
+                    `${ENV}/api1/fileUploadsApi1/product/` +
+                      productById.product_img
                   "
                   alt=""
                 />
@@ -303,6 +306,7 @@ export default {
   name: 'FormDetailProduct',
   data() {
     return {
+      ENV: `${process.env.VUE_APP_PORT}`,
       home: '',
       dineIn: '',
       take: '',
@@ -534,9 +538,9 @@ export default {
 </script>
 
 <style scoped>
-/* .small-display {
+.small-display {
   display: none !important;
-} */
+}
 .card-style {
   border: none;
   border-radius: 15px;
@@ -612,6 +616,10 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
+  .small-display {
+    display: flex !important;
+    margin-bottom: 20px;
+  }
   .checkout-text {
     display: none !important;
   }
@@ -619,9 +627,9 @@ export default {
     width: 70px;
     margin-left: 30px;
   }
-  /* .large-disp {
+  .large-disp {
     display: none !important;
-  } */
+  }
   .space {
     margin-bottom: 20px;
   }

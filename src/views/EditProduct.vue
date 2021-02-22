@@ -37,7 +37,8 @@
                     v-else
                     class="round-img"
                     :src="
-                      'http://localhost:5000/product/' + productById.product_img
+                      `${ENV}/api1/fileUploadsApi1/product/` +
+                        productById.product_img
                     "
                     alt=""
                   />
@@ -217,6 +218,7 @@ export default {
   },
   data() {
     return {
+      ENV: `${process.env.VUE_APP_PORT}`,
       R: '',
       L: '',
       XL: '',
@@ -384,8 +386,7 @@ export default {
           // }, 1500)
         })
         .catch(error => {
-          console.log(error)
-          this.makeToast('Insert Product Failed', error, 'danger')
+          this.makeToast('Insert Product Failed', error.data.msg, 'danger')
         })
     },
     handleFile(e) {
