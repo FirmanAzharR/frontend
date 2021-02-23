@@ -365,9 +365,9 @@ export default {
         data.append('delivery_hour_start', delivery_hour_start)
         data.append('delivery_hour_end', delivery_hour_end)
         data.append('delivery_methods', delivery_methods)
-        // for (var pair of data.entries()) {
-        //   console.log(pair[0] + ', ' + pair[1])
-        // }
+        for (var pair of data.entries()) {
+          console.log(pair[0] + ', ' + pair[1])
+        }
         this.postProducts(data)
           .then(result => {
             console.log(result)
