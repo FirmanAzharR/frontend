@@ -25,9 +25,7 @@
             <img
               v-else
               class="round-img"
-              :src="
-                `${ENV}/api1/fileUploadsApi1/product/` + productById.product_img
-              "
+              :src="`${ENV}/fileUploadsApi1/product/` + productById.product_img"
               alt=""
               style="background-color:#d2d2d2;border-radius:50%;width:170px;height:170px"
             />
@@ -258,8 +256,7 @@
                 <img
                   class="checkout-img"
                   :src="
-                    `${ENV}/api1/fileUploadsApi1/product/` +
-                      productById.product_img
+                    `${ENV}/fileUploadsApi1/product/` + productById.product_img
                   "
                   alt=""
                 />

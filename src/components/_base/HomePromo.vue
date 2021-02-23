@@ -50,7 +50,7 @@
               :src="
                 item.coupon_img === ''
                   ? require('../../assets/img/aside-icon2.png')
-                  : `${ENV}/api1/fileUploadsApi1/coupon/` + item.coupon_img
+                  : `${ENV}/fileUploadsApi1/coupon/` + item.coupon_img
               "
               alt="img"
               class="img"

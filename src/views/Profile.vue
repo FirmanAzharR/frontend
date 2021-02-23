@@ -33,9 +33,7 @@
                     <img
                       v-else
                       class="round-img"
-                      :src="
-                        `${ENV}/api1/fileUploadsApi1/profile/` + form.user_img
-                      "
+                      :src="`${ENV}/fileUploadsApi1/profile/` + form.user_img"
                       alt=""
                     />
                     <b-iconstack

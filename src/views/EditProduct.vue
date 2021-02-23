@@ -37,7 +37,7 @@
                     v-else
                     class="round-img"
                     :src="
-                      `${ENV}/api1/fileUploadsApi1/product/` +
+                      `${ENV}/fileUploadsApi1/product/` +
                         productById.product_img
                     "
                     alt=""

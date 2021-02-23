@@ -24,8 +24,7 @@
                     <img
                       class="order-img"
                       :src="
-                        `${ENV}/api1/fileUploadsApi1/product/` +
-                          item.product_img
+                        `${ENV}/fileUploadsApi1/product/` + item.product_img
                       "
                       alt=""
                     />

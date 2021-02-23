@@ -70,9 +70,7 @@
                 <img
                   v-else
                   style="border-radius:50%;width:35px;height:35px;object-fit:cover"
-                  :src="
-                    `${ENV}/api1/fileUploadsApi1/profile/` + getProfile.user_img
-                  "
+                  :src="`${ENV}/fileUploadsApi1/profile/` + getProfile.user_img"
                   alt=""
               /></router-link>
             </b-nav-item>

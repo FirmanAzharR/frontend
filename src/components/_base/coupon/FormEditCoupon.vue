@@ -23,9 +23,7 @@
                 <img
                   v-else
                   class="round-img"
-                  :src="
-                    `${ENV}/api1/fileUploadsApi1/coupon/` + cobaset.coupon_img
-                  "
+                  :src="`${ENV}/fileUploadsApi1/coupon/` + cobaset.coupon_img"
                   alt=""
                 />
               </div>
