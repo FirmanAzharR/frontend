@@ -60,12 +60,14 @@
                     class="input"
                     v-model="form.delivery_hour_start"
                     locale="id"
+                    required
                   ></b-form-timepicker>
                   <label>End</label>
                   <b-form-timepicker
                     class="input"
                     v-model="form.delivery_hour_end"
                     locale="id"
+                    required
                   ></b-form-timepicker>
                 </div>
                 <div class="space2">
