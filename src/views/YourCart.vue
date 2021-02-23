@@ -297,6 +297,12 @@ export default {
           'Choose the product you want ',
           'warning'
         )
+      } else if (this.getProfile.user_address === '') {
+        this.makeToast(
+          'Fill your address on profile',
+          'Your address is empty',
+          'warning'
+        )
       } else if (this.selected === '') {
         this.makeToast('Payment method ', 'Choose payment method', 'warning')
       } else {
