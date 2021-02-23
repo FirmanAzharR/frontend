@@ -55,20 +55,18 @@
                 </div>
                 <div class="space">
                   <h6>Delivery Hour:</h6>
-                  <b-form-input
+                  <label>Start</label>
+                  <b-form-timepicker
                     class="input"
-                    type="text"
-                    placeholder="select start hour"
                     v-model="form.delivery_hour_start"
-                    required
-                  ></b-form-input>
-                  <b-form-input
+                    locale="id"
+                  ></b-form-timepicker>
+                  <label>End</label>
+                  <b-form-timepicker
                     class="input"
-                    type="text"
-                    placeholder="select end hour"
                     v-model="form.delivery_hour_end"
-                    required
-                  ></b-form-input>
+                    locale="id"
+                  ></b-form-timepicker>
                 </div>
                 <div class="space2">
                   <h6>Input stok</h6>
