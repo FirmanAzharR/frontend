@@ -125,6 +125,7 @@
                 <b-card-text>
                   <b>Delivery</b> to {{ getProfile.user_address }}
                 </b-card-text>
+                {{ getProfile }}
                 <hr />
                 <b-card-text>
                   <b>Phone</b> {{ getProfile.user_phone }}
@@ -299,7 +300,7 @@ export default {
         )
       } else if (this.selected === '') {
         this.makeToast('Payment method ', 'Choose payment method', 'warning')
-      } else if (this.getProfile.user_address === NULL) {
+      } else if (this.getProfile.user_address === 'NULL') {
         this.makeToast(
           'Fill your address on profile',
           'Your address is empty',
