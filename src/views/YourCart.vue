@@ -125,7 +125,6 @@
                 <b-card-text>
                   <b>Delivery</b> to {{ getProfile.user_address }}
                 </b-card-text>
-                {{ getProfile }}
                 <hr />
                 <b-card-text>
                   <b>Phone</b> {{ getProfile.user_phone }}
@@ -395,6 +394,7 @@ export default {
 .btn-style-large {
   width: 450px;
   max-width: 450px;
+  margin-bottom: 50px;
 }
 .add-coupon {
   width: 450px;
