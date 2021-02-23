@@ -14,8 +14,9 @@
             ><HomePromo class="animate__animated animate__fadeIn"
           /></b-col>
           <b-col xl="8" md="12" sm="12">
-            <div v-if="setUser.user_role === 1" style="padding:20px">
+            <div style="padding:20px">
               <router-link
+                v-if="setUser.user_role === 1"
                 :to="{ name: 'AddProduct' }"
                 class="link"
                 style="background-color:#6A4029;color:white;padding:5px;border-radius:25px;margin-left:25px;font-weight:500;padding:10px;border:none"

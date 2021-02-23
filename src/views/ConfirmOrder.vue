@@ -253,6 +253,7 @@ export default {
         })
         .catch(error => {
           this.res = error
+          console.log(error)
           this.makeToast('Failed', 'Confirm Order Failed', 'danger')
         })
     },

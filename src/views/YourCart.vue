@@ -69,8 +69,7 @@
                     <img
                       class="order-img"
                       :src="
-                        `${ENV}/api1/fileUploadsApi1/product/` +
-                          item.product_img
+                        `${ENV}/fileUploadsApi1/product/` + item.product_img
                       "
                       alt=""
                     />
@@ -364,6 +363,8 @@ export default {
     removeCart(index) {
       if (index > -1) {
         this.getCart.splice(index, 1)
+        this.sumSubtotal()
+        this.totalPay()
         this.setCart(this.getCart)
       }
     }

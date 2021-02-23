@@ -94,9 +94,7 @@
                   rounded="circle"
                   thumbnail
                   fluid
-                  :src="
-                    `${ENV}/api1/fileUploadsApi1/product/` + item.product_img
-                  "
+                  :src="`${ENV}/fileUploadsApi1/product/` + item.product_img"
                   alt="Image"
                   class="shadow-card"
                   style="width:80px;margin-top:5px;height:80px;object-fit:cover"
