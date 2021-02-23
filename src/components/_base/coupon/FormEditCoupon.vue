@@ -188,6 +188,7 @@ export default {
       })
     },
     onSubmit() {
+      this.subDate()
       const data = new FormData()
       data.append('coupon_name', this.cobaset.coupon_name)
       data.append('coupon_code', this.cobaset.coupon_code)
