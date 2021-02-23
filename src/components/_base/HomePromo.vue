@@ -104,7 +104,8 @@ export default {
   data() {
     return {
       ENV: `${process.env.VUE_APP_PORT}`,
-      couponId: ''
+      couponId: '',
+      res: ''
     }
   },
   created() {
@@ -129,9 +130,10 @@ export default {
     onDelete() {
       this.deleteCoupon(this.couponId)
         .then(result => {
+          this.res = result
           this.makeToast(
             'Coupon Deleted',
-            `Your Couppon ${result} Deleted successfully`,
+            `Your Coupon Deleted successfully`,
             'success'
           )
           this.getCoupon()
