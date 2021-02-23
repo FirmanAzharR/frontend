@@ -187,6 +187,12 @@
               >Mark as done</b-button
             >
             <b-button
+              v-if="getOrdersData.status_confirm !== 0 || clickStatus !== 0"
+              class="btn-style-done rubik btn-style-small"
+              variant="success"
+              >Done</b-button
+            >
+            <b-button
               block
               class="btn-style rubik btn-style-small"
               variant="warning"
