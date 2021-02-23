@@ -300,7 +300,7 @@ export default {
         )
       } else if (this.selected === '') {
         this.makeToast('Payment method ', 'Choose payment method', 'warning')
-      } else if (this.getProfile.user_address === 'NULL') {
+      } else if (this.getProfile.user_address == null) {
         this.makeToast(
           'Fill your address on profile',
           'Your address is empty',
