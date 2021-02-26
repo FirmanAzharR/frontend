@@ -7,7 +7,7 @@
     <a href="https://github.com/FirmanAzharR/CoffeeLand-Vue/pulls">Request Feature</a>
   </p>
 
-![Image](cover.png)
+![Image](cover.jpg)
 
 ## About The Project
 
