@@ -48,7 +48,7 @@
                             <img
                               :src="
                                 item.foto === ''
-                                  ? require('../assets/img/food-1.png')
+                                  ? require('../assets/img/box.png')
                                   : `${ENV}/fileUploadsApi1/` +
                                     item.foto
                               "
