@@ -1,17 +1,11 @@
 <template>
   <div class="addproduct">
     <div>
-      <Navbar />
       <b-container
         fluid
         class="bv-example-row animate__animated animate__fadeIn"
-        style="border-top: 1px solid #d2d2d2;"
+        style="margin-top:20px"
       >
-        <div>
-          <ul>
-            <li><a href="#">Favorite & Promo ></a>Add new product</li>
-          </ul>
-        </div>
         <b-form @submit.prevent="onSubmit">
           <b-row>
             <b-col xl="4" lg="4" md="4" sm="12">
@@ -39,10 +33,6 @@
                     >Take a picture</b-button
                   >
                   <br />
-                  <!-- <b-form-file
-                    style="width:250px"
-                    @change="handleFile"
-                  ></b-form-file> -->
                   <input
                     id="fileUpload"
                     @change="handleFile"
@@ -53,121 +43,45 @@
                     Browse Image
                   </button>
                 </div>
-                <div class="space">
-                  <h6>Delivery Hour:</h6>
-                  <label>Start</label>
-                  <b-form-timepicker
-                    class="input"
-                    v-model="form.delivery_hour_start"
-                    locale="id"
-                    required
-                  ></b-form-timepicker>
-                  <label>End</label>
-                  <b-form-timepicker
-                    class="input"
-                    v-model="form.delivery_hour_end"
-                    locale="id"
-                    required
-                  ></b-form-timepicker>
-                </div>
-                <div class="space2">
-                  <h6>Input stok</h6>
-                  <b-form-input
-                    class="input"
-                    type="number"
-                    placeholder="Input Stock"
-                    v-model="form.product_stock"
-                  ></b-form-input>
-                </div>
               </div>
             </b-col>
             <b-col xl="8" lg="8" md="8" sm="12">
-              <div style="margin-left:20px">
-                <h6>Category</h6>
-                <b-form-select
-                  class="input2"
-                  v-model="selected"
-                  :options="options"
-                  @change="changeCategory()"
-                  required
-                ></b-form-select>
-                <h6>Product Name</h6>
+              <div style="margin-left:20px;">
+                <h6>Nama Barang</h6>
                 <b-form-input
                   class="input2"
                   type="text"
-                  placeholder="Input Product Name"
-                  v-model="form.product_name"
+                  placeholder="Input nama barang"
+                  v-model="form.nama"
                   required
                 ></b-form-input>
-                <h6>Input Product Discount</h6>
+                <h6>Harga Beli</h6>
                 <b-form-input
                   class="input2"
                   type="number"
-                  placeholder="Input Discount"
+                  placeholder="Input harga beli"
                   min="0"
-                  v-model="form.product_discon"
+                  v-model="form.harga_beli"
                   required
                 ></b-form-input>
-                <h6>Product Information</h6>
-                <b-form-textarea
-                  id="input2"
-                  placeholder="Enter Product Description"
-                  rows="3"
-                  max-rows="6"
-                  v-model="form.product_information"
-                  required
-                ></b-form-textarea>
                 <br />
-                <h6>Product Price</h6>
+                 <h6>Harga Jual</h6>
                 <b-form-input
                   class="input2"
                   type="number"
-                  placeholder="Input Price"
+                  placeholder="Input harga jual"
                   min="0"
-                  v-model="form.product_price"
+                  v-model="form.harga_jual"
                   required
                 ></b-form-input>
                 <br />
-                <div style="margin-bottom:25px">
-                  <h6>Product Size</h6>
-                  <p>* Click size you want to use for this product</p>
-                  <div class="d-flex">
-                    <b-button
-                      :class="R !== '' ? 'style-sizeClick' : 'style-size'"
-                      @click="addSize('R', 1)"
-                      >R</b-button
-                    >
-                    <b-button
-                      :class="L !== '' ? 'style-sizeClick' : 'style-size'"
-                      @click="addSize('L', 2)"
-                      >L</b-button
-                    >
-                    <b-button
-                      :class="XL !== '' ? 'style-sizeClick' : 'style-size'"
-                      @click="addSize('XL', 3)"
-                      >XL</b-button
-                    >
-                  </div>
-                </div>
-                <div>
-                  <h6>Input Delivery Methods</h6>
-                  <p>* Click method you want to use for this product</p>
-                  <b-button
-                    :class="home !== '' ? 'style-size2Click' : 'style-size2'"
-                    @click="addDeliver('home', 1)"
-                    >Home Delivery</b-button
-                  >
-                  <b-button
-                    :class="dineIn !== '' ? 'style-size2Click' : 'style-size2'"
-                    @click="addDeliver('dineIn', 2)"
-                    >Dine in</b-button
-                  >
-                  <b-button
-                    :class="take !== '' ? 'style-size2Click' : 'style-size2'"
-                    @click="addDeliver('take', 3)"
-                    >Take Away</b-button
-                  >
-                </div>
+                <h6>Input stok</h6>
+                  <b-form-input
+                    class="input"
+                    type="number"
+                    placeholder="Input stok"
+                    v-model="form.stok"
+                  ></b-form-input>
                 <div class="space3">
                   <b-button
                     type="submit"
@@ -186,113 +100,34 @@
           </b-row>
         </b-form>
       </b-container>
-      <Footer />
+     
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import Navbar from '../components/_base/Navbar'
-import Footer from '../components/_base/Footer'
+
 export default {
   name: 'AddProduct',
   components: {
-    Navbar,
-    Footer
+
   },
   data() {
     return {
-      R: '',
-      L: '',
-      XL: '',
-      size: [],
-      home: '',
-      dineIn: '',
-      take: '',
-      deliveMethods: [],
-      selected: null,
       url: null,
-      options: [
-        { value: null, text: 'Please select an option' },
-        { value: 1, text: 'Coffee' },
-        { value: 2, text: 'Non Coffee' },
-        { value: 3, text: 'Food' }
-      ],
       form: {
-        category_id: '',
-        product_name: '',
-        product_discon: '',
-        product_information: '',
-        product_size: '',
-        product_price: '',
-        product_img: '',
-        product_status: 1,
-        product_stock: '',
-        delivery_hour_start: '',
-        delivery_hour_end: '',
-        delivery_methods: ''
+        nama:'',
+        harga_beli:'',
+        harga_jual:'',
+        stok:'',
+        foto:''
       }
     }
   },
   created() {},
   methods: {
     ...mapActions(['postProducts']),
-    removeArr(type, value) {
-      if (type === 'size') {
-        const index = this.size.indexOf(value)
-        if (index > -1) {
-          this.size.splice(index, 1)
-        }
-      } else if (type === 'delive') {
-        const index = this.deliveMethods.indexOf(value)
-        if (index > -1) {
-          this.deliveMethods.splice(index, 1)
-        }
-      }
-    },
-    addSize(name, value) {
-      if ((name === 'R') & (this.R === '')) {
-        this.R = name
-        this.size.push(value)
-      } else if ((name === 'R') & (this.R !== '')) {
-        this.R = ''
-        this.removeArr('size', value)
-      } else if ((name === 'L') & (this.L === '')) {
-        this.L = name
-        this.size.push(value)
-      } else if ((name === 'L') & (this.L !== '')) {
-        this.L = ''
-        this.removeArr('size', value)
-      } else if ((name === 'XL') & (this.XL === '')) {
-        this.XL = name
-        this.size.push(value)
-      } else if ((name === 'XL') & (this.XL !== '')) {
-        this.XL = ''
-        this.removeArr('size', value)
-      }
-    },
-    addDeliver(name, value) {
-      if ((name === 'home') & (this.home === '')) {
-        this.home = name
-        this.deliveMethods.push(value)
-      } else if ((name === 'home') & (this.home !== '')) {
-        this.home = ''
-        this.removeArr('delive', value)
-      } else if ((name === 'dineIn') & (this.dineIn === '')) {
-        this.dineIn = name
-        this.deliveMethods.push(value)
-      } else if ((name === 'dineIn') & (this.dineIn !== '')) {
-        this.dineIn = ''
-        this.removeArr('delive', value)
-      } else if ((name === 'take') & (this.take === '')) {
-        this.take = name
-        this.deliveMethods.push(value)
-      } else if ((name === 'take') & (this.take !== '')) {
-        this.take = ''
-        this.removeArr('delive', value)
-      }
-    },
     chooseFiles: function() {
       document.getElementById('fileUpload').click()
     },
@@ -307,64 +142,29 @@ export default {
       this.form.category_id = this.selected
     },
     onReset() {
-      this.R = ''
-      this.L = ''
-      this.XL = ''
-      this.size = []
-      this.home = ''
-      this.dineIn = ''
-      this.take = ''
-      this.deliveMethods = []
-      this.selected = null
       this.url = null
       this.form = {
-        category_id: '',
-        product_name: '',
-        product_discon: '',
-        product_information: '',
-        product_size: '',
-        product_price: '',
-        product_img: '',
-        product_status: 1,
-        product_stock: '',
-        delivery_hour_start: '',
-        delivery_hour_end: '',
-        delivery_methods: ''
+        nama:'',
+        harga_beli:'',
+        harga_jual:'',
+        stok:'',
+        foto:''
       }
     },
     onSubmit() {
-      if ((this.deliveMethods.length < 0) & (this.size.length < 0)) {
-        this.makeToast('Some input form empty', 'Fill input form', 'warning')
-      } else {
-        this.form.product_size = this.size.toString()
-        this.form.delivery_methods = this.deliveMethods.toString()
         const {
-          category_id,
-          product_name,
-          product_discon,
-          product_information,
-          product_size,
-          product_price,
-          product_img,
-          product_status,
-          product_stock,
-          delivery_hour_start,
-          delivery_hour_end,
-          delivery_methods
+        nama,
+        harga_beli,
+        harga_jual,
+        stok,
+        foto
         } = this.form
         const data = new FormData()
-        data.append('category_id', category_id)
-        data.append('product_name', product_name)
-        data.append('product_discon', product_discon)
-        data.append('product_information', product_information)
-        data.append('product_size', product_size)
-        data.append('product_price', product_price)
-        data.append('product_img', product_img)
-        data.append('product_status', product_status)
-        data.append('product_stock', product_stock)
-        data.append('delivery_hour_start', delivery_hour_start)
-        data.append('delivery_hour_end', delivery_hour_end)
-        data.append('delivery_methods', delivery_methods)
+        data.append('nama', nama)
+        data.append('harga_beli', harga_beli)
+        data.append('harga_jual', harga_jual)
+        data.append('stok', stok)
+        data.append('foto', foto)
         for (var pair of data.entries()) {
           console.log(pair[0] + ', ' + pair[1])
         }
@@ -377,7 +177,7 @@ export default {
           .catch(error => {
             this.makeToast('Insert Product Failed', error.data.msg, 'danger')
           })
-      }
+      
     },
     handleFile(e) {
       if (
@@ -390,7 +190,7 @@ export default {
           'warning'
         )
       } else {
-        const file = (this.form.product_img = e.target.files[0])
+        const file = (this.form.foto = e.target.files[0])
         this.url = URL.createObjectURL(file)
       }
     }

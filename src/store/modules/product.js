@@ -4,14 +4,11 @@ export default {
   state: {
     products: [],
     productById: '',
-    productDetails: [],
     productSearch: '',
-    sort: 'category_id ASC',
     category: '',
     totalRows: null,
-    limit: 12,
-    page: 1,
-    cart: []
+    limit: 3,
+    page: 1
   },
   mutations: {
     // tambahkan
@@ -23,23 +20,11 @@ export default {
     handleChangePage(state, payload) {
       state.page = payload
     },
-    handleChangeCategory(state, payload) {
-      state.category = payload
-    },
-    handleSort(state, payload) {
-      state.sort = payload
-    },
     productSearchs(state, payload) {
       state.productSearch = payload
     },
     setProductById(state, payload) {
       state.productById = payload
-    },
-    cart(state, payload) {
-      state.cart.push(payload)
-    },
-    setCart(state, payload) {
-      state.cart = payload
     }
   },
   actions: {
@@ -47,7 +32,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `${process.env.VUE_APP_PORT}/product?page=${context.state.page}&limit=${context.state.limit}&category=${context.state.category}&search=${context.state.productSearch}&sort=${context.state.sort}`
+            `${process.env.VUE_APP_PORT}/barang/get-barang?page=${context.state.page}&limit=${context.state.limit}&search=${context.state.productSearch}`
           )
           .then(response => {
             resolve(response)
@@ -62,22 +47,9 @@ export default {
     getProductById(context, id) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`${process.env.VUE_APP_PORT}/product/${id}`)
+          .get(`${process.env.VUE_APP_PORT}/barang/get-barang/${id}`)
           .then(response => {
             context.commit('setProductById', response.data.data[0])
-            resolve(response)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    getProductDetail(context, id) {
-      return new Promise((resolve, reject) => {
-        axios
-          .get(`${process.env.VUE_APP_PORT}/product/productDetail/${id}`)
-          .then(response => {
-            context.state.productDetails = response.data.data
             resolve(response)
           })
           .catch(error => {
@@ -88,7 +60,7 @@ export default {
     postProducts(context, data) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`${process.env.VUE_APP_PORT}/product`, data)
+          .post(`${process.env.VUE_APP_PORT}/barang/add-barang`, data)
           .then(response => {
             resolve(response)
           })
@@ -101,7 +73,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `${process.env.VUE_APP_PORT}/product/${payload.id_product}`,
+            `${process.env.VUE_APP_PORT}/barang/update-barang/${payload.id_product}`,
             payload.data
           )
           .then(response => {
@@ -114,34 +86,10 @@ export default {
           })
       })
     },
-    deleteProducts(context, data) {
+    deleteProducts(context, id) {
       return new Promise((resolve, reject) => {
         axios
-          .delete(`${process.env.VUE_APP_PORT}/product/${data}`)
-          .then(response => {
-            resolve(response)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    addTransaction(context, payload) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(`${process.env.VUE_APP_PORT}/checkout/confirm`, payload)
-          .then(response => {
-            resolve(response)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    addDetailTransaction(context, payload) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(`${process.env.VUE_APP_PORT}/checkout/confirm/detail`, payload)
+          .delete(`${process.env.VUE_APP_PORT}/barang/delete-barang/${id}`)
           .then(response => {
             resolve(response)
           })
@@ -166,12 +114,6 @@ export default {
     },
     getProductById(state) {
       return state.productById
-    },
-    getProductDetail(state) {
-      return state.productDetails
-    },
-    getCart(state) {
-      return state.cart
     }
   }
 }

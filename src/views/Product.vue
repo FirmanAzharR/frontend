@@ -1,76 +1,24 @@
 <template>
   <div class="product">
     <div>
-      <!-- <Navbar :dataProductName="productSearch" @sendData="search" /> -->
-      <Navbar />
       <b-container fluid class="bv-example-row">
         <b-row style="border-top: 1px solid #d2d2d2;">
-          <b-col
-            xl="4"
-            lg="4"
-            md="12"
-            sm="12"
-            style="border-right: 1px solid #d2d2d2"
-            ><HomePromo class="animate__animated animate__fadeIn"
-          /></b-col>
-          <b-col xl="8" md="12" sm="12">
+          <b-col xl="12" md="12" sm="12">
             <div style="padding:20px">
               <router-link
-                v-if="setUser.user_role === 1"
                 :to="{ name: 'AddProduct' }"
                 class="link"
                 style="background-color:#6A4029;color:white;padding:5px;border-radius:25px;margin-left:25px;font-weight:500;padding:10px;border:none"
                 >Add Product</router-link
               >
-              <b-nav fill align="center" class="font2 nav-font-size">
-                <b-nav-item
-                  ><router-link to="#" class="link"
-                    >Favorite & Promo</router-link
-                  ></b-nav-item
-                >
-                <b-nav-item @click="getProductByCategory(1)"
-                  ><router-link to="#" class="link"
-                    >Coffee</router-link
-                  ></b-nav-item
-                >
-                <b-nav-item @click="getProductByCategory(2)"
-                  ><router-link to="#" class="link"
-                    >Non Coffee</router-link
-                  ></b-nav-item
-                >
-                <b-nav-item @click="getProductByCategory(3)"
-                  ><router-link to="#" class="link"
-                    >Foods</router-link
-                  ></b-nav-item
-                >
-                <!-- <b-nav-item @click="resetProduct"
-                  ><router-link to="#" class="link"
-                    >All Product</router-link
-                  ></b-nav-item
-                > -->
-                <b-nav-item @click="getProductByCategory('')"
-                  ><router-link to="#" class="link"
-                    >All Product</router-link
-                  ></b-nav-item
-                >
-                <b-nav-item-dropdown text="Sort by" right>
-                  <b-dropdown-item
-                    href="#"
-                    @click="getProductSort('product_discon DESC')"
-                    >Biggest promo</b-dropdown-item
-                  >
-                  <b-dropdown-item
-                    href="#"
-                    @click="getProductSort('product_price ASC')"
-                    >Cheapest price</b-dropdown-item
-                  >
-                  <b-dropdown-item
-                    href="#"
-                    @click="getProductSort('product_price DESC')"
-                    >most expensive price</b-dropdown-item
-                  >
-                </b-nav-item-dropdown>
-              </b-nav>
+                <b-form-input
+                id="search"
+                style=""
+                placeholder="Search Product"
+                type="text"
+                v-model="cari"
+                @keyup.enter="search"
+              ></b-form-input>
               <div
                 style="margin-top:30px"
                 class="animate__animated animate__fadeIn"
@@ -88,8 +36,8 @@
                     <div class="item font1 centered">
                       <router-link
                         :to="{
-                          name: 'DetailProduct',
-                          params: { id: item.product_id }
+                          name: 'EditProduct',
+                          params: { id: item.id_barang }
                         }"
                       >
                         <b-card
@@ -99,36 +47,27 @@
                           <div align="center">
                             <img
                               :src="
-                                item.product_img === ''
+                                item.foto === ''
                                   ? require('../assets/img/food-1.png')
-                                  : `${ENV}/fileUploadsApi1/product/` +
-                                    item.product_img
+                                  : `${ENV}/fileUploadsApi1/` +
+                                    item.foto
                               "
                               alt=""
                               class="item-img"
                             />
-                            <div
-                              class="badge-pos"
-                              v-if="item.product_discon !== 0"
-                            >
-                              <b-badge
-                                pill
-                                variant="light"
-                                style="font-size:19px"
-                                >{{ item.product_discon }}%</b-badge
-                              >
-                            </div>
                             <h6
                               style="font-weight:bold;font-size:18px"
                               class="font1"
                             >
-                              {{ item.product_name }}
+                              {{ item.nama }}
                             </h6>
                             <h6
                               class="font1"
                               style="font-weight:bold;color:#8B5830;"
                             >
-                              IDR {{ item.product_price }}
+                              IDR {{ item.harga_jual }}
+                              <br>
+                              IDR {{ item.harga_beli }}
                             </h6>
                           </div>
                         </b-card>
@@ -149,37 +88,21 @@
           </b-col>
         </b-row>
       </b-container>
-      <Footer />
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
-import Navbar from '../components/_base/Navbar'
-import Footer from '../components/_base/Footer'
-import HomePromo from '../components/_base/HomePromo'
-//import axios from 'axios'
 export default {
   name: 'Product',
-  //props: ['searchProduct'],
   components: {
-    Navbar,
-    HomePromo,
-    Footer
   },
   data() {
     return {
       ENV: `${process.env.VUE_APP_PORT}`,
       user: 1,
-      // products: [],
-      // productSearch: '',
-      // sort: 'category_id ASC',
-      // category: '',
       currentPage: 1
-      // totalRows: null,
-      // limit: 12,
-      // page: 1
     }
   },
   computed: {
@@ -188,48 +111,27 @@ export default {
       page: 'getPageProduct',
       limit: 'getLimitProduct',
       rows: 'getTotalRowsProduct',
-      setUser: 'setUser'
+      // setUser: 'setUser'
     })
-    // rows() {
-    //   return this.totalRows
-    // }
   },
   created() {
     this.productSearchs('')
     this.handleChangePage(1)
-    this.handleChangeCategory('')
     this.getProducts()
-    //this.getProduct(this.category, this.productSearch, this.sort)
-    //this.getProducts
   },
   methods: {
     ...mapActions(['getProducts']),
     ...mapMutations([
       'handleChangePage',
-      'handleChangeCategory',
-      'handleSort',
       'productSearchs'
     ]),
-
-    getProductByCategory(idCategory) {
-      this.handleChangePage(1)
-      this.productSearchs('')
-      this.handleChangeCategory(idCategory)
-      this.getProducts()
-      //this.page = 1
-      //this.productSearch = ''
-      //this.getProducts()
-    },
-    getProductSort(dataSort) {
-      this.handleChangePage(1)
-      this.handleSort(dataSort)
-      this.getProducts()
-    },
     changePage(numberPage) {
       this.handleChangePage(numberPage)
       this.getProducts()
-      // this.page = numberPage
-      // this.getProduct('', '', this.sort)
+    },
+    search() {
+      this.productSearchs(this.cari)
+      this.getProducts()
     }
   }
 }
