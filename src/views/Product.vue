@@ -16,7 +16,7 @@
             >
           </b-col>
           <b-col>
-            <b-button class="link" style="float:right; margin-left:20px" @click="handleLogout"
+            <b-button style="float:right; margin-left:20px;color:white" @click="handleLogout"
             >Logout</b-button>
             <b-form-input
             id="search"
