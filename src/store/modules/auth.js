@@ -35,21 +35,8 @@ export default {
           })
       })
     },
-    forgotPass(context, payload) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(`${process.env.VUE_APP_PORT}/user/forgot`, payload)
-          .then(result => {
-            resolve(result)
-          })
-          .catch(error => {
-            reject(error.response)
-          })
-      })
-    },
     logout(context) {
       localStorage.removeItem('token')
-      localStorage.removeItem('cart')
       context.commit('delUser')
       router.push('/login')
     },
