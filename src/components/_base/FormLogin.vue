@@ -35,6 +35,9 @@
             >Login</b-button
           >
         </b-form>
+        <br>
+                    <h6>email: admin@gmail.com</h6>
+            <h6>password: admin</h6>
       </div>
           </b-col>
           <b-col></b-col>

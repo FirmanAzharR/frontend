@@ -7,6 +7,7 @@
             <div v-if="getPage === 'signin'">
               <FormLogin class="animate__animated animate__fadeIn" />
             </div>
+            <br>
           </div>
         </b-col>
       </b-row>
