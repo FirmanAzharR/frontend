@@ -48,22 +48,17 @@
                   />
                 </div>
                 <div>
-                  <b-button
-                    class="btn-style"
-                    style="margin-bottom:15px;margin-top:15px;background-color: #0B132A;color:white"
-                    >Take a picture</b-button
-                  >
-                  <br />
-                  <input
+                <input
                     id="fileUpload"
                     @change="handleFile"
                     type="file"
                     hidden
                   />
-                  <button @click.prevent="chooseFiles()" class="btn-style" style="margin-bottom:100px;">
+                  <button @click.prevent="chooseFiles()" class="btn-style" style="margin-top:40px">
                     Browse Image
                   </button>
                   <br/>
+                  <h6 style="margin-bottom:110px;margin-top:20px;text-align:center">Max size 100kb</h6>
               <b-button variant="danger" class="btn-style"
               @click.prevent="handleClick"
               >Delete Product&nbsp;&nbsp;<b-icon-trash></b-icon-trash

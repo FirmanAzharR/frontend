@@ -32,21 +32,16 @@
                   </div>
                 </div>
                 <div>
-                  <b-button
-                    class="btn-style"
-                    style="margin-bottom:15px;margin-top:15px;background-color: #0B132A;color:white"
-                    >Take a picture</b-button
-                  >
-                  <br />
                   <input
                     id="fileUpload"
                     @change="handleFile"
                     type="file"
                     hidden
                   />
-                  <button @click.prevent="chooseFiles()" class="btn-style">
+                  <button @click.prevent="chooseFiles()" class="btn-style" style="margin-top:40px">
                     Browse Image
                   </button>
+                  <h6 style="margin-top:20px;text-align:center">Max size 100kb</h6>
                 </div>
               </div>
             </b-col>
