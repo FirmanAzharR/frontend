@@ -6,6 +6,11 @@
         class="bv-example-row animate__animated animate__fadeIn"
         style="margin-top:20px"
       >
+      <router-link
+							:to="{ name: 'Product' }"
+							style="background-color:#6A4029;color:white;padding:5px;font-weight:500;border:none"
+							>Go to Page Prouct</router-link
+							>
         <b-form @submit.prevent="onSubmit">
           <b-row>
             <b-col xl="4" lg="4" md="4" sm="12">

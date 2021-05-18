@@ -7,7 +7,7 @@ export default {
     productSearch: '',
     category: '',
     totalRows: null,
-    limit: 3,
+    limit: 12,
     page: 1
   },
   mutations: {
