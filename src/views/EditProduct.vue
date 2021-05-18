@@ -1,16 +1,20 @@
 <template>
-  <div class="addproduct">
+  <div class="addproduct" style="margin:30px">
   <vue-confirm-dialog></vue-confirm-dialog>
     <div>
       <b-container
         fluid
         class="bv-example-row"
-        style="border-top: 1px solid #d2d2d2;"
       >
         <div>
           <ul>
             <li>
-              <a href="#">Favorite & Promo ></a>{{ selected.nama }}
+              <router-link
+							:to="{ name: 'Product' }"
+							class="link"
+							style="padding:5px;font-weight:500;border:none"
+							>Product</router-link
+							> > {{ selected.nama }}
             </li>
           </ul>
         </div>
@@ -56,12 +60,11 @@
                     type="file"
                     hidden
                   />
-                  <button @click.prevent="chooseFiles()" class="btn-style">
+                  <button @click.prevent="chooseFiles()" class="btn-style" style="margin-bottom:100px;">
                     Browse Image
                   </button>
                   <br/>
-              <b-button pill
-              style="background-color:#6A4029;color:white;border:none"
+              <b-button variant="danger" class="btn-style"
               @click.prevent="handleClick"
               >Delete Product&nbsp;&nbsp;<b-icon-trash></b-icon-trash
             ></b-button>
@@ -100,7 +103,7 @@
                 <br />
                 <h6>Input stok</h6>
                   <b-form-input
-                    class="input"
+                    class="input2"
                     type="number"
                     placeholder="Input stok"
                     v-model="selected.stok"
@@ -109,7 +112,7 @@
                   <b-button
                     type="submit"
                     class="btn-style2 margin-right"
-                    style="background-color:#6A4029;"
+                    style="background-color:#0080c9;"
                     >Save</b-button
                   >
                   <b-button
@@ -247,6 +250,9 @@ export default {
 .margin-input {
   margin-top: 100px;
 }
+.margin-right {
+  margin-right: 100px;
+}
 .style-size {
   border-radius: 50%;
   width: 50px;
@@ -299,7 +305,7 @@ export default {
   border-radius: 15px;
 }
 .btn-style2 {
-  width: auto;
+  width: 250px;
   padding: 17px;
   font-weight: bold;
   border: none;

@@ -8,7 +8,7 @@
       >
       <router-link
 							:to="{ name: 'Product' }"
-							style="background-color:#6A4029;color:white;padding:5px;font-weight:500;border:none"
+							style="padding:5px;font-weight:500;border:none"
 							>Go to Page Prouct</router-link
 							>
         <b-form @submit.prevent="onSubmit">
@@ -82,7 +82,7 @@
                 <br />
                 <h6>Input stok</h6>
                   <b-form-input
-                    class="input"
+                    class="input2"
                     type="number"
                     placeholder="Input stok"
                     v-model="form.stok"
@@ -91,7 +91,7 @@
                   <b-button
                     type="submit"
                     class="btn-style2 margin-right"
-                    style="background-color:#6A4029;"
+                    style="background-color:#0080c9;"
                     >Save</b-button
                   >
                   <b-button

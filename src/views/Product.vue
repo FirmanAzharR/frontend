@@ -10,7 +10,7 @@
 							<router-link
 							:to="{ name: 'AddProduct' }"
 							class="link"
-							style="background-color:#6A4029;color:white;padding:5px;font-weight:500;border:none"
+							style="background-color:#0099ff;color:white;padding:5px;font-weight:500;border:none"
 							>Add Product</router-link
 							>
 						</b-col>
