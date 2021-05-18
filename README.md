@@ -2,7 +2,7 @@
 Features CRUD,Search,Pagination,Auth
 
 ## Installation
-- Clone RestApi Project from github
+- Clone Frontend Project from github
 - Install modules on project
 ```bash
 npm install
