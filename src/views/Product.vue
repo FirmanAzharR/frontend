@@ -72,8 +72,6 @@
 						style="font-weight:bold;color:#8B5830;"
 						>
 						IDR {{ item.harga_jual }}
-						<br>
-						IDR {{ item.harga_beli }}
 					</h6>
 				</div>
 			</b-card>
